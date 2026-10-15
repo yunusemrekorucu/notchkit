@@ -52,6 +52,8 @@ Drag files onto the notch to keep them in a tray, or drop them on the AirDrop ta
 
 Add, remove and reorder widgets with a live preview, and configure each widget on its own.
 
+With more than one display connected, choose where the notch appears: all displays, only the built-in display, only the main display, or the displays you pick.
+
 <p align="center">
   <img src="docs/screenshots/settings-widgets.png" width="60%" alt="The Widgets settings tab with a live preview of the notch layout">
 </p>
@@ -135,7 +137,7 @@ NotchKit asks for each permission only the first time you use the feature that n
 
 ## How it works
 
-- Each screen gets a full-width, transparent `NSPanel` at the status bar level. The notch is drawn inside it with SwiftUI and animates between its closed and open shapes.
+- Each enabled display gets a full-width, transparent `NSPanel` at the status bar level. The notch is drawn inside it with SwiftUI and animates between its closed and open shapes.
 - Now Playing data comes from Apple's private MediaRemote framework. Since macOS 15.4 restricts direct access, NotchKit uses the open-source [mediaremote-adapter](https://github.com/ungive/mediaremote-adapter).
 - Settings are stored with [Defaults](https://github.com/sindresorhus/Defaults), and launch at login uses [LaunchAtLogin](https://github.com/sindresorhus/LaunchAtLogin-Modern).
 

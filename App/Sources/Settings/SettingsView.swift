@@ -22,7 +22,6 @@ struct SettingsView: View {
 private struct GeneralSettings: View {
     @Default(.alwaysOpenNotchOnHover) private var openOnHover
     @Default(.disableHaptics) private var disableHaptics
-    @Default(.enableOnNonNotchScreens) private var nonNotch
     @Default(.preventUnhoverCloseWhenTyping) private var preventClose
     @Default(.preferRoundButtons) private var roundButtons
     @Default(.translucent) private var translucent
@@ -59,9 +58,9 @@ private struct GeneralSettings: View {
                     .help("Some gestures are disabled while this is on.")
                 Toggle("Disable haptic feedback", isOn: $disableHaptics)
                 Toggle("Keep open while typing", isOn: $preventClose)
-                Toggle("Enable on screens without a notch", isOn: $nonNotch)
                 Toggle("Swipe sideways to change tracks", isOn: $swipeTrack)
             }
+            DisplaysSection()
             Section("Appearance") {
                 Toggle("Prefer round buttons", isOn: $roundButtons)
                 Toggle("Translucent notch background", isOn: $translucent)
@@ -78,6 +77,68 @@ private struct GeneralSettings: View {
             }
         }
         .formStyle(.grouped)
+    }
+}
+
+private struct DisplaysSection: View {
+    @Default(.displayMode) private var mode
+    @Default(.selectedDisplays) private var selected
+    @State private var screens = NSScreen.screens
+
+    var body: some View {
+        Section {
+            Picker("Show NotchKit on", selection: $mode) {
+                Text("All displays").tag(DisplayMode.all)
+                Text("Built-in display only").tag(DisplayMode.builtIn)
+                Text("Main display only").tag(DisplayMode.primary)
+                Text("Selected displays").tag(DisplayMode.custom)
+            }
+            ForEach(screens, id: \.displayUUID) { screen in
+                Toggle(isOn: binding(for: screen)) {
+                    Text(screen.localizedName)
+                    Text(details(for: screen))
+                }
+                .disabled(isOnlyShown(screen))
+            }
+        } header: {
+            Text("Displays")
+        } footer: {
+            Text("Turning a display on or off switches to Selected displays. If none of the chosen displays is connected, NotchKit uses the main display.")
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)) { _ in
+            screens = NSScreen.screens
+        }
+    }
+
+    private var shownIDs: Set<String> {
+        return Set(DisplaySelection.screens().map(\.displayUUID))
+    }
+
+    private func isOnlyShown(_ screen: NSScreen) -> Bool {
+        shownIDs == [screen.displayUUID]
+    }
+
+    private func binding(for screen: NSScreen) -> Binding<Bool> {
+        Binding {
+            shownIDs.contains(screen.displayUUID)
+        } set: { isOn in
+            var ids = shownIDs
+            if isOn { ids.insert(screen.displayUUID) } else { ids.remove(screen.displayUUID) }
+            // Keep choices for displays that are currently unplugged.
+            let connected = Set(screens.map(\.displayUUID))
+            let offline = mode == .custom ? selected.filter { !connected.contains($0) } : []
+            selected = offline + screens.map(\.displayUUID).filter(ids.contains)
+            mode = .custom
+        }
+    }
+
+    private func details(for screen: NSScreen) -> String {
+        var parts: [String] = []
+        if screen == NSScreen.screens.first { parts.append(String(localized: "Main")) }
+        if screen.isBuiltIn { parts.append(String(localized: "Built-in")) }
+        if screen.hasNotch { parts.append(String(localized: "Notch")) }
+        parts.append("\(Int(screen.frame.width))×\(Int(screen.frame.height))")
+        return parts.joined(separator: " · ")
     }
 }
 

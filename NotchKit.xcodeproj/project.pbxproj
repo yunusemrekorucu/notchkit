@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02A5112AF8D7E81092F83849 /* WidgetsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B911BD2C880F16424EF4BE0 /* WidgetsSettings.swift */; };
+		0A2FCBD399294F91C9CC181C /* DisplaySelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 748F5D9DDA4606C23A85FB18 /* DisplaySelection.swift */; };
 		0F96485BF9DCF3B019ABCEC6 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7B8B47FF82FC083794DD44 /* AppLanguage.swift */; };
 		15578CDA2B86CE03688B3FBF /* PomodoroWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF2CBFAA07C369A274FA45D /* PomodoroWidget.swift */; };
 		174FCE3A1622D7BD589784CC /* ClosedNotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F608F0AE06C450A8A0628DA /* ClosedNotchView.swift */; };
@@ -63,6 +64,7 @@
 		5F608F0AE06C450A8A0628DA /* ClosedNotchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosedNotchView.swift; sourceTree = "<group>"; };
 		6A7398EDB5AB375A761B1B47 /* NotchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchViewModel.swift; sourceTree = "<group>"; };
 		6AD74E959BDF143227FF605D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		748F5D9DDA4606C23A85FB18 /* DisplaySelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplaySelection.swift; sourceTree = "<group>"; };
 		8C9F9D5BF3266F7A9C41FCF1 /* OpenNotchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenNotchView.swift; sourceTree = "<group>"; };
 		8DC1FA49098AAFA907561F37 /* BatteryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMonitor.swift; sourceTree = "<group>"; };
 		8EF2A7D6CF1DEA975A88F1AD /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				5F608F0AE06C450A8A0628DA /* ClosedNotchView.swift */,
+				748F5D9DDA4606C23A85FB18 /* DisplaySelection.swift */,
 				443C1D25052D0C43F9DA51F0 /* NotchGeometry.swift */,
 				427E31C265523DD380112565 /* NotchPanel.swift */,
 				C774DFBAE358DDCA1D33A0C7 /* NotchRootView.swift */,
@@ -345,6 +348,7 @@
 				A0BB09E03D5D97E7072F21D8 /* CalendarWidget.swift in Sources */,
 				174FCE3A1622D7BD589784CC /* ClosedNotchView.swift in Sources */,
 				C14CD1BCE037B0229D317DD4 /* DefaultsKeys.swift in Sources */,
+				0A2FCBD399294F91C9CC181C /* DisplaySelection.swift in Sources */,
 				C4AB40980303203132F569B0 /* LegacyMigration.swift in Sources */,
 				B7FF152F7866976D8ACA2729 /* LiveActivityKind.swift in Sources */,
 				61F7C68A95F6274CCD308FE3 /* MediaController.swift in Sources */,

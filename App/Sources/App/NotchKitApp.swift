@@ -7,6 +7,7 @@ struct NotchKitApp: App {
     init() {
         // Must run before any setting is read.
         LegacyMigration.run()
+        DisplaySelection.migrateLegacySetting()
     }
 
     var body: some Scene {

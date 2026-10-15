@@ -2,6 +2,7 @@ import SwiftUI
 import Defaults
 
 enum MediaSource: String, CaseIterable, Defaults.Serializable { case systemWide, appleMusic, spotify }
+enum DisplayMode: String, CaseIterable, Defaults.Serializable { case all, builtIn, primary, custom }
 enum FullscreenMode: String, CaseIterable, Defaults.Serializable { case allMonitors, notchedScreens, never }
 enum MediaEffect: String, CaseIterable, Defaults.Serializable { case spectrograph, waves, vibratingCircle }
 
@@ -121,7 +122,9 @@ extension Defaults.Keys {
     static let alwaysOpenNotchOnHover = Key<Bool>("alwaysOpenNotchOnHover", default: false)
     static let contentPadding = Key<Int>("contentPadding", default: 12)
     static let disableHaptics = Key<Bool>("disableHaptics", default: false)
-    static let enableOnNonNotchScreens = Key<Bool>("enableOnNonNotchScreens", default: true)
+    static let displayMode = Key<DisplayMode>("displayMode", default: .all)
+    /// Display UUIDs shown when `displayMode` is `.custom`.
+    static let selectedDisplays = Key<[String]>("selectedDisplays", default: [])
     static let notchWidthFineTune = Key<CGFloat>("notchWidthFineTune", default: 0)
     static let notchHeightFineTune = Key<CGFloat>("notchHeightFineTune", default: 0)
     static let preferRoundButtons = Key<Bool>("preferRoundButtons", default: true)

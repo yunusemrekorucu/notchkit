@@ -23,14 +23,14 @@ final class NotchWindowManager {
         NotificationCenter.default.publisher(for: NSApplication.didChangeScreenParametersNotification)
             .sink { [weak self] _ in self?.rebuild() }
             .store(in: &cancellables)
-        Defaults.publisher(.enableOnNonNotchScreens, options: [])
+        Defaults.publisher(keys: .displayMode, .selectedDisplays, options: [])
             .sink { [weak self] _ in Task { @MainActor in self?.rebuild() } }
             .store(in: &cancellables)
         installMonitors()
     }
 
     private func rebuild() {
-        let screens = NSScreen.screens.filter { $0.safeAreaInsets.top > 0 || Defaults[.enableOnNonNotchScreens] }
+        let screens = DisplaySelection.screens()
         let ids = Set(screens.map(\.displayID))
         for (id, entry) in entries where !ids.contains(id) {
             entry.panel.orderOut(nil)

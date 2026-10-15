@@ -146,6 +146,16 @@
         }
       }
     },
+    "All displays": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tüm ekranlar"
+          }
+        }
+      }
+    },
     "All widgets are added.": {
       "localizations": {
         "tr": {
@@ -242,6 +252,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mola!"
+          }
+        }
+      }
+    },
+    "Built-in": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dahili"
+          }
+        }
+      }
+    },
+    "Built-in display only": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yalnızca dahili ekran"
           }
         }
       }
@@ -376,6 +406,16 @@
         }
       }
     },
+    "Displays": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ekranlar"
+          }
+        }
+      }
+    },
     "Drag an app here": {
       "localizations": {
         "tr": {
@@ -452,16 +492,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Canlı aktiviteleri etkinleştir"
-          }
-        }
-      }
-    },
-    "Enable on screens without a notch": {
-      "localizations": {
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notch'suz ekranlarda da etkinleştir"
           }
         }
       }
@@ -656,6 +686,26 @@
         }
       }
     },
+    "Main": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ana"
+          }
+        }
+      }
+    },
+    "Main display only": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yalnızca ana ekran"
+          }
+        }
+      }
+    },
     "Media": {
       "localizations": {
         "tr": {
@@ -772,6 +822,16 @@
     "Nook": {
       "shouldTranslate": false
     },
+    "Notch": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notch"
+          }
+        }
+      }
+    },
     "Notch fine-tuning": {
       "localizations": {
         "tr": {
@@ -782,22 +842,22 @@
         }
       }
     },
-    "NotchKit Settings": {
-      "localizations": {
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "NotchKit Ayarları"
-          }
-        }
-      }
-    },
     "NotchKit detects your notch size automatically. If you see gaps at the edges, adjust it here.": {
       "localizations": {
         "tr": {
           "stringUnit": {
             "state": "translated",
             "value": "NotchKit notch boyutunu otomatik algılar. Kenarlarda boşluk kalıyorsa buradan düzeltin."
+          }
+        }
+      }
+    },
+    "NotchKit Settings": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NotchKit Ayarları"
           }
         }
       }
@@ -985,6 +1045,16 @@
         }
       }
     },
+    "Selected displays": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seçilen ekranlar"
+          }
+        }
+      }
+    },
     "Send with AirDrop": {
       "localizations": {
         "tr": {
@@ -1071,6 +1141,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Finder'da göster"
+          }
+        }
+      }
+    },
+    "Show NotchKit on": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NotchKit'in gösterileceği yer"
           }
         }
       }
@@ -1204,6 +1284,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tepsi dosyaları"
+          }
+        }
+      }
+    },
+    "Turning a display on or off switches to Selected displays. If none of the chosen displays is connected, NotchKit uses the main display.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir ekranı açıp kapatmak Seçilen ekranlar moduna geçer. Seçilen ekranların hiçbiri bağlı değilse NotchKit ana ekranı kullanır."
           }
         }
       }
