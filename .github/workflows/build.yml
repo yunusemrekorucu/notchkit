@@ -1,0 +1,35 @@
+name: Build
+
+# Builds the universal app and DMG on every push to main and on pull requests,
+# so compiler problems show up before a release tag is pushed.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Install tools
+        run: brew install xcodegen cmake create-dmg
+
+      - name: Build DMG
+        run: scripts/build-release.sh
+
+      - name: Upload DMG
+        uses: actions/upload-artifact@v4
+        with:
+          name: NotchKit-dmg
+          path: build/release/*.dmg
+          retention-days: 7

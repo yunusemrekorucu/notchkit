@@ -30,14 +30,14 @@ final class MirrorController: ObservableObject {
         }
         session.sessionPreset = .medium
         session.commitConfiguration()
-        let session = self.session
-        Task.detached { session.startRunning() }
+        let captureSession = session
+        Task.detached { captureSession.startRunning() }
         state = .mirroring
     }
 
     func stop() {
-        let session = self.session
-        Task.detached { session.stopRunning() }
+        let captureSession = session
+        Task.detached { captureSession.stopRunning() }
         state = .stopped
     }
 }
