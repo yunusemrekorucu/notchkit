@@ -66,7 +66,23 @@ Add, remove and reorder widgets with a live preview, and configure each widget o
 
 NotchKit is available in **English** and **Turkish**. It follows your Mac's language by default (Turkish if your Mac is set to Turkish, English otherwise), and you can switch it in **Settings → General → Language**.
 
-## Requirements
+## Install
+
+1. Download the latest **NotchKit-x.y.z.dmg** from [Releases](https://github.com/yunusemrekorucu/notchkit/releases/latest) and open it.
+2. Drag **NotchKit** to **Applications**.
+3. Open NotchKit. Because the app isn't notarized yet, macOS blocks the first launch. Go to **System Settings → Privacy & Security** and click **Open Anyway** next to the NotchKit message. You only need to do this once.
+
+   If you prefer the Terminal, this removes the download quarantine instead:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/NotchKit.app
+   ```
+
+NotchKit runs on macOS 14.6 or later, natively on both Apple silicon and Intel Macs.
+
+## Building from source
+
+### Requirements
 
 - macOS 14.6 or later (a MacBook with a notch is recommended; screens without a notch get a virtual one)
 - Xcode 16 or later
@@ -76,7 +92,7 @@ NotchKit is available in **English** and **Turkish**. It follows your Mac's lang
 brew install xcodegen cmake
 ```
 
-## Building
+### Build
 
 ```bash
 git clone --recursive https://github.com/yunusemrekorucu/notchkit.git
@@ -94,6 +110,10 @@ xcodebuild -project NotchKit.xcodeproj -scheme NotchKit -configuration Release -
 The media bridge (`vendor/mediaremote-adapter`) is built automatically on the first build. The app is produced as `NotchKit.app`; copy it to `/Applications` and open it.
 
 If you cloned without `--recursive`, fetch the submodule with `git submodule update --init`.
+
+### Release DMG
+
+`scripts/build-release.sh` builds a universal app and packages it as `build/release/NotchKit-<version>.dmg`. Pushing a tag such as `v1.1.0` runs the same script on GitHub Actions and attaches the DMG to a release. Release notes are read from `docs/release-notes/<tag>.md` when that file exists.
 
 ### Demo mode
 
@@ -133,6 +153,7 @@ App/Sources
 └── Shared/          Settings keys and helpers
 App/Resources        App icon and string catalogs (English, Turkish)
 design/AppIcon.svg   Source of the app icon
+scripts/             Release build script
 docs/screenshots     Images used in this README
 ```
 
