@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00E5590FBCD25DA5733690C0 /* NotchShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF3791B62C9618615E5BB52 /* NotchShape.swift */; };
+		05BF55816D10E5BE20EAD4A7 /* NotchGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A716B6BDD059C403D9143073 /* NotchGeometry.swift */; };
+		099D9CC7A508C11EF6C31579 /* OpenNotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F99A13C34C4DEEC15A0051 /* OpenNotchView.swift */; };
+		1E8F18EF3ABFC12606ABC5B1 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D274C08925500B664021BE5B /* ShortcutsWidget.swift */; };
+		2EA047DFD80C97957EC2C271 /* WidgetsSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC48972F697A6A0F3F015CC /* WidgetsSettings.swift */; };
+		31DCBF094B84F6C9F3BCEBDD /* LiveActivityKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA34190989B5DD78E0FBF1F /* LiveActivityKind.swift */; };
+		3D7121F81C0A2239DC6F0B4B /* TodoWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4123DC7092AF6B426DF649A6 /* TodoWidget.swift */; };
+		46D7F9177F972CD4BC2B16DF /* MirrorWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD941F2BBB5644FC9912357 /* MirrorWidget.swift */; };
+		4C64ACBC58A8806D69035AC1 /* DefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38B0B29ADEF3E34A95AFAEC /* DefaultsKeys.swift */; };
+		5625A80D7693F4333A5047B6 /* TrayStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA56A65C1B52178CBC1D4BD3 /* TrayStore.swift */; };
+		57C03A3032C15DF76F8A81C3 /* PomodoroWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDF5AA52B3B739AB1664546 /* PomodoroWidget.swift */; };
+		60CC303F2F821E11F41201C8 /* NotchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF823FB06AFD853DF47F67B /* NotchRootView.swift */; };
+		65DEAB53CE1E36BC7EAF3747 /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850343FFAA85D55E4DA08685 /* NowPlaying.swift */; };
+		6E01ABF474C259E51727E68D /* NotchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F6C6B42588C1E4CEB06E4C /* NotchPanel.swift */; };
+		7D5B36FE06FF9B8D4A4E2E19 /* NotchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855C55BD9E0A9A2E33CC16CC /* NotchViewModel.swift */; };
+		83A1E4ABD4A160EA2C2B8C04 /* BatteryMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD7A483789E3ADC9EF8D2E /* BatteryMonitor.swift */; };
+		8884C8CB2935631A1D369E51 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DD2892687428F2DC53AEBB7 /* Assets.xcassets */; };
+		88D6897D4F820B76125DABF6 /* TrayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 401747562C06AB62AE46F51F /* TrayView.swift */; };
+		8C5316F296FBB0ACED027962 /* CalendarWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C177A4E19093CACEC34F5CE0 /* CalendarWidget.swift */; };
+		92332FAA88AD04005D60574C /* NotesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5637D4A0FCFCF89548118DA /* NotesWidget.swift */; };
+		9C06131F728A26973AA8976C /* MediaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF027E753445066E8C875C0 /* MediaController.swift */; };
+		B430C79E415356FA60FA63C9 /* NotchWindowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F8C0A19339D27324DF08E /* NotchWindowManager.swift */; };
+		C080BC7DA123B6039B40BBEC /* ClosedNotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548DEFEEE9DF2A34267DDE7C /* ClosedNotchView.swift */; };
+		CBC733DEADD3C7733428D10B /* NSImage+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84567F206D18822BB6E4D237 /* NSImage+Color.swift */; };
+		CE617A05205299FD636F5ADD /* LaunchAtLogin in Frameworks */ = {isa = PBXBuildFile; productRef = 44195BF1FEDFB9219810048B /* LaunchAtLogin */; };
+		D88B1717605B50166CC61780 /* MediaWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD39BF560651BD49B9634D84 /* MediaWidget.swift */; };
+		DB7F702D93642E676BF46C3A /* NookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89302195F37D77B2FFC0FB7A /* NookView.swift */; };
+		E2243A71F6E9C36827E7F566 /* QuickAppsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BAF57F9BC0A62EBE686BA5 /* QuickAppsWidget.swift */; };
+		E2999A868AFFFB7EC8C73459 /* NookApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA7422E5B7F95F8F7DFFD94 /* NookApp.swift */; };
+		ECECE4F487EF0A599161E7E9 /* SettingsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1218BE70E7FCF3625173A541 /* SettingsNavigation.swift */; };
+		F18C43BED6A43D2189020A87 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB06F40A247D85FA425B578C /* SettingsView.swift */; };
+		F1D9BF9F3B38D1B591A5A20E /* NookLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E6E9A83A6B2F00298309CE /* NookLayout.swift */; };
+		FA09B67D88C18710F1E272DC /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 3CEC01D4F6ACB1C65EE750FA /* Defaults */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1218BE70E7FCF3625173A541 /* SettingsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsNavigation.swift; sourceTree = "<group>"; };
+		1DDD7A483789E3ADC9EF8D2E /* BatteryMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryMonitor.swift; sourceTree = "<group>"; };
+		1EA34190989B5DD78E0FBF1F /* LiveActivityKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityKind.swift; sourceTree = "<group>"; };
+		25F6C6B42588C1E4CEB06E4C /* NotchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchPanel.swift; sourceTree = "<group>"; };
+		29BAF57F9BC0A62EBE686BA5 /* QuickAppsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAppsWidget.swift; sourceTree = "<group>"; };
+		2BF3791B62C9618615E5BB52 /* NotchShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchShape.swift; sourceTree = "<group>"; };
+		401747562C06AB62AE46F51F /* TrayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrayView.swift; sourceTree = "<group>"; };
+		4123DC7092AF6B426DF649A6 /* TodoWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoWidget.swift; sourceTree = "<group>"; };
+		548DEFEEE9DF2A34267DDE7C /* ClosedNotchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosedNotchView.swift; sourceTree = "<group>"; };
+		5FDF5AA52B3B739AB1664546 /* PomodoroWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroWidget.swift; sourceTree = "<group>"; };
+		6AF31C476DBDFF1170647A72 /* Nook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Nook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6CD941F2BBB5644FC9912357 /* MirrorWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorWidget.swift; sourceTree = "<group>"; };
+		6FF027E753445066E8C875C0 /* MediaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaController.swift; sourceTree = "<group>"; };
+		73F99A13C34C4DEEC15A0051 /* OpenNotchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenNotchView.swift; sourceTree = "<group>"; };
+		7DD2892687428F2DC53AEBB7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		84567F206D18822BB6E4D237 /* NSImage+Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Color.swift"; sourceTree = "<group>"; };
+		850343FFAA85D55E4DA08685 /* NowPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlaying.swift; sourceTree = "<group>"; };
+		855C55BD9E0A9A2E33CC16CC /* NotchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchViewModel.swift; sourceTree = "<group>"; };
+		89302195F37D77B2FFC0FB7A /* NookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NookView.swift; sourceTree = "<group>"; };
+		9CF823FB06AFD853DF47F67B /* NotchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchRootView.swift; sourceTree = "<group>"; };
+		9FA7422E5B7F95F8F7DFFD94 /* NookApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NookApp.swift; sourceTree = "<group>"; };
+		A716B6BDD059C403D9143073 /* NotchGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchGeometry.swift; sourceTree = "<group>"; };
+		C177A4E19093CACEC34F5CE0 /* CalendarWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWidget.swift; sourceTree = "<group>"; };
+		C5637D4A0FCFCF89548118DA /* NotesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesWidget.swift; sourceTree = "<group>"; };
+		CD39BF560651BD49B9634D84 /* MediaWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaWidget.swift; sourceTree = "<group>"; };
+		CFC48972F697A6A0F3F015CC /* WidgetsSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsSettings.swift; sourceTree = "<group>"; };
+		D274C08925500B664021BE5B /* ShortcutsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWidget.swift; sourceTree = "<group>"; };
+		DA56A65C1B52178CBC1D4BD3 /* TrayStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrayStore.swift; sourceTree = "<group>"; };
+		E3E6E9A83A6B2F00298309CE /* NookLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NookLayout.swift; sourceTree = "<group>"; };
+		F06F8C0A19339D27324DF08E /* NotchWindowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchWindowManager.swift; sourceTree = "<group>"; };
+		F38B0B29ADEF3E34A95AFAEC /* DefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsKeys.swift; sourceTree = "<group>"; };
+		FB06F40A247D85FA425B578C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		49C4221EF767866BBF7D296F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA09B67D88C18710F1E272DC /* Defaults in Frameworks */,
+				CE617A05205299FD636F5ADD /* LaunchAtLogin in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E7E62AED27E9B6ED40B7349 /* Notch */ = {
+			isa = PBXGroup;
+			children = (
+				548DEFEEE9DF2A34267DDE7C /* ClosedNotchView.swift */,
+				A716B6BDD059C403D9143073 /* NotchGeometry.swift */,
+				25F6C6B42588C1E4CEB06E4C /* NotchPanel.swift */,
+				9CF823FB06AFD853DF47F67B /* NotchRootView.swift */,
+				2BF3791B62C9618615E5BB52 /* NotchShape.swift */,
+				855C55BD9E0A9A2E33CC16CC /* NotchViewModel.swift */,
+				F06F8C0A19339D27324DF08E /* NotchWindowManager.swift */,
+				73F99A13C34C4DEEC15A0051 /* OpenNotchView.swift */,
+			);
+			path = Notch;
+			sourceTree = "<group>";
+		};
+		19D5D8A226E98CF560346134 /* Tray */ = {
+			isa = PBXGroup;
+			children = (
+				DA56A65C1B52178CBC1D4BD3 /* TrayStore.swift */,
+				401747562C06AB62AE46F51F /* TrayView.swift */,
+			);
+			path = Tray;
+			sourceTree = "<group>";
+		};
+		4F2BFFB76E90E1E1885F91EA /* App */ = {
+			isa = PBXGroup;
+			children = (
+				F520A62A6ADD8830D05531A0 /* Resources */,
+				C4B0DCB356ABBD86429EB587 /* Sources */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5B124BF8D163A2304D3302DA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				1218BE70E7FCF3625173A541 /* SettingsNavigation.swift */,
+				FB06F40A247D85FA425B578C /* SettingsView.swift */,
+				CFC48972F697A6A0F3F015CC /* WidgetsSettings.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		65183CBBD13559CB50BF0021 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9FA7422E5B7F95F8F7DFFD94 /* NookApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		93A0E38041813552F08D30E7 /* Nook */ = {
+			isa = PBXGroup;
+			children = (
+				C177A4E19093CACEC34F5CE0 /* CalendarWidget.swift */,
+				CD39BF560651BD49B9634D84 /* MediaWidget.swift */,
+				6CD941F2BBB5644FC9912357 /* MirrorWidget.swift */,
+				E3E6E9A83A6B2F00298309CE /* NookLayout.swift */,
+				89302195F37D77B2FFC0FB7A /* NookView.swift */,
+				C5637D4A0FCFCF89548118DA /* NotesWidget.swift */,
+				5FDF5AA52B3B739AB1664546 /* PomodoroWidget.swift */,
+				29BAF57F9BC0A62EBE686BA5 /* QuickAppsWidget.swift */,
+				D274C08925500B664021BE5B /* ShortcutsWidget.swift */,
+				4123DC7092AF6B426DF649A6 /* TodoWidget.swift */,
+			);
+			path = Nook;
+			sourceTree = "<group>";
+		};
+		A8C977DAD6C99CBC762F9D18 /* LiveActivities */ = {
+			isa = PBXGroup;
+			children = (
+				1DDD7A483789E3ADC9EF8D2E /* BatteryMonitor.swift */,
+				1EA34190989B5DD78E0FBF1F /* LiveActivityKind.swift */,
+			);
+			path = LiveActivities;
+			sourceTree = "<group>";
+		};
+		C4B0DCB356ABBD86429EB587 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				65183CBBD13559CB50BF0021 /* App */,
+				A8C977DAD6C99CBC762F9D18 /* LiveActivities */,
+				C9BE18FE2F257B1579416AD4 /* Media */,
+				93A0E38041813552F08D30E7 /* Nook */,
+				0E7E62AED27E9B6ED40B7349 /* Notch */,
+				5B124BF8D163A2304D3302DA /* Settings */,
+				D6FB093DFFC10BC78F8E88A0 /* Shared */,
+				19D5D8A226E98CF560346134 /* Tray */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C9BE18FE2F257B1579416AD4 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				6FF027E753445066E8C875C0 /* MediaController.swift */,
+				850343FFAA85D55E4DA08685 /* NowPlaying.swift */,
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
+		CC3EFE3504B73EAEEDED18F5 = {
+			isa = PBXGroup;
+			children = (
+				4F2BFFB76E90E1E1885F91EA /* App */,
+				EF799ADDBCF3DE03D240F860 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D6FB093DFFC10BC78F8E88A0 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F38B0B29ADEF3E34A95AFAEC /* DefaultsKeys.swift */,
+				84567F206D18822BB6E4D237 /* NSImage+Color.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		EF799ADDBCF3DE03D240F860 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6AF31C476DBDFF1170647A72 /* Nook.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F520A62A6ADD8830D05531A0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7DD2892687428F2DC53AEBB7 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8E7BD5965AE4DD3F52BB8C83 /* Nook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0EF7E3D1B814047D80676E12 /* Build configuration list for PBXNativeTarget "Nook" */;
+			buildPhases = (
+				1BE143C92FA501D5DCD601C2 /* Sources */,
+				95CFB352818574A5B3887ED3 /* Resources */,
+				49C4221EF767866BBF7D296F /* Frameworks */,
+				8D3953818D6B643F0185C7F4 /* Embed MediaRemoteAdapter */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Nook;
+			packageProductDependencies = (
+				3CEC01D4F6ACB1C65EE750FA /* Defaults */,
+				44195BF1FEDFB9219810048B /* LaunchAtLogin */,
+			);
+			productName = Nook;
+			productReference = 6AF31C476DBDFF1170647A72 /* Nook.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7138A22EF1642B27AC8B891C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					8E7BD5965AE4DD3F52BB8C83 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DAAFB02242CC68B8589BBFFD /* Build configuration list for PBXProject "Nook" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CC3EFE3504B73EAEEDED18F5;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EAE95D5252D834D2E317545D /* XCRemoteSwiftPackageReference "Defaults" */,
+				D52D79D91C9F5EEE7D18E993 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EF799ADDBCF3DE03D240F860 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8E7BD5965AE4DD3F52BB8C83 /* Nook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		95CFB352818574A5B3887ED3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8884C8CB2935631A1D369E51 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8D3953818D6B643F0185C7F4 /* Embed MediaRemoteAdapter */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Embed MediaRemoteAdapter";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\nSRC=\"${PROJECT_DIR}/vendor/mediaremote-adapter\"\nDST=\"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MediaRemoteAdapter\"\n# Adapter henüz derlenmediyse derle (cmake gerekir: brew install cmake).\nif [ ! -d \"$SRC/build/MediaRemoteAdapter.framework\" ]; then\n  export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\n  if ! command -v cmake >/dev/null; then\n    echo \"error: mediaremote-adapter için cmake gerekli (brew install cmake)\"; exit 1\n  fi\n  cmake -S \"$SRC\" -B \"$SRC/build\" -DCMAKE_BUILD_TYPE=Release\n  cmake --build \"$SRC/build\" --target MediaRemoteAdapter\nfi\nmkdir -p \"$DST\"\nrm -rf \"$DST/MediaRemoteAdapter.framework\"\ncp -R \"$SRC/build/MediaRemoteAdapter.framework\" \"$DST/\"\ncp \"$SRC/bin/mediaremote-adapter.pl\" \"$DST/\"\ncodesign --force --sign - \"$DST/MediaRemoteAdapter.framework\" || true\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1BE143C92FA501D5DCD601C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83A1E4ABD4A160EA2C2B8C04 /* BatteryMonitor.swift in Sources */,
+				8C5316F296FBB0ACED027962 /* CalendarWidget.swift in Sources */,
+				C080BC7DA123B6039B40BBEC /* ClosedNotchView.swift in Sources */,
+				4C64ACBC58A8806D69035AC1 /* DefaultsKeys.swift in Sources */,
+				31DCBF094B84F6C9F3BCEBDD /* LiveActivityKind.swift in Sources */,
+				9C06131F728A26973AA8976C /* MediaController.swift in Sources */,
+				D88B1717605B50166CC61780 /* MediaWidget.swift in Sources */,
+				46D7F9177F972CD4BC2B16DF /* MirrorWidget.swift in Sources */,
+				CBC733DEADD3C7733428D10B /* NSImage+Color.swift in Sources */,
+				E2999A868AFFFB7EC8C73459 /* NookApp.swift in Sources */,
+				F1D9BF9F3B38D1B591A5A20E /* NookLayout.swift in Sources */,
+				DB7F702D93642E676BF46C3A /* NookView.swift in Sources */,
+				05BF55816D10E5BE20EAD4A7 /* NotchGeometry.swift in Sources */,
+				6E01ABF474C259E51727E68D /* NotchPanel.swift in Sources */,
+				60CC303F2F821E11F41201C8 /* NotchRootView.swift in Sources */,
+				00E5590FBCD25DA5733690C0 /* NotchShape.swift in Sources */,
+				7D5B36FE06FF9B8D4A4E2E19 /* NotchViewModel.swift in Sources */,
+				B430C79E415356FA60FA63C9 /* NotchWindowManager.swift in Sources */,
+				92332FAA88AD04005D60574C /* NotesWidget.swift in Sources */,
+				65DEAB53CE1E36BC7EAF3747 /* NowPlaying.swift in Sources */,
+				099D9CC7A508C11EF6C31579 /* OpenNotchView.swift in Sources */,
+				57C03A3032C15DF76F8A81C3 /* PomodoroWidget.swift in Sources */,
+				E2243A71F6E9C36827E7F566 /* QuickAppsWidget.swift in Sources */,
+				ECECE4F487EF0A599161E7E9 /* SettingsNavigation.swift in Sources */,
+				F18C43BED6A43D2189020A87 /* SettingsView.swift in Sources */,
+				1E8F18EF3ABFC12606ABC5B1 /* ShortcutsWidget.swift in Sources */,
+				3D7121F81C0A2239DC6F0B4B /* TodoWidget.swift in Sources */,
+				5625A80D7693F4333A5047B6 /* TrayStore.swift in Sources */,
+				88D6897D4F820B76125DABF6 /* TrayView.swift in Sources */,
+				2EA047DFD80C97957EC2C271 /* WidgetsSettings.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3313EE12AC021C4D9AE9FA9D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		7A6C850226CBA973FA870E59 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+		AC45F5D2BA9AECD737E19F87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/Nook.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yunusemrekorucu.Nook;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D80B35B219F56E4A95665AC5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = App/Nook.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = App/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.yunusemrekorucu.Nook;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0EF7E3D1B814047D80676E12 /* Build configuration list for PBXNativeTarget "Nook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D80B35B219F56E4A95665AC5 /* Debug */,
+				AC45F5D2BA9AECD737E19F87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DAAFB02242CC68B8589BBFFD /* Build configuration list for PBXProject "Nook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A6C850226CBA973FA870E59 /* Debug */,
+				3313EE12AC021C4D9AE9FA9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D52D79D91C9F5EEE7D18E993 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/LaunchAtLogin-Modern";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		EAE95D5252D834D2E317545D /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3CEC01D4F6ACB1C65EE750FA /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EAE95D5252D834D2E317545D /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+		44195BF1FEDFB9219810048B /* LaunchAtLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D52D79D91C9F5EEE7D18E993 /* XCRemoteSwiftPackageReference "LaunchAtLogin-Modern" */;
+			productName = LaunchAtLogin;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7138A22EF1642B27AC8B891C /* Project object */;
+}

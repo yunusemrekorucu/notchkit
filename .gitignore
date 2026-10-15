@@ -1,0 +1,21 @@
+# Derleme çıktıları
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+
+# Yalnızca yerel: analiz notları ve rea araç kurulumu
+re/
+.rea/
+.mcp.json
+.claude/
+node_modules/
+package.json
+package-lock.json
+
+# Alt modül derlemesi
+vendor/mediaremote-adapter/build/
+
+# Kod kapsama profil çıktıları
+*.profraw

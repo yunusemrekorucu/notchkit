@@ -1,0 +1,76 @@
+name: Nook
+options:
+  bundleIdPrefix: com.yunusemrekorucu
+  deploymentTarget:
+    macOS: "14.6"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    MACOSX_DEPLOYMENT_TARGET: "14.6"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: "-"
+    ENABLE_HARDENED_RUNTIME: NO
+    ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+packages:
+  Defaults:
+    url: https://github.com/sindresorhus/Defaults
+    from: 9.0.0
+  LaunchAtLogin:
+    url: https://github.com/sindresorhus/LaunchAtLogin-Modern
+    from: 1.1.0
+targets:
+  Nook:
+    type: application
+    platform: macOS
+    sources:
+      - path: App/Sources
+      - path: App/Resources
+        buildPhase: resources
+    dependencies:
+      - package: Defaults
+      - package: LaunchAtLogin
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Nook
+        CFBundleDevelopmentRegion: tr
+        CFBundleLocalizations: [tr]
+        CFBundleShortVersionString: "1.0.0"
+        CFBundleVersion: "1"
+        LSUIElement: true
+        LSMinimumSystemVersion: "14.6"
+        LSApplicationCategoryType: public.app-category.utilities
+        NSCameraUsageDescription: Nook'taki Ayna (Mirror) widget'ı için kullanılır.
+        NSCalendarsFullAccessUsageDescription: Takvim widget'ı ve yaklaşan etkinlik bildirimi için kullanılır.
+        NSBluetoothAlwaysUsageDescription: Bağlı Bluetooth cihazlarını göstermek için kullanılır.
+        NSAppleEventsUsageDescription: Çalan parçayı göstermek ve kontrol etmek için kullanılır.
+    entitlements:
+      path: App/Nook.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+        com.apple.security.device.camera: true
+        com.apple.security.personal-information.calendars: true
+        com.apple.security.automation.apple-events: true
+    postBuildScripts:
+      - name: Embed MediaRemoteAdapter
+        basedOnDependencyAnalysis: false
+        script: |
+          set -e
+          SRC="${PROJECT_DIR}/vendor/mediaremote-adapter"
+          DST="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MediaRemoteAdapter"
+          # Adapter henüz derlenmediyse derle (cmake gerekir: brew install cmake).
+          if [ ! -d "$SRC/build/MediaRemoteAdapter.framework" ]; then
+            export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+            if ! command -v cmake >/dev/null; then
+              echo "error: mediaremote-adapter için cmake gerekli (brew install cmake)"; exit 1
+            fi
+            cmake -S "$SRC" -B "$SRC/build" -DCMAKE_BUILD_TYPE=Release
+            cmake --build "$SRC/build" --target MediaRemoteAdapter
+          fi
+          mkdir -p "$DST"
+          rm -rf "$DST/MediaRemoteAdapter.framework"
+          cp -R "$SRC/build/MediaRemoteAdapter.framework" "$DST/"
+          cp "$SRC/bin/mediaremote-adapter.pl" "$DST/"
+          codesign --force --sign - "$DST/MediaRemoteAdapter.framework" || true

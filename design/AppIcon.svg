@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- NotchKit uygulama ikonu "Ada": macOS ikon ızgarası (1024 tuvalde 824'lük gövde). -->
+  <defs>
+    <clipPath id="clip"><path id="sq" d="M100,290 C100,138 138,100 290,100 L734,100 C886,100 924,138 924,290 L924,734 C924,886 886,924 734,924 L290,924 C138,924 100,886 100,734 Z"/></clipPath>
+    <radialGradient id="bg" cx=".5" cy=".15" r="1"><stop offset="0" stop-color="#25303f"/><stop offset="1" stop-color="#05070a"/></radialGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#10b981" stop-opacity=".75"/><stop offset="1" stop-color="#10b981" stop-opacity="0"/></radialGradient>
+    <linearGradient id="art" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6ee7b7"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient>
+    <linearGradient id="bars" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#34d399"/><stop offset="1" stop-color="#d9f99d"/></linearGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="50"/></filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".35"/></filter>
+  </defs>
+  <path d="M100,290 C100,138 138,100 290,100 L734,100 C886,100 924,138 924,290 L924,734 C924,886 886,924 734,924 L290,924 C138,924 100,886 100,734 Z" fill="#05070a" filter="url(#shadow)"/>
+  <g clip-path="url(#clip)">
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+    <ellipse cx="512" cy="530" rx="380" ry="190" fill="url(#glow)" filter="url(#blur)"/>
+    <rect x="146" y="402" width="732" height="236" rx="118" fill="#000" stroke="#fff" stroke-opacity=".1" stroke-width="4"/>
+    <rect x="196" y="450" width="140" height="140" rx="36" fill="url(#art)"/>
+    <rect x="626" y="485" width="26" height="70" rx="13" fill="url(#bars)"/>
+    <rect x="668" y="458" width="26" height="124" rx="13" fill="url(#bars)"/>
+    <rect x="710" y="440" width="26" height="160" rx="13" fill="url(#bars)"/>
+    <rect x="752" y="468" width="26" height="104" rx="13" fill="url(#bars)"/>
+    <rect x="794" y="490" width="26" height="60" rx="13" fill="url(#bars)"/>
+  </g>
+  <path d="M100,290 C100,138 138,100 290,100 L734,100 C886,100 924,138 924,290 L924,734 C924,886 886,924 734,924 L290,924 C138,924 100,886 100,734 Z" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="5"/>
+</svg>
