@@ -31,6 +31,7 @@ xcodegen generate --quiet
 
 echo "==> Building universal Release app"
 rm -rf "$DERIVED"
+mkdir -p "$BUILD_DIR"
 xcodebuild \
   -project NotchKit.xcodeproj \
   -scheme NotchKit \
@@ -40,9 +41,12 @@ xcodebuild \
   ARCHS="arm64 x86_64" \
   ONLY_ACTIVE_ARCH=NO \
   CODE_SIGN_IDENTITY="-" \
-  build | grep -E "error:|warning: .*deprecated|BUILD (SUCCEEDED|FAILED)" || true
-
-[ -d "$APP" ] || { echo "error: build failed, $APP not found"; exit 1; }
+  build > "$BUILD_DIR/xcodebuild.log" 2>&1 || {
+    grep -E "error:" "$BUILD_DIR/xcodebuild.log" | sort -u
+    echo "error: xcodebuild failed, see $BUILD_DIR/xcodebuild.log"
+    exit 1
+  }
+grep -E "BUILD SUCCEEDED" "$BUILD_DIR/xcodebuild.log"
 
 VERSION="${1:-$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP/Contents/Info.plist")}"
 BUILD_NUMBER="${BUILD_NUMBER:-1}"

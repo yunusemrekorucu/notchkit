@@ -144,17 +144,29 @@ struct AudioBarsView: View {
     var color: Color
     private let count = 4
 
+    // Kept as separate, explicitly typed functions: inlining this math in the
+    // TimelineView closure is too slow for some Swift compiler versions to type-check.
+    private func barHeight(index: Int, time: Double) -> CGFloat {
+        guard isPlaying else { return 0.2 }
+        let offset = Double(index)
+        let frequency: Double = 5 + offset * 1.7
+        let phase: Double = sin(time * frequency + offset * 1.3)
+        return CGFloat(0.35 + 0.65 * abs(phase))
+    }
+
+    private func bar(height: CGFloat) -> some View {
+        Capsule().fill(color)
+            .frame(width: 2.5)
+            .scaleEffect(y: height, anchor: .center)
+            .animation(.easeInOut(duration: 0.12), value: height)
+    }
+
     var body: some View {
         TimelineView(.animation(minimumInterval: 0.12, paused: !isPlaying)) { context in
-            let t = context.date.timeIntervalSinceReferenceDate
+            let time: Double = context.date.timeIntervalSinceReferenceDate
             HStack(alignment: .center, spacing: 2) {
-                ForEach(0..<count, id: \.self) { i in
-                    let phase = sin(t * (5 + Double(i) * 1.7) + Double(i) * 1.3)
-                    let h = isPlaying ? 0.35 + 0.65 * abs(phase) : 0.2
-                    Capsule().fill(color)
-                        .frame(width: 2.5)
-                        .scaleEffect(y: h, anchor: .center)
-                        .animation(.easeInOut(duration: 0.12), value: h)
+                ForEach(0..<count, id: \.self) { index in
+                    bar(height: barHeight(index: index, time: time))
                 }
             }
         }
