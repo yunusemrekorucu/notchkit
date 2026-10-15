@@ -26,7 +26,11 @@ final class MediaController: ObservableObject {
     private var scriptURL: URL? { adapterDir?.appendingPathComponent("mediaremote-adapter.pl") }
     private var frameworkURL: URL? { adapterDir?.appendingPathComponent("MediaRemoteAdapter.framework") }
 
+    /// `-demo YES` ile başlatıldığında gerçek medya yerine örnek bir parça gösterilir (ekran görüntüleri için).
+    static var isDemo: Bool { UserDefaults.standard.bool(forKey: "demo") }
+
     func start() {
+        if Self.isDemo { startDemo(); return }
         guard process == nil, let script = scriptURL, let framework = frameworkURL,
               FileManager.default.fileExists(atPath: script.path) else { return }
         let p = Process()
@@ -109,9 +113,58 @@ final class MediaController: ObservableObject {
         if n != nowPlaying { nowPlaying = n }
     }
 
+    private func startDemo() {
+        var n = NowPlaying()
+        n.title = "Neon Skyline"
+        n.artist = "The Midnight Drive"
+        n.album = "Afterglow"
+        n.bundleIdentifier = "com.apple.Music"
+        n.isPlaying = true
+        n.playbackRate = 1
+        n.duration = 214
+        n.elapsed = 73
+        n.timestamp = .now
+        n.artwork = Self.demoArtwork()
+        nowPlaying = n
+    }
+
+    /// Programla çizilen örnek albüm kapağı.
+    private static func demoArtwork() -> NSImage {
+        let size = NSSize(width: 600, height: 600)
+        return NSImage(size: size, flipped: false) { rect in
+            NSGradient(colors: [NSColor(red: 0.98, green: 0.36, blue: 0.55, alpha: 1),
+                                NSColor(red: 0.42, green: 0.25, blue: 0.95, alpha: 1),
+                                NSColor(red: 0.05, green: 0.65, blue: 0.85, alpha: 1)])?
+                .draw(in: rect, angle: -55)
+            NSColor(red: 1, green: 0.85, blue: 0.4, alpha: 0.95).setFill()
+            NSBezierPath(ovalIn: NSRect(x: 190, y: 250, width: 220, height: 220)).fill()
+            NSColor.black.withAlphaComponent(0.55).setFill()
+            for i in 0..<7 {
+                NSBezierPath(rect: NSRect(x: 0, y: 250 + CGFloat(i) * 20, width: 600, height: CGFloat(4 + i))).fill()
+            }
+            NSColor(red: 0.08, green: 0.05, blue: 0.2, alpha: 1).setFill()
+            let hills = NSBezierPath()
+            hills.move(to: .zero)
+            hills.line(to: NSPoint(x: 0, y: 200))
+            hills.curve(to: NSPoint(x: 600, y: 170), controlPoint1: NSPoint(x: 220, y: 320), controlPoint2: NSPoint(x: 380, y: 90))
+            hills.line(to: NSPoint(x: 600, y: 0))
+            hills.close()
+            hills.fill()
+            return true
+        }
+    }
+
     // MARK: - Komutlar
 
     func send(_ command: Command) {
+        if Self.isDemo {
+            if command == .togglePlayPause {
+                nowPlaying.elapsed = nowPlaying.elapsed(at: .now)
+                nowPlaying.timestamp = .now
+                nowPlaying.isPlaying.toggle()
+            }
+            return
+        }
         run(["send", String(command.rawValue)])
     }
 
