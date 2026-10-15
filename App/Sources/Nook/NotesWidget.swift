@@ -28,7 +28,7 @@ struct NotesWidget: View {
                             }
                             .buttonStyle(.plain)
                             .contextMenu {
-                                Button("Notu sil", role: .destructive) { delete(note) }
+                                Button("Delete Note", role: .destructive) { delete(note) }
                             }
                         }
                     }
@@ -58,7 +58,7 @@ struct NotesWidget: View {
                     .background(RoundedRectangle(cornerRadius: 10).fill(Color(red: 0.098, green: 0.098, blue: 0.106)))
                     .overlay(alignment: .topLeading) {
                         if notes[safe: index]?.text.isEmpty ?? true {
-                            Text("Bir şeyler yaz…").font(.system(size: 12)).foregroundStyle(.white.opacity(0.3))
+                            Text("Write something…").font(.system(size: 12)).foregroundStyle(.white.opacity(0.3))
                                 .padding(.leading, 11).padding(.top, 6).allowsHitTesting(false)
                         }
                     }

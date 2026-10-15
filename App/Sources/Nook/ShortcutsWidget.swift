@@ -44,7 +44,7 @@ struct ShortcutsWidget: View {
             VStack(spacing: 8) {
                 Image(systemName: "sparkles").font(.system(size: 20)).foregroundStyle(.white.opacity(0.7))
                 Button { SettingsOpener.open(tab: .widgets, widget: .shortcuts) } label: {
-                    Text("Kestirme seç")
+                    Text("Choose Shortcuts")
                         .font(.system(size: 11, weight: .semibold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 10).padding(.vertical, 5)

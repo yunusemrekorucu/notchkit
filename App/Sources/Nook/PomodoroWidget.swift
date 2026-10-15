@@ -12,9 +12,9 @@ final class PomodoroStore: ObservableObject {
 
         var title: String {
             switch self {
-            case .focus: "Odak"
-            case .shortBreak: "Kısa mola"
-            case .longBreak: "Uzun mola"
+            case .focus: String(localized: "Focus")
+            case .shortBreak: String(localized: "Short break")
+            case .longBreak: String(localized: "Long break")
             }
         }
 
@@ -189,12 +189,12 @@ struct PomodoroWidget: View {
 
                     HStack(spacing: 2) {
                         NookButton(symbol: "arrow.counterclockwise", size: 26, fontSize: 11) { store.reset() }
-                            .help("Sıfırla")
+                            .help("Reset")
                         NookButton(symbol: store.isRunning ? "pause.fill" : "play.fill", size: 32, fontSize: 16) {
                             store.toggle()
                         }
                         NookButton(symbol: "forward.end.fill", size: 26, fontSize: 11) { store.skip() }
-                            .help("Sonraki aşamaya geç")
+                            .help("Skip to next phase")
                     }
                     .offset(x: -4)
                 }
@@ -203,7 +203,7 @@ struct PomodoroWidget: View {
             .frame(maxHeight: .infinity)
         }
         .contextMenu {
-            Button("Döngüyü sıfırla") { store.resetCycle() }
+            Button("Reset Cycle") { store.resetCycle() }
         }
     }
 }

@@ -17,7 +17,7 @@ struct TodoWidget: View {
         VStack(spacing: 6) {
             HStack(spacing: 6) {
                 Image(systemName: "plus").font(.system(size: 10, weight: .bold)).foregroundStyle(.white.opacity(0.5))
-                TextField("Yeni görev", text: $draft)
+                TextField("New task", text: $draft)
                     .textFieldStyle(.plain)
                     .font(.system(size: 12))
                     .focused($focused)
@@ -33,7 +33,7 @@ struct TodoWidget: View {
             }
             .overlay {
                 if visible.isEmpty {
-                    Text("Görev yok 🎉").font(.system(size: 11)).foregroundStyle(.white.opacity(0.4))
+                    Text("No tasks 🎉").font(.system(size: 11)).foregroundStyle(.white.opacity(0.4))
                 }
             }
         }
@@ -60,7 +60,7 @@ struct TodoWidget: View {
         }
         .frame(height: 20)
         .contextMenu {
-            Button("Sil", role: .destructive) { todos.removeAll { $0.id == item.id } }
+            Button("Delete", role: .destructive) { todos.removeAll { $0.id == item.id } }
         }
     }
 

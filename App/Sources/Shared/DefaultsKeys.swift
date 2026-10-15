@@ -26,14 +26,14 @@ enum NookWidget: String, CaseIterable, Identifiable, Codable, Defaults.Serializa
 
     var title: String {
         switch self {
-        case .media: "Medya Oynatıcı"
-        case .calendar: "Takvim"
-        case .shortcuts: "Kestirmeler"
-        case .mirror: "Ayna"
-        case .notes: "Notlar"
-        case .todo: "Yapılacaklar"
-        case .pomodoro: "Pomodoro"
-        case .quickApps: "Hızlı Uygulamalar"
+        case .media: String(localized: "Media Player")
+        case .calendar: String(localized: "Calendar")
+        case .shortcuts: String(localized: "Shortcuts")
+        case .mirror: String(localized: "Mirror")
+        case .notes: String(localized: "Notes")
+        case .todo: String(localized: "To-dos")
+        case .pomodoro: String(localized: "Pomodoro")
+        case .quickApps: String(localized: "Quick Apps")
         }
     }
 
@@ -106,12 +106,12 @@ enum LiveActivityToggle: String, CaseIterable, Identifiable, Codable, Defaults.S
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .media: "Şimdi Çalıyor"
-        case .tray: "Tepsi dosyaları"
-        case .calendar: "Yaklaşan etkinlik"
-        case .bluetooth: "Bluetooth cihazı"
-        case .battery: "Pil"
-        case .pomodoro: "Pomodoro"
+        case .media: String(localized: "Now Playing")
+        case .tray: String(localized: "Tray files")
+        case .calendar: String(localized: "Upcoming event")
+        case .bluetooth: String(localized: "Bluetooth device")
+        case .battery: String(localized: "Battery")
+        case .pomodoro: String(localized: "Pomodoro")
         }
     }
 }

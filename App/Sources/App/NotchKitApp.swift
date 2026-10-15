@@ -1,8 +1,13 @@
 import SwiftUI
 
 @main
-struct NookApp: App {
+struct NotchKitApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+
+    init() {
+        // Must run before any setting is read.
+        LegacyMigration.run()
+    }
 
     var body: some Scene {
         Settings { EmptyView() }
@@ -47,7 +52,7 @@ enum SettingsOpener {
         if let widget { SettingsNavigation.shared.selectedWidget = widget }
         if window == nil {
             let w = NSWindow(contentViewController: NSHostingController(rootView: SettingsView()))
-            w.title = "Nook Ayarları"
+            w.title = String(localized: "NotchKit Settings")
             w.styleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
             w.setContentSize(NSSize(width: 680, height: 620))
             w.isReleasedWhenClosed = false

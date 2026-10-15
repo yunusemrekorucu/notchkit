@@ -23,10 +23,10 @@ struct MediaWidget: View {
 
                 VStack(alignment: .leading, spacing: 4) {
                     VStack(alignment: .leading, spacing: 1) {
-                        Text(np.isEmpty ? "Hiçbir şey çalmıyor" : np.title)
+                        Text(np.isEmpty ? String(localized: "Nothing is playing") : np.title)
                             .font(.system(size: 13, weight: .semibold))
                             .foregroundStyle(.white)
-                        Text(np.isEmpty ? "Bir uygulamada müzik başlat" : np.artist)
+                        Text(np.isEmpty ? String(localized: "Start music in any app") : np.artist)
                             .font(.system(size: 12))
                             .foregroundStyle(.white.opacity(0.6))
                     }

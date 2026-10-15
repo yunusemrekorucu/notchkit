@@ -67,10 +67,6 @@ enum MeetingService: String {
     }
 }
 
-extension Locale {
-    static let turkish = Locale(identifier: "tr_TR")
-}
-
 struct CalendarWidget: View {
     @ObservedObject private var store = CalendarStore.shared
     @State private var selectedDay = Calendar.current.startOfDay(for: .now)
@@ -102,17 +98,17 @@ struct CalendarWidget: View {
 
     private var monthLabel: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(selectedDay.formatted(.dateTime.month(.wide).locale(.turkish)).capitalized(with: .turkish))
+            Text(selectedDay.formatted(.dateTime.month(.wide)).capitalized(with: .current))
                 .font(.system(size: 13, weight: .bold))
                 .foregroundStyle(.white)
-            Text(selectedDay.formatted(.dateTime.year().locale(.turkish)))
+            Text(selectedDay.formatted(.dateTime.year()))
                 .font(.system(size: 10, weight: .medium))
                 .foregroundStyle(.white.opacity(0.45))
             if !Calendar.current.isDate(selectedDay, inSameDayAs: today) {
                 Button {
                     withAnimation(.snappy) { selectedDay = today }
                 } label: {
-                    Text("Bugün")
+                    Text("Today")
                         .font(.system(size: 9, weight: .semibold))
                         .foregroundStyle(.red)
                 }
@@ -159,7 +155,7 @@ struct CalendarWidget: View {
             HStack(spacing: 6) {
                 Image(systemName: "calendar.badge.checkmark")
                     .font(.system(size: 12))
-                Text(Calendar.current.isDate(selectedDay, inSameDayAs: today) ? "Bugün etkinlik yok" : "Bu gün etkinlik yok")
+                Text(Calendar.current.isDate(selectedDay, inSameDayAs: today) ? String(localized: "No events today") : String(localized: "No events on this day"))
                     .font(.system(size: 11, weight: .medium))
             }
             .foregroundStyle(.white.opacity(0.4))
@@ -180,12 +176,12 @@ struct CalendarWidget: View {
             Image(systemName: "calendar")
                 .font(.system(size: 20, weight: .medium))
                 .foregroundStyle(.red)
-            Text("Etkinliklerini görmek için takvim izni ver")
+            Text("Allow calendar access to see your events")
                 .font(.system(size: 11, weight: .medium))
                 .foregroundStyle(.white.opacity(0.6))
                 .multilineTextAlignment(.center)
             Button { store.requestAccess() } label: {
-                Text("İzin ver")
+                Text("Allow Access")
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.black)
                     .padding(.horizontal, 12).padding(.vertical, 4)
@@ -208,7 +204,7 @@ private struct DayCell: View {
 
     var body: some View {
         VStack(spacing: 2) {
-            Text(day.formatted(.dateTime.weekday(.abbreviated).locale(.turkish)).uppercased(with: .turkish))
+            Text(day.formatted(.dateTime.weekday(.abbreviated)).uppercased(with: .current))
                 .font(.system(size: 8, weight: .bold))
                 .foregroundStyle(isSelected ? .black.opacity(0.6)
                                  : isWeekend ? Color(red: 0.925, green: 0.643, blue: 0.612) : .white.opacity(0.45))
@@ -239,7 +235,7 @@ struct EventRow: View {
         HStack(spacing: 8) {
             Capsule().fill(color).frame(width: 3, height: 20)
             VStack(alignment: .leading, spacing: 0) {
-                Text(event.title ?? "Etkinlik")
+                Text(event.title ?? String(localized: "Event"))
                     .font(.system(size: 11, weight: .semibold))
                     .foregroundStyle(.white)
                     .lineLimit(1)
@@ -252,7 +248,7 @@ struct EventRow: View {
                 Button { NSWorkspace.shared.open(url) } label: {
                     HStack(spacing: 3) {
                         Image(systemName: "video.fill").font(.system(size: 8))
-                        Text("Katıl").font(.system(size: 9.5, weight: .semibold))
+                        Text("Join").font(.system(size: 9.5, weight: .semibold))
                     }
                     .foregroundStyle(.white)
                     .padding(.horizontal, 7).padding(.vertical, 3)
@@ -276,9 +272,9 @@ struct EventRow: View {
     }
 
     private var timeText: String {
-        if event.isAllDay { return "Tüm gün" }
-        let start = event.startDate.formatted(.dateTime.hour().minute().locale(.turkish))
-        let end = event.endDate.formatted(.dateTime.hour().minute().locale(.turkish))
-        return isOngoing ? "Şimdi · \(end)'e kadar" : "\(start) – \(end)"
+        if event.isAllDay { return String(localized: "All day") }
+        let start = event.startDate.formatted(.dateTime.hour().minute())
+        let end = event.endDate.formatted(.dateTime.hour().minute())
+        return isOngoing ? String(localized: "Now · until \(end)") : "\(start) – \(end)"
     }
 }

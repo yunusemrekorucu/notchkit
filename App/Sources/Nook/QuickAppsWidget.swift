@@ -52,7 +52,7 @@ final class QuickAppsStore: ObservableObject {
         panel.allowedContentTypes = [.application]
         panel.allowsMultipleSelection = true
         panel.directoryURL = URL(fileURLWithPath: "/Applications")
-        panel.prompt = "Ekle"
+        panel.prompt = String(localized: "Add")
         if panel.runModal() == .OK { add(panel.urls) }
     }
 
@@ -78,7 +78,7 @@ struct QuickAppsWidget: View {
                     Image(systemName: "plus.app")
                         .font(.system(size: 20, weight: .medium))
                         .foregroundStyle(.white.opacity(targeted ? 1 : 0.6))
-                    Text("Uygulama sürükle")
+                    Text("Drag an app here")
                         .font(.system(size: 10, weight: .medium))
                         .foregroundStyle(.white.opacity(0.5))
                         .multilineTextAlignment(.center)
@@ -136,10 +136,10 @@ private struct QuickAppIcon: View {
         .onTapGesture { QuickAppsStore.shared.launch(url) }
         .help(QuickAppsStore.displayName(url))
         .contextMenu {
-            Button("Aç") { QuickAppsStore.shared.launch(url) }
-            Button("Finder'da göster") { NSWorkspace.shared.activateFileViewerSelecting([url]) }
+            Button("Open") { QuickAppsStore.shared.launch(url) }
+            Button("Show in Finder") { NSWorkspace.shared.activateFileViewerSelecting([url]) }
             Divider()
-            Button("Kaldır", role: .destructive) { QuickAppsStore.shared.remove(url.path) }
+            Button("Remove", role: .destructive) { QuickAppsStore.shared.remove(url.path) }
         }
     }
 }

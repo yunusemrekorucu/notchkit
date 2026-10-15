@@ -1,0 +1,1303 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "": {
+      "shouldTranslate": false
+    },
+    "%@ settings": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ayarları"
+          }
+        }
+      }
+    },
+    "%lld": {
+      "shouldTranslate": false
+    },
+    "%lld cells": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hücre"
+          }
+        }
+      }
+    },
+    "%lld cells · %lld pt wide. The Nook's width adjusts to your widgets.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld hücre · %lld pt genişlik. Nook genişliği widget'lara göre otomatik ayarlanır."
+          }
+        }
+      }
+    },
+    "%lld min": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld dk"
+          }
+        }
+      }
+    },
+    "%lld pt": {
+      "shouldTranslate": false
+    },
+    "%lld%%": {
+      "shouldTranslate": false
+    },
+    "About": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hakkında"
+          }
+        }
+      }
+    },
+    "Active widgets": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkin widget'lar"
+          }
+        }
+      }
+    },
+    "Activities": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aktiviteler"
+          }
+        }
+      }
+    },
+    "Add": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ekle"
+          }
+        }
+      }
+    },
+    "Add App…": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulama ekle…"
+          }
+        }
+      }
+    },
+    "Add Running App": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çalışanlardan ekle"
+          }
+        }
+      }
+    },
+    "Add Widgets": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget ekle"
+          }
+        }
+      }
+    },
+    "Add widgets in Settings": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayarlardan widget ekleyin"
+          }
+        }
+      }
+    },
+    "AirDrop": {
+      "shouldTranslate": false
+    },
+    "All day": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tüm gün"
+          }
+        }
+      }
+    },
+    "All widgets are added.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tüm widget'lar eklendi."
+          }
+        }
+      }
+    },
+    "Allow Access": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İzin ver"
+          }
+        }
+      }
+    },
+    "Allow calendar access to see your events": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkinliklerini görmek için takvim izni ver"
+          }
+        }
+      }
+    },
+    "Always open on hover": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Üzerine gelince her zaman aç"
+          }
+        }
+      }
+    },
+    "App": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulama"
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Görünüm"
+          }
+        }
+      }
+    },
+    "Automatic · %lld cells": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otomatik · %lld hücre"
+          }
+        }
+      }
+    },
+    "Battery": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pil"
+          }
+        }
+      }
+    },
+    "Bluetooth device": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bluetooth cihazı"
+          }
+        }
+      }
+    },
+    "Break!": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mola!"
+          }
+        }
+      }
+    },
+    "Calendar": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Takvim"
+          }
+        }
+      }
+    },
+    "Camera": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera"
+          }
+        }
+      }
+    },
+    "Cell size": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hücre boyutu"
+          }
+        }
+      }
+    },
+    "Choose Shortcuts": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kestirme seç"
+          }
+        }
+      }
+    },
+    "Clear Tray": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tepsiyi temizle"
+          }
+        }
+      }
+    },
+    "Column width": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sütun genişliği"
+          }
+        }
+      }
+    },
+    "Content padding": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İçerik boşluğu"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopyala"
+          }
+        }
+      }
+    },
+    "Days to show": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gösterilecek gün"
+          }
+        }
+      }
+    },
+    "Default": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Varsayılan"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sil"
+          }
+        }
+      }
+    },
+    "Delete Note": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notu sil"
+          }
+        }
+      }
+    },
+    "Disable haptic feedback": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haptik geri bildirimi kapat"
+          }
+        }
+      }
+    },
+    "Drag an app here": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uygulama sürükle"
+          }
+        }
+      }
+    },
+    "Drag rows to reorder them. Settings for the selected widget appear below.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıralamak için satırları sürükle. Seçtiğin widget'ın ayarları aşağıda görünür."
+          }
+        }
+      }
+    },
+    "Drop files here": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dosyaları buraya sürükle"
+          }
+        }
+      }
+    },
+    "Each column holds 2 apps, and the widget grows with the number of apps. You can also drag apps from Finder or the Dock onto the widget.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her sütunda 2 uygulama bulunur; widget genişliği uygulama sayısına göre büyür. Uygulamaları Finder'dan ya da Dock'tan doğrudan widget'ın üzerine de sürükleyebilirsin."
+          }
+        }
+      }
+    },
+    "Each column holds 2 shortcuts, and the widget grows with the number of shortcuts you pick.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her sütunda 2 kestirme bulunur; widget genişliği seçtiğin kestirme sayısına göre büyür."
+          }
+        }
+      }
+    },
+    "Edit Widgets…": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget'ları düzenle…"
+          }
+        }
+      }
+    },
+    "Empty": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boş"
+          }
+        }
+      }
+    },
+    "Enable live activities": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Canlı aktiviteleri etkinleştir"
+          }
+        }
+      }
+    },
+    "Enable on screens without a notch": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notch'suz ekranlarda da etkinleştir"
+          }
+        }
+      }
+    },
+    "Enable the Nook": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nook'u etkinleştir"
+          }
+        }
+      }
+    },
+    "Event": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkinlik"
+          }
+        }
+      }
+    },
+    "Files": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dosyalar"
+          }
+        }
+      }
+    },
+    "Files in tray": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tepsideki dosya"
+          }
+        }
+      }
+    },
+    "Focus": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odak"
+          }
+        }
+      }
+    },
+    "Focus duration": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odak süresi"
+          }
+        }
+      }
+    },
+    "Focus!": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Odak!"
+          }
+        }
+      }
+    },
+    "General": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genel"
+          }
+        }
+      }
+    },
+    "Height": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yükseklik"
+          }
+        }
+      }
+    },
+    "Height: %lld": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yükseklik: %lld"
+          }
+        }
+      }
+    },
+    "Hidden, doesn't fit on screen": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gizli, ekrana sığmıyor"
+          }
+        }
+      }
+    },
+    "Join": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Katıl"
+          }
+        }
+      }
+    },
+    "Keep open while typing": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yazarken fare çıkınca kapanmasın"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dil"
+          }
+        }
+      }
+    },
+    "Launch at login": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Girişte başlat"
+          }
+        }
+      }
+    },
+    "Layout": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yerleşim"
+          }
+        }
+      }
+    },
+    "Live Activities": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Canlı Aktiviteler"
+          }
+        }
+      }
+    },
+    "Loading shortcuts…": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kestirmeler yükleniyor…"
+          }
+        }
+      }
+    },
+    "Long break": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uzun mola"
+          }
+        }
+      }
+    },
+    "Media": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medya"
+          }
+        }
+      }
+    },
+    "Media Player": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medya Oynatıcı"
+          }
+        }
+      }
+    },
+    "Media: mediaremote-adapter (BSD-3, © Jonas van den Berg)": {
+      "shouldTranslate": false
+    },
+    "Mirror": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayna"
+          }
+        }
+      }
+    },
+    "Music, notes, tasks and files, right inside your notch.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Müzik, notlar, görevler ve dosyalar. Notch'unun tam içinde."
+          }
+        }
+      }
+    },
+    "New task": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni görev"
+          }
+        }
+      }
+    },
+    "No camera access": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamera izni yok"
+          }
+        }
+      }
+    },
+    "No events on this day": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu gün etkinlik yok"
+          }
+        }
+      }
+    },
+    "No events today": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün etkinlik yok"
+          }
+        }
+      }
+    },
+    "No shortcuts found in the Shortcuts app.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kestirmeler uygulamasında hiç kestirme bulunamadı."
+          }
+        }
+      }
+    },
+    "No tasks 🎉": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Görev yok 🎉"
+          }
+        }
+      }
+    },
+    "No widgets yet. Add some below.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Henüz widget yok. Aşağıdan ekleyebilirsin."
+          }
+        }
+      }
+    },
+    "Nook": {
+      "shouldTranslate": false
+    },
+    "Notch fine-tuning": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notch ince ayarı"
+          }
+        }
+      }
+    },
+    "NotchKit Settings": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NotchKit Ayarları"
+          }
+        }
+      }
+    },
+    "NotchKit detects your notch size automatically. If you see gaps at the edges, adjust it here.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NotchKit notch boyutunu otomatik algılar. Kenarlarda boşluk kalıyorsa buradan düzeltin."
+          }
+        }
+      }
+    },
+    "Notes": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notlar"
+          }
+        }
+      }
+    },
+    "Nothing is playing": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hiçbir şey çalmıyor"
+          }
+        }
+      }
+    },
+    "Now": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şimdi"
+          }
+        }
+      }
+    },
+    "Now Playing": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şimdi Çalıyor"
+          }
+        }
+      }
+    },
+    "Now · until %@": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şimdi · bitiş %@"
+          }
+        }
+      }
+    },
+    "Open": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aç"
+          }
+        }
+      }
+    },
+    "Open Settings": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayarları Aç"
+          }
+        }
+      }
+    },
+    "Play a sound when a phase ends": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aşama bitince ses çal"
+          }
+        }
+      }
+    },
+    "Pomodoro": {
+      "shouldTranslate": false
+    },
+    "Prefer round buttons": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yuvarlak butonları tercih et"
+          }
+        }
+      }
+    },
+    "Preview": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Önizleme"
+          }
+        }
+      }
+    },
+    "Quick Apps": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hızlı Uygulamalar"
+          }
+        }
+      }
+    },
+    "Quit NotchKit": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NotchKit'ten Çık"
+          }
+        }
+      }
+    },
+    "Remove": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaldır"
+          }
+        }
+      }
+    },
+    "Remove from Tray": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tepsiden kaldır"
+          }
+        }
+      }
+    },
+    "Reset": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıfırla"
+          }
+        }
+      }
+    },
+    "Reset Cycle": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Döngüyü sıfırla"
+          }
+        }
+      }
+    },
+    "Restart NotchKit to apply the new language.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni dilin uygulanması için NotchKit'i yeniden başlat."
+          }
+        }
+      }
+    },
+    "Restart Now": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şimdi Yeniden Başlat"
+          }
+        }
+      }
+    },
+    "Send with AirDrop": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirDrop ile gönder"
+          }
+        }
+      }
+    },
+    "Sessions before a long break": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uzun moladan önceki oturum"
+          }
+        }
+      }
+    },
+    "Short break": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kısa mola"
+          }
+        }
+      }
+    },
+    "Shortcuts": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kestirmeler"
+          }
+        }
+      }
+    },
+    "Show a quick peek when the song changes": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şarkı değişince hızlı bakış göster"
+          }
+        }
+      }
+    },
+    "Show all-day events": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tüm gün etkinliklerini göster"
+          }
+        }
+      }
+    },
+    "Show completed tasks": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tamamlanan görevleri göster"
+          }
+        }
+      }
+    },
+    "Show dividers between widgets": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget'lar arasında ayraç göster"
+          }
+        }
+      }
+    },
+    "Show in Finder": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finder'da göster"
+          }
+        }
+      }
+    },
+    "Size": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boyut"
+          }
+        }
+      }
+    },
+    "Skip to next phase": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonraki aşamaya geç"
+          }
+        }
+      }
+    },
+    "Some gestures are disabled while this is on.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Açıkken bazı hareketler devre dışı kalır."
+          }
+        }
+      }
+    },
+    "Start music in any app": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir uygulamada müzik başlat"
+          }
+        }
+      }
+    },
+    "Start the next phase automatically": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonraki aşamayı otomatik başlat"
+          }
+        }
+      }
+    },
+    "Swipe sideways to change tracks": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yatay kaydırmayla parça değiştir"
+          }
+        }
+      }
+    },
+    "System": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sistem"
+          }
+        }
+      }
+    },
+    "System uses your Mac's language: Turkish if it's set to Turkish, English otherwise.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sistem, Mac'inin dilini kullanır: Mac Türkçe ise Türkçe, değilse İngilizce."
+          }
+        }
+      }
+    },
+    "The width is calculated from the widgets in the Widgets tab.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genişlik, Widget'lar sekmesindeki widget'lara göre otomatik hesaplanır."
+          }
+        }
+      }
+    },
+    "To-dos": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yapılacaklar"
+          }
+        }
+      }
+    },
+    "Today": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün"
+          }
+        }
+      }
+    },
+    "Translucent notch background": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yarı saydam notch arka planı"
+          }
+        }
+      }
+    },
+    "Tray": {
+      "shouldTranslate": false
+    },
+    "Tray files": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tepsi dosyaları"
+          }
+        }
+      }
+    },
+    "Upcoming event": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaklaşan etkinlik"
+          }
+        }
+      }
+    },
+    "Use album colors": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Albüm rengini kullan"
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sürüm %@"
+          }
+        }
+      }
+    },
+    "When this is off, clicking the notch does nothing.": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapalıyken notch'a tıklamak bir şey yapmaz."
+          }
+        }
+      }
+    },
+    "Widget spacing": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget aralığı"
+          }
+        }
+      }
+    },
+    "Widgets": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widget'lar"
+          }
+        }
+      }
+    },
+    "Width": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genişlik"
+          }
+        }
+      }
+    },
+    "Width: %lld": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genişlik: %lld"
+          }
+        }
+      }
+    },
+    "Write something…": {
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir şeyler yaz…"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -27,15 +27,15 @@ struct WidgetsSettings: View {
                 NookPreview(widgets: visible)
                     .padding(.vertical, 4)
             } header: {
-                Text("Önizleme")
+                Text("Preview")
             } footer: {
                 let cells = visible.reduce(0) { $0 + $1.width }
-                Text("\(cells) hücre · \(Int(NookLayout.contentWidth(of: visible))) pt genişlik. Nook genişliği widget'lara göre otomatik ayarlanır.")
+                Text("\(cells) cells · \(Int(NookLayout.contentWidth(of: visible))) pt wide. The Nook's width adjusts to your widgets.")
             }
 
             Section {
                 if widgets.isEmpty {
-                    Text("Henüz widget yok. Aşağıdan ekleyebilirsin.").foregroundStyle(.secondary)
+                    Text("No widgets yet. Add some below.").foregroundStyle(.secondary)
                 }
                 ForEach(widgets) { widget in
                     EnabledWidgetRow(
@@ -52,14 +52,14 @@ struct WidgetsSettings: View {
                     .onDrop(of: [.text], delegate: ReorderDelegate(target: widget, widgets: $widgets, dragging: $dragging))
                 }
             } header: {
-                Text("Etkin widget'lar")
+                Text("Active widgets")
             } footer: {
-                Text("Sıralamak için satırları sürükle. Seçtiğin widget'ın ayarları aşağıda görünür.")
+                Text("Drag rows to reorder them. Settings for the selected widget appear below.")
             }
 
-            Section("Widget ekle") {
+            Section("Add Widgets") {
                 if available.isEmpty {
-                    Text("Tüm widget'lar eklendi.").foregroundStyle(.secondary)
+                    Text("All widgets are added.").foregroundStyle(.secondary)
                 } else {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 190), spacing: 10)], spacing: 10) {
                         ForEach(available) { widget in
@@ -76,7 +76,7 @@ struct WidgetsSettings: View {
             Section {
                 widgetSettings(nav.selectedWidget)
             } header: {
-                Label("\(nav.selectedWidget.title) ayarları", systemImage: nav.selectedWidget.symbol)
+                Label("\(nav.selectedWidget.title) settings", systemImage: nav.selectedWidget.symbol)
             }
         }
         .formStyle(.grouped)
@@ -95,18 +95,18 @@ struct WidgetsSettings: View {
     @ViewBuilder
     private func widgetSettings(_ widget: NookWidget) -> some View {
         if widget.isAutoWidth {
-            LabeledContent("Genişlik") {
-                Text("Otomatik · \(widget.width) hücre").foregroundStyle(.secondary)
+            LabeledContent("Width") {
+                Text("Automatic · \(widget.width) cells").foregroundStyle(.secondary)
             }
         } else {
-            ValueStepper("Genişlik", value: Binding(get: { widget.width }, set: { widget.setWidth($0) }), in: 1...10, display: "\(widget.width) hücre")
+            ValueStepper("Width", value: Binding(get: { widget.width }, set: { widget.setWidth($0) }), in: 1...10, display: "\(widget.width) cells")
         }
 
         switch widget {
         case .calendar: CalendarWidgetSettings()
         case .shortcuts: ShortcutsWidgetSettings()
         case .mirror: MirrorWidgetSettings()
-        case .todo: Defaults.Toggle("Tamamlanan görevleri göster", key: .showCompletedTodos)
+        case .todo: Defaults.Toggle(key: .showCompletedTodos) { Text("Show completed tasks") }
         case .pomodoro: PomodoroWidgetSettings()
         case .quickApps: QuickAppsWidgetSettings()
         case .media, .notes: EmptyView()
@@ -148,7 +148,7 @@ private struct NookPreview: View {
             .frame(maxWidth: .infinity)
             .overlay {
                 if widgets.isEmpty {
-                    Text("Boş").font(.caption).foregroundStyle(.white.opacity(0.5))
+                    Text("Empty").font(.caption).foregroundStyle(.white.opacity(0.5))
                 }
             }
         }
@@ -174,11 +174,11 @@ private struct EnabledWidgetRow: View {
             VStack(alignment: .leading, spacing: 1) {
                 Text(widget.title).fontWeight(.medium)
                 if isHidden {
-                    Text("Gizli, ekrana sığmıyor").font(.caption).foregroundStyle(.orange)
+                    Text("Hidden, doesn't fit on screen").font(.caption).foregroundStyle(.orange)
                 }
             }
             Spacer()
-            Text(widget.isAutoWidth ? "Otomatik · \(widget.width) hücre" : "\(widget.width) hücre")
+            Text(widget.isAutoWidth ? String(localized: "Automatic · \(widget.width) cells") : String(localized: "\(widget.width) cells"))
                 .font(.callout.monospacedDigit())
                 .foregroundStyle(.secondary)
             Button(action: onRemove) {
@@ -188,7 +188,7 @@ private struct EnabledWidgetRow: View {
                     .font(.system(size: 16))
             }
             .buttonStyle(.plain)
-            .help("Kaldır")
+            .help("Remove")
             .opacity(hovering || isSelected ? 1 : 0.5)
         }
         .padding(.vertical, 4)
@@ -267,12 +267,12 @@ private struct PomodoroWidgetSettings: View {
     @Default(.pomodoroSessionsBeforeLongBreak) private var sessions
 
     var body: some View {
-        ValueStepper("Odak süresi", value: $focus, in: 5...90, step: 5, display: "\(focus) dk")
-        ValueStepper("Kısa mola", value: $shortBreak, in: 1...30, display: "\(shortBreak) dk")
-        ValueStepper("Uzun mola", value: $longBreak, in: 5...60, step: 5, display: "\(longBreak) dk")
-        ValueStepper("Uzun moladan önceki oturum", value: $sessions, in: 2...8, display: "\(sessions)")
-        Defaults.Toggle("Sonraki aşamayı otomatik başlat", key: .pomodoroAutoStart)
-        Defaults.Toggle("Aşama bitince ses çal", key: .pomodoroPlaySound)
+        ValueStepper("Focus duration", value: $focus, in: 5...90, step: 5, display: "\(focus) min")
+        ValueStepper("Short break", value: $shortBreak, in: 1...30, display: "\(shortBreak) min")
+        ValueStepper("Long break", value: $longBreak, in: 5...60, step: 5, display: "\(longBreak) min")
+        ValueStepper("Sessions before a long break", value: $sessions, in: 2...8, display: "\(sessions)")
+        Defaults.Toggle(key: .pomodoroAutoStart) { Text("Start the next phase automatically") }
+        Defaults.Toggle(key: .pomodoroPlaySound) { Text("Play a sound when a phase ends") }
             .onChange(of: focus) { PomodoroStore.shared.durationsChanged() }
             .onChange(of: shortBreak) { PomodoroStore.shared.durationsChanged() }
             .onChange(of: longBreak) { PomodoroStore.shared.durationsChanged() }
@@ -290,7 +290,7 @@ private struct QuickAppsWidgetSettings: View {
     }
 
     var body: some View {
-        Text("Her sütunda 2 uygulama bulunur; widget genişliği uygulama sayısına göre büyür. Uygulamaları Finder'dan ya da Dock'tan doğrudan widget'ın üzerine de sürükleyebilirsin.")
+        Text("Each column holds 2 apps, and the widget grows with the number of apps. You can also drag apps from Finder or the Dock onto the widget.")
             .font(.caption).foregroundStyle(.secondary)
 
         ForEach(apps, id: \.self) { path in
@@ -316,10 +316,10 @@ private struct QuickAppsWidgetSettings: View {
         }
 
         HStack {
-            Button("Uygulama ekle…") { QuickAppsStore.shared.pickApps() }
-            Menu("Çalışanlardan ekle") {
+            Button("Add App…") { QuickAppsStore.shared.pickApps() }
+            Menu("Add Running App") {
                 ForEach(runningApps, id: \.processIdentifier) { app in
-                    Button(app.localizedName ?? "Uygulama") {
+                    Button(app.localizedName ?? String(localized: "App")) {
                         if let url = app.bundleURL { QuickAppsStore.shared.add([url]) }
                     }
                 }
@@ -356,8 +356,8 @@ private struct CalendarWidgetSettings: View {
     @Default(.calendarDaysAhead) private var daysAhead
 
     var body: some View {
-        ValueStepper("Gösterilecek gün", value: $daysAhead, in: 1...30, display: "\(daysAhead)")
-        Defaults.Toggle("Tüm gün etkinliklerini göster", key: .calendarShowAllDay)
+        ValueStepper("Days to show", value: $daysAhead, in: 1...30, display: "\(daysAhead)")
+        Defaults.Toggle(key: .calendarShowAllDay) { Text("Show all-day events") }
     }
 }
 
@@ -367,13 +367,13 @@ private struct ShortcutsWidgetSettings: View {
     @State private var available: [String]?
 
     var body: some View {
-        ValueStepper("Sütun genişliği", value: $columnWidth, in: 1...4, display: "\(columnWidth) hücre")
-        Text("Her sütunda 2 kestirme bulunur; widget genişliği seçtiğin kestirme sayısına göre büyür.")
+        ValueStepper("Column width", value: $columnWidth, in: 1...4, display: "\(columnWidth) cells")
+        Text("Each column holds 2 shortcuts, and the widget grows with the number of shortcuts you pick.")
             .font(.caption).foregroundStyle(.secondary)
 
         if let available {
             if available.isEmpty {
-                Text("Kestirmeler uygulamasında hiç kestirme bulunamadı.").foregroundStyle(.secondary)
+                Text("No shortcuts found in the Shortcuts app.").foregroundStyle(.secondary)
             }
             ForEach(available, id: \.self) { name in
                 Toggle(isOn: Binding(
@@ -383,7 +383,7 @@ private struct ShortcutsWidgetSettings: View {
                 }
             }
         } else {
-            HStack { ProgressView().controlSize(.small); Text("Kestirmeler yükleniyor…").foregroundStyle(.secondary) }
+            HStack { ProgressView().controlSize(.small); Text("Loading shortcuts…").foregroundStyle(.secondary) }
                 .task { available = await ShortcutsService.list() }
         }
     }
@@ -396,8 +396,8 @@ private struct MirrorWidgetSettings: View {
         mediaType: .video, position: .unspecified).devices
 
     var body: some View {
-        Picker("Kamera", selection: $deviceID) {
-            Text("Varsayılan").tag(String?.none)
+        Picker("Camera", selection: $deviceID) {
+            Text("Default").tag(String?.none)
             ForEach(devices, id: \.uniqueID) { Text($0.localizedName).tag(Optional($0.uniqueID)) }
         }
     }
@@ -405,13 +405,13 @@ private struct MirrorWidgetSettings: View {
 
 /// Etiket solda, değer ve +/- sağda hizalı stepper satırı.
 struct ValueStepper: View {
-    let title: String
+    let title: LocalizedStringKey
     @Binding var value: Int
     let range: ClosedRange<Int>
     var step: Int = 1
-    let display: String
+    let display: LocalizedStringKey
 
-    init(_ title: String, value: Binding<Int>, in range: ClosedRange<Int>, step: Int = 1, display: String) {
+    init(_ title: LocalizedStringKey, value: Binding<Int>, in range: ClosedRange<Int>, step: Int = 1, display: LocalizedStringKey) {
         self.title = title
         self._value = value
         self.range = range

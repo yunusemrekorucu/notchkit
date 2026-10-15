@@ -7,13 +7,13 @@ struct SettingsView: View {
 
     var body: some View {
         TabView(selection: $nav.tab) {
-            GeneralSettings().tabItem { Label("Genel", systemImage: "gear") }.tag(SettingsTab.general)
+            GeneralSettings().tabItem { Label("General", systemImage: "gear") }.tag(SettingsTab.general)
             NookSettings().tabItem { Label("Nook", systemImage: "lamp.desk.fill") }.tag(SettingsTab.nook)
-            WidgetsSettings().tabItem { Label("Widget'lar", systemImage: "square.grid.2x2.fill") }.tag(SettingsTab.widgets)
-            TraySettings().tabItem { Label("Tepsi", systemImage: "tray.fill") }.tag(SettingsTab.tray)
-            LiveActivitySettings().tabItem { Label("Canlı Aktiviteler", systemImage: "clock.badge.fill") }
+            WidgetsSettings().tabItem { Label("Widgets", systemImage: "square.grid.2x2.fill") }.tag(SettingsTab.widgets)
+            TraySettings().tabItem { Label("Tray", systemImage: "tray.fill") }.tag(SettingsTab.tray)
+            LiveActivitySettings().tabItem { Label("Live Activities", systemImage: "clock.badge.fill") }
                 .tag(SettingsTab.liveActivities)
-            AboutSettings().tabItem { Label("Hakkında", systemImage: "ellipsis.circle.fill") }.tag(SettingsTab.about)
+            AboutSettings().tabItem { Label("About", systemImage: "ellipsis.circle.fill") }.tag(SettingsTab.about)
         }
         .frame(minWidth: 620, minHeight: 520)
     }
@@ -30,31 +30,51 @@ private struct GeneralSettings: View {
     @Default(.notchWidthFineTune) private var widthTune
     @Default(.notchHeightFineTune) private var heightTune
     @Default(.horizontalSwipeChangesTrack) private var swipeTrack
+    @State private var language = AppLanguage.current
+    private let launchLanguage = AppLanguage.current
 
     var body: some View {
         Form {
             Section {
-                LaunchAtLogin.Toggle("Girişte başlat")
-                Toggle("Üzerine gelince her zaman aç", isOn: $openOnHover)
-                    .help("Açıkken bazı hareketler devre dışı kalır.")
-                Toggle("Haptik geri bildirimi kapat", isOn: $disableHaptics)
-                Toggle("Yazarken fare çıkınca kapanmasın", isOn: $preventClose)
-                Toggle("Notch'suz ekranlarda da etkinleştir", isOn: $nonNotch)
-                Toggle("Yatay kaydırmayla parça değiştir", isOn: $swipeTrack)
-            }
-            Section("Görünüm") {
-                Toggle("Yuvarlak butonları tercih et", isOn: $roundButtons)
-                Toggle("Yarı saydam notch arka planı", isOn: $translucent)
-                ValueStepper("İçerik boşluğu", value: $padding, in: 4...24, display: "\(padding) pt")
+                Picker("Language", selection: $language) {
+                    Text("System").tag(AppLanguage.system)
+                    Text(verbatim: "English").tag(AppLanguage.english)
+                    Text(verbatim: "Türkçe").tag(AppLanguage.turkish)
+                }
+                .onChange(of: language) { _, value in value.apply() }
+                if language != launchLanguage {
+                    HStack {
+                        Text("Restart NotchKit to apply the new language.")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Restart Now") { AppLanguage.relaunch() }
+                    }
+                }
+            } footer: {
+                Text("System uses your Mac's language: Turkish if it's set to Turkish, English otherwise.")
             }
             Section {
-                Slider(value: $widthTune, in: -20...20, step: 1) { Text("Genişlik: \(Int(widthTune))") }
-                Slider(value: $heightTune, in: -10...10, step: 1) { Text("Yükseklik: \(Int(heightTune))") }
-                Button("Sıfırla") { widthTune = 0; heightTune = 0 }
+                LaunchAtLogin.Toggle { Text("Launch at login") }
+                Toggle("Always open on hover", isOn: $openOnHover)
+                    .help("Some gestures are disabled while this is on.")
+                Toggle("Disable haptic feedback", isOn: $disableHaptics)
+                Toggle("Keep open while typing", isOn: $preventClose)
+                Toggle("Enable on screens without a notch", isOn: $nonNotch)
+                Toggle("Swipe sideways to change tracks", isOn: $swipeTrack)
+            }
+            Section("Appearance") {
+                Toggle("Prefer round buttons", isOn: $roundButtons)
+                Toggle("Translucent notch background", isOn: $translucent)
+                ValueStepper("Content padding", value: $padding, in: 4...24, display: "\(padding) pt")
+            }
+            Section {
+                Slider(value: $widthTune, in: -20...20, step: 1) { Text("Width: \(Int(widthTune))") }
+                Slider(value: $heightTune, in: -10...10, step: 1) { Text("Height: \(Int(heightTune))") }
+                Button("Reset") { widthTune = 0; heightTune = 0 }
             } header: {
-                Text("Notch ince ayarı")
+                Text("Notch fine-tuning")
             } footer: {
-                Text("Nook notch boyutunu otomatik algılar. Kenarlarda boşluk kalıyorsa buradan düzeltin.")
+                Text("NotchKit detects your notch size automatically. If you see gaps at the edges, adjust it here.")
             }
         }
         .formStyle(.grouped)
@@ -71,22 +91,22 @@ private struct NookSettings: View {
     var body: some View {
         Form {
             Section {
-                Toggle("Nook'u etkinleştir", isOn: $enabled)
+                Toggle("Enable the Nook", isOn: $enabled)
             } footer: {
-                Text("Kapalıyken notch'a tıklamak bir şey yapmaz.")
+                Text("When this is off, clicking the notch does nothing.")
             }
             Section {
-                ValueStepper("Yükseklik", value: $height, in: 1...4, display: "\(height) hücre")
-                ValueStepper("Hücre boyutu", value: $cellSize, in: 40...80, step: 2, display: "\(cellSize) pt")
-                ValueStepper("Widget aralığı", value: $spacing, in: 4...20, display: "\(spacing) pt")
-                Toggle("Widget'lar arasında ayraç göster", isOn: $dividers)
+                ValueStepper("Height", value: $height, in: 1...4, display: "\(height) cells")
+                ValueStepper("Cell size", value: $cellSize, in: 40...80, step: 2, display: "\(cellSize) pt")
+                ValueStepper("Widget spacing", value: $spacing, in: 4...20, display: "\(spacing) pt")
+                Toggle("Show dividers between widgets", isOn: $dividers)
             } header: {
-                Text("Yerleşim")
+                Text("Layout")
             } footer: {
-                Text("Genişlik, Widget'lar sekmesindeki widget'lara göre otomatik hesaplanır.")
+                Text("The width is calculated from the widgets in the Widgets tab.")
             }
             Section {
-                Button("Widget'ları düzenle…") { SettingsNavigation.shared.tab = .widgets }
+                Button("Edit Widgets…") { SettingsNavigation.shared.tab = .widgets }
             }
         }
         .formStyle(.grouped)
@@ -100,13 +120,13 @@ private struct TraySettings: View {
 
     var body: some View {
         Form {
-            Section("Boyut") {
-                ValueStepper("Genişlik", value: $width, in: 6...20, display: "\(width) hücre")
-                ValueStepper("Yükseklik", value: $height, in: 1...4, display: "\(height) hücre")
+            Section("Size") {
+                ValueStepper("Width", value: $width, in: 6...20, display: "\(width) cells")
+                ValueStepper("Height", value: $height, in: 1...4, display: "\(height) cells")
             }
-            Section("Dosyalar") {
-                LabeledContent("Tepsideki dosya", value: "\(tray.items.count)")
-                Button("Tepsiyi temizle", role: .destructive) { tray.removeAll() }.disabled(tray.items.isEmpty)
+            Section("Files") {
+                LabeledContent("Files in tray", value: "\(tray.items.count)")
+                Button("Clear Tray", role: .destructive) { tray.removeAll() }.disabled(tray.items.isEmpty)
             }
         }
         .formStyle(.grouped)
@@ -122,18 +142,18 @@ private struct LiveActivitySettings: View {
     var body: some View {
         Form {
             Section {
-                Toggle("Canlı aktiviteleri etkinleştir", isOn: $enabled)
-                Toggle("Şarkı değişince hızlı bakış göster", isOn: $quickPeek)
+                Toggle("Enable live activities", isOn: $enabled)
+                Toggle("Show a quick peek when the song changes", isOn: $quickPeek)
             }
-            Section("Aktiviteler") {
+            Section("Activities") {
                 ForEach(LiveActivityToggle.allCases) { a in
                     Toggle(a.title, isOn: Binding(
                         get: { activities.contains(a) },
                         set: { on in if on { activities.append(a) } else { activities.removeAll { $0 == a } } }))
                 }
             }
-            Section("Medya") {
-                Toggle("Albüm rengini kullan", isOn: $colored)
+            Section("Media") {
+                Toggle("Use album colors", isOn: $colored)
             }
         }
         .formStyle(.grouped)
@@ -144,14 +164,14 @@ private struct AboutSettings: View {
     var body: some View {
         VStack(spacing: 12) {
             Image(nsImage: NSApp.applicationIconImage).resizable().frame(width: 96, height: 96)
-            Text("Nook").font(.largeTitle.bold())
-            Text("Sürüm \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
+            Text(verbatim: "NotchKit").font(.largeTitle.bold())
+            Text("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
                 .foregroundStyle(.secondary)
-            Text("Müzik, notlar, görevler ve dosyalar. Notch'unun tam içinde.")
+            Text("Music, notes, tasks and files, right inside your notch.")
                 .multilineTextAlignment(.center).foregroundStyle(.secondary)
-            Text("Medya: mediaremote-adapter (BSD-3, © Jonas van den Berg)")
+            Text("Media: mediaremote-adapter (BSD-3, © Jonas van den Berg)")
                 .font(.caption).foregroundStyle(.tertiary)
-            Button("Nook'tan çık") { NSApp.terminate(nil) }
+            Button("Quit NotchKit") { NSApp.terminate(nil) }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()

@@ -18,7 +18,7 @@ struct TrayView: View {
     @ViewBuilder
     private var filesArea: some View {
         if tray.items.isEmpty {
-            DropTarget(title: "Dosyaları buraya sürükle", symbol: "tray.and.arrow.down.fill", tint: .white) { urls in
+            DropTarget(title: "Drop files here", symbol: "tray.and.arrow.down.fill", tint: .white) { urls in
                 tray.add(urls)
             }
         } else {
@@ -39,14 +39,14 @@ struct TrayView: View {
                 Button { tray.removeAll() } label: {
                     Image(systemName: "xmark.circle.fill").foregroundStyle(.white.opacity(0.4))
                 }
-                .buttonStyle(.plain).padding(6).help("Tepsiyi temizle")
+                .buttonStyle(.plain).padding(6).help("Clear Tray")
             }
         }
     }
 }
 
 struct DropTarget: View {
-    var title: String
+    var title: LocalizedStringKey
     var symbol: String
     var tint: Color
     var onDrop: ([URL]) -> Void
@@ -105,15 +105,15 @@ struct TrayItemView: View {
         .onTapGesture(count: 2) { tray.open(item) }
         .onDrag { NSItemProvider(contentsOf: item.url) ?? NSItemProvider() }
         .contextMenu {
-            Button("Aç") { tray.open(item) }
-            Button("Finder'da göster") { tray.reveal(item) }
-            Button("Kopyala") {
+            Button("Open") { tray.open(item) }
+            Button("Show in Finder") { tray.reveal(item) }
+            Button("Copy") {
                 NSPasteboard.general.clearContents()
                 NSPasteboard.general.writeObjects([item.url as NSURL])
             }
-            Button("AirDrop ile gönder") { tray.airDrop([item.url]) }
+            Button("Send with AirDrop") { tray.airDrop([item.url]) }
             Divider()
-            Button("Tepsiden kaldır", role: .destructive) { tray.remove(item) }
+            Button("Remove from Tray", role: .destructive) { tray.remove(item) }
         }
         .task(id: item.url) {
             let request = QLThumbnailGenerator.Request(fileAt: item.url, size: CGSize(width: 96, height: 96),

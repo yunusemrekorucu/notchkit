@@ -33,7 +33,7 @@ struct NookView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .overlay {
             if visible.isEmpty {
-                Text("Ayarlardan widget ekleyin")
+                Text("Add widgets in Settings")
                     .font(.system(size: 13, weight: .medium))
                     .foregroundStyle(.white.opacity(0.5))
             }

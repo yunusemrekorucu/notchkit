@@ -95,7 +95,7 @@ struct ClosedNotchView: View {
             }
         case .pomodoro:
             if let finished = pomodoro.justFinished {
-                Text(finished == .focus ? "Mola!" : "Odak!")
+                Text(finished == .focus ? String(localized: "Break!") : String(localized: "Focus!"))
                     .font(.system(size: 11, weight: .bold))
                     .foregroundStyle(finished == .focus ? PomodoroStore.Phase.shortBreak.color : PomodoroStore.Phase.focus.color)
             } else {
@@ -116,7 +116,7 @@ extension ClosedNotchView {
     func calendarLabel(at date: Date) -> String {
         guard let event = calendar.upcoming else { return "" }
         let minutes = Int(event.startDate.timeIntervalSince(date) / 60)
-        return minutes > 0 ? "\(minutes) dk" : "Şimdi"
+        return minutes > 0 ? String(localized: "\(minutes) min") : String(localized: "Now")
     }
 }
 

@@ -1,9 +1,10 @@
-name: Nook
+name: NotchKit
 options:
   bundleIdPrefix: com.yunusemrekorucu
   deploymentTarget:
     macOS: "14.6"
   createIntermediateGroups: true
+  developmentLanguage: en
 settings:
   base:
     SWIFT_VERSION: "5.10"
@@ -21,7 +22,7 @@ packages:
     url: https://github.com/sindresorhus/LaunchAtLogin-Modern
     from: 1.1.0
 targets:
-  Nook:
+  NotchKit:
     type: application
     platform: macOS
     sources:
@@ -34,20 +35,21 @@ targets:
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: Nook
-        CFBundleDevelopmentRegion: tr
-        CFBundleLocalizations: [tr]
+        CFBundleDisplayName: NotchKit
+        CFBundleName: NotchKit
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [en, tr]
         CFBundleShortVersionString: "1.0.0"
         CFBundleVersion: "1"
         LSUIElement: true
         LSMinimumSystemVersion: "14.6"
         LSApplicationCategoryType: public.app-category.utilities
-        NSCameraUsageDescription: Nook'taki Ayna (Mirror) widget'ı için kullanılır.
-        NSCalendarsFullAccessUsageDescription: Takvim widget'ı ve yaklaşan etkinlik bildirimi için kullanılır.
-        NSBluetoothAlwaysUsageDescription: Bağlı Bluetooth cihazlarını göstermek için kullanılır.
-        NSAppleEventsUsageDescription: Çalan parçayı göstermek ve kontrol etmek için kullanılır.
+        NSCameraUsageDescription: Used by the Mirror widget.
+        NSCalendarsFullAccessUsageDescription: Used by the Calendar widget and the upcoming event indicator.
+        NSBluetoothAlwaysUsageDescription: Used to show your connected Bluetooth devices.
+        NSAppleEventsUsageDescription: Used to show and control the track that is playing.
     entitlements:
-      path: App/Nook.entitlements
+      path: App/NotchKit.entitlements
       properties:
         com.apple.security.app-sandbox: false
         com.apple.security.device.camera: true

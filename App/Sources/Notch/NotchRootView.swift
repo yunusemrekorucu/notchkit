@@ -36,9 +36,9 @@ struct NotchRootView: View {
         .frame(width: size.width, height: size.height)
         .contentShape(shape)
         .contextMenu {
-            Button("Ayarları Aç") { SettingsOpener.open() }
+            Button("Open Settings") { SettingsOpener.open() }
             Divider()
-            Button("Nook'tan Çık") { NSApp.terminate(nil) }
+            Button("Quit NotchKit") { NSApp.terminate(nil) }
         }
         .onDrop(of: [.fileURL], isTargeted: $model.isDraggingFiles) { providers in
             loadFileURLs(from: providers) { urls in

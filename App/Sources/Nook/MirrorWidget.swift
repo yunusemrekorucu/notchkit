@@ -56,7 +56,7 @@ struct MirrorWidget: View {
                 case .loading:
                     ProgressView().controlSize(.small)
                 case .denied:
-                    Text("Kamera izni yok").font(.system(size: 10)).foregroundStyle(.white.opacity(0.6))
+                    Text("No camera access").font(.system(size: 10)).foregroundStyle(.white.opacity(0.6))
                 case .stopped:
                     Image(systemName: "web.camera.fill").font(.system(size: 22)).foregroundStyle(.white.opacity(0.7))
                 }

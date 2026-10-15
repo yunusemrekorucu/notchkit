@@ -62,7 +62,9 @@ Add, remove and reorder widgets with a live preview, and configure each widget o
 - Swipe sideways on the notch to skip to the next or previous track.
 - Right-click the notch to open Settings or quit.
 
-> The app's interface is currently in Turkish. English localization is planned.
+### Languages
+
+NotchKit is available in **English** and **Turkish**. It follows your Mac's language by default (Turkish if your Mac is set to Turkish, English otherwise), and you can switch it in **Settings → General → Language**.
 
 ## Requirements
 
@@ -80,16 +82,16 @@ brew install xcodegen cmake
 git clone --recursive https://github.com/yunusemrekorucu/notchkit.git
 cd notchkit
 xcodegen generate
-open Nook.xcodeproj
+open NotchKit.xcodeproj
 ```
 
 Or build from the command line:
 
 ```bash
-xcodebuild -project Nook.xcodeproj -scheme Nook -configuration Release -derivedDataPath build/DD build
+xcodebuild -project NotchKit.xcodeproj -scheme NotchKit -configuration Release -derivedDataPath build/DD build
 ```
 
-The media bridge (`vendor/mediaremote-adapter`) is built automatically on the first build. The app is produced as `Nook.app`; copy it to `/Applications` and open it.
+The media bridge (`vendor/mediaremote-adapter`) is built automatically on the first build. The app is produced as `NotchKit.app`; copy it to `/Applications` and open it.
 
 If you cloned without `--recursive`, fetch the submodule with `git submodule update --init`.
 
@@ -98,7 +100,7 @@ If you cloned without `--recursive`, fetch the submodule with `git submodule upd
 Launch with `-demo YES` to show a sample track instead of your real media, which is handy for screenshots:
 
 ```bash
-open -a Nook --args -demo YES
+open -a NotchKit --args -demo YES
 ```
 
 ## Permissions
@@ -129,6 +131,7 @@ App/Sources
 ├── Media/           Bridge to mediaremote-adapter
 ├── Settings/        Settings screens
 └── Shared/          Settings keys and helpers
+App/Resources        App icon and string catalogs (English, Turkish)
 design/AppIcon.svg   Source of the app icon
 docs/screenshots     Images used in this README
 ```
