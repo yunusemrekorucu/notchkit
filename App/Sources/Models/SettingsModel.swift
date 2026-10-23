@@ -652,6 +652,9 @@ extension Settings {
             case .storage: return storageWidgetEnabled
             case .dev: return devWidgetEnabled
             case .agent: return false
+            case .pomodoro: return pomodoroWidgetEnabled
+            case .todo: return todoWidgetEnabled
+            case .quickApps: return quickAppsWidgetEnabled
             }
         }
     }
@@ -1474,7 +1477,10 @@ struct Settings: Codable, Equatable {
     var dmgInstallerProgressDisplay: FileOperationProgressDisplay = .liveActivity
     var dmgInstallerOfferOnManualMount: Bool = false
     var timerWidgetEnabled: Bool = false
-    var batteryWidgetEnabled: Bool = true
+    var pomodoroWidgetEnabled: Bool = false
+    var todoWidgetEnabled: Bool = false
+    var quickAppsWidgetEnabled: Bool = false
+    var batteryWidgetEnabled: Bool = false
     var focusSessionWidgetEnabled: Bool = true
     var storageWidgetEnabled: Bool = false
     var storageOpenOnClick: Bool = true
@@ -3288,7 +3294,7 @@ enum LowPowerMode: String, Codable, CaseIterable, Identifiable {
 }
 
 enum WidgetType: String, Codable, CaseIterable, Identifiable, Equatable {
-    case weather, calendar, shortcuts, music, sports, finance, shopify, notes, clipboard, mirror, battery, timer, focusSession, storage, dev, agent
+    case weather, calendar, shortcuts, music, sports, finance, shopify, notes, clipboard, mirror, battery, timer, focusSession, storage, dev, agent, pomodoro, todo, quickApps
     var id: String { self.rawValue }
     var displayName: String {
         switch self {
@@ -3308,6 +3314,9 @@ enum WidgetType: String, Codable, CaseIterable, Identifiable, Equatable {
         case .storage: return "Storage"
         case .dev: return "Dev"
         case .agent: return "Agent"
+        case .pomodoro: return "Pomodoro"
+        case .todo: return "To-dos"
+        case .quickApps: return "Quick Apps"
         }
     }
 }
@@ -3835,7 +3844,7 @@ extension UTType {
 }
 
 enum SettingsSection: String, CaseIterable, Identifiable {
-    case overview, general, systemEnhance, apps, storage, widgets, liveActivities, appActivities, fileProgress, appearance, lockScreen, bluetoothUnlock, shortcuts, keyboardShortcuts, snapZones, audio, battery, bluetooth, hud, notifications, nearbyShare, continuity, fileShelf, notes, clipboard, emoji, mouse, monitoring, devActivity, archives, mirror, caffeine, music, weather, calendar, eyeBreak, focusSession, appLock, intelligence, sports, finance, dockLayouts, mediaOptimizer, about
+    case overview, general, systemEnhance, apps, storage, widgets, liveActivities, appActivities, fileProgress, appearance, lockScreen, bluetoothUnlock, shortcuts, keyboardShortcuts, snapZones, audio, battery, bluetooth, hud, notifications, nearbyShare, continuity, fileShelf, notes, clipboard, emoji, mouse, monitoring, devActivity, archives, mirror, caffeine, music, weather, calendar, eyeBreak, focusSession, productivity, appLock, intelligence, sports, finance, dockLayouts, mediaOptimizer, about
 
     var id: String { self.rawValue }
 
@@ -3909,6 +3918,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .weather: "Weather widget data sources, units, and location-based behavior."
         case .calendar: "Calendar and reminder integrations shown in widgets and live activities."
         case .eyeBreak: "Break reminders, timing, and focus nudges for healthier screen habits."
+        case .productivity: "Pomodoro timer, to-do list and pinned Quick Apps widgets."
         case .focusSession: "Session-style Focus Profiles with timers, app/website blocking, social filters, triggers, and cross-device sync."
         case .appLock: "Lock apps behind Touch ID or password — blur overlays, idle/sleep auto-lock, and auto-close."
         case .intelligence: "NotchKit Blip — Mac agent with memory, skills, tools, and computer use."
@@ -3959,6 +3969,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .weather: ["weather", "forecast", "temperature", "location"]
         case .calendar: ["calendar", "reminders", "events", "schedule"]
         case .eyeBreak: ["eye", "break", "rest", "wellness", "focus"]
+        case .productivity: ["pomodoro", "todo", "to-do", "tasks", "checklist", "quick apps", "launcher", "pin", "timer"]
         case .focusSession: ["focus", "session", "timer", "pomodoro", "block", "distraction", "website", "app", "blocking", "shortcut", "history", "stopwatch", "streak"]
         case .appLock: ["lock", "app lock", "protect", "touch id", "password", "privacy", "overlay", "idle", "sleep", "panic", "auto-close", "secure"]
         case .intelligence: ["intelligence", "blip", "facet", "nova", "octo", "claw", "connected", "accounts", "gmail", "github", "outlook", "findmy", "gemini", "ai", "assistant", "agent", "automation", "task", "voice", "live", "computer", "control", "accessibility", "memory", "skills", "personalization", "profiling", "monitoring", "privacy", "learning", "behavior", "screenshots", "calendar", "notes", "spotify", "clipboard", "settings", "data", "tracking", "circle", "search", "lasso"]
@@ -3991,19 +4002,19 @@ enum SettingsSection: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .overview: "Overview"; case .general: "General"; case .systemEnhance: "System Enhance"; case .apps: "Apps"; case .storage: "Storage"; case .widgets: "Widgets"; case .liveActivities: "Live Activities"; case .appActivities: "App Activities"; case .fileProgress: "File Progress"; case .appearance: "Appearance"; case .lockScreen: "Lock Screen"; case .bluetoothUnlock: "Authentication"; case .shortcuts: "Shortcuts"; case .keyboardShortcuts: "Keyboard Shortcuts"; case .snapZones: "Snap Zones"; case .audio: "Audio"; case .battery: "Battery"; case .bluetooth: "Bluetooth"; case .hud: "HUD"; case .notifications: "Notifications"; case .nearbyShare: "Nearby Share"; case .continuity: "Continuity"; case .fileShelf: "File Shelf"; case .notes: "Notes";        case .clipboard: "Clipboard"; case .emoji: "Emoji"; case .mouse: "Mouse"; case .monitoring: "Monitoring"; case .devActivity: "Dev Activity"; case .archives: "Archives & DMG"; case .mirror: "Mirror"; case .caffeine: "Caffeinate"; case .music: "Music"; case .weather: "Weather";        case .calendar: "Calendar"; case .eyeBreak: "Eye Break"; case .focusSession: "Focus Sessions"; case .appLock: "App Lock"; case .intelligence: "Blip"; case .sports: "Sports"; case .finance: "Finance"; case .dockLayouts: "Dock"; case .mediaOptimizer: "Media Optimizer"; case .about: "About"
+        case .overview: "Overview"; case .general: "General"; case .systemEnhance: "System Enhance"; case .apps: "Apps"; case .storage: "Storage"; case .widgets: "Widgets"; case .liveActivities: "Live Activities"; case .appActivities: "App Activities"; case .fileProgress: "File Progress"; case .appearance: "Appearance"; case .lockScreen: "Lock Screen"; case .bluetoothUnlock: "Authentication"; case .shortcuts: "Shortcuts"; case .keyboardShortcuts: "Keyboard Shortcuts"; case .snapZones: "Snap Zones"; case .audio: "Audio"; case .battery: "Battery"; case .bluetooth: "Bluetooth"; case .hud: "HUD"; case .notifications: "Notifications"; case .nearbyShare: "Nearby Share"; case .continuity: "Continuity"; case .fileShelf: "File Shelf"; case .notes: "Notes";        case .clipboard: "Clipboard"; case .emoji: "Emoji"; case .mouse: "Mouse"; case .monitoring: "Monitoring"; case .devActivity: "Dev Activity"; case .archives: "Archives & DMG"; case .mirror: "Mirror"; case .caffeine: "Caffeinate"; case .music: "Music"; case .weather: "Weather";        case .calendar: "Calendar"; case .eyeBreak: "Eye Break"; case .focusSession: "Focus Sessions"; case .productivity: "Pomodoro & Tasks"; case .appLock: "App Lock"; case .intelligence: "Blip"; case .sports: "Sports"; case .finance: "Finance"; case .dockLayouts: "Dock"; case .mediaOptimizer: "Media Optimizer"; case .about: "About"
         }
     }
 
     var systemImage: String {
         switch self {
-        case .overview: "sparkles"; case .general: "gear"; case .systemEnhance: "macwindow.on.rectangle"; case .apps: "square.stack.3d.up.fill"; case .storage: "internaldrive.fill"; case .widgets: "square.grid.2x2.fill"; case .liveActivities: "timer"; case .appActivities: "video.bubble.fill"; case .fileProgress: "arrow.down.circle.fill"; case .appearance: "paintpalette"; case .lockScreen: "lock.fill"; case .bluetoothUnlock: "lock.laptopcomputer"; case .shortcuts: "square.grid.3x1.below.line.grid.1x2"; case .keyboardShortcuts: "keyboard"; case .snapZones: "uiwindow.split.2x1"; case .audio: "waveform"; case .battery: "battery.100"; case .bluetooth: "macbook.and.ipad"; case .hud: "macwindow.on.rectangle"; case .notifications: "bell"; case .nearbyShare: "shareplay"; case .continuity: "iphone.gen3.radiowaves.left.and.right"; case .fileShelf: "tray.full.fill"; case .notes: "note.text";        case .clipboard: "list.clipboard"; case .emoji: "face.smiling"; case .mouse: "computermouse.fill"; case .monitoring: "gauge.with.dots.needle.50percent"; case .devActivity: "hammer.circle.fill"; case .archives: "archivebox.fill"; case .mirror: "camera.fill"; case .caffeine: "cup.and.saucer.fill"; case .music: "music.note"; case .weather: "cloud.sun.fill";        case .calendar: "calendar"; case .eyeBreak: "eye.fill"; case .focusSession: "moon.fill"; case .appLock: "lock.shield.fill"; case .intelligence: "sparkle"; case .sports: "sportscourt"; case .finance: "chart.line.uptrend.xyaxis"; case .dockLayouts: "dock.rectangle"; case .mediaOptimizer: "photo"; case .about: "info.circle"
+        case .overview: "sparkles"; case .general: "gear"; case .systemEnhance: "macwindow.on.rectangle"; case .apps: "square.stack.3d.up.fill"; case .storage: "internaldrive.fill"; case .widgets: "square.grid.2x2.fill"; case .liveActivities: "timer"; case .appActivities: "video.bubble.fill"; case .fileProgress: "arrow.down.circle.fill"; case .appearance: "paintpalette"; case .lockScreen: "lock.fill"; case .bluetoothUnlock: "lock.laptopcomputer"; case .shortcuts: "square.grid.3x1.below.line.grid.1x2"; case .keyboardShortcuts: "keyboard"; case .snapZones: "uiwindow.split.2x1"; case .audio: "waveform"; case .battery: "battery.100"; case .bluetooth: "macbook.and.ipad"; case .hud: "macwindow.on.rectangle"; case .notifications: "bell"; case .nearbyShare: "shareplay"; case .continuity: "iphone.gen3.radiowaves.left.and.right"; case .fileShelf: "tray.full.fill"; case .notes: "note.text";        case .clipboard: "list.clipboard"; case .emoji: "face.smiling"; case .mouse: "computermouse.fill"; case .monitoring: "gauge.with.dots.needle.50percent"; case .devActivity: "hammer.circle.fill"; case .archives: "archivebox.fill"; case .mirror: "camera.fill"; case .caffeine: "cup.and.saucer.fill"; case .music: "music.note"; case .weather: "cloud.sun.fill";        case .calendar: "calendar"; case .eyeBreak: "eye.fill"; case .focusSession: "moon.fill"; case .productivity: "checklist"; case .appLock: "lock.shield.fill"; case .intelligence: "sparkle"; case .sports: "sportscourt"; case .finance: "chart.line.uptrend.xyaxis"; case .dockLayouts: "dock.rectangle"; case .mediaOptimizer: "photo"; case .about: "info.circle"
         }
     }
 
     var iconBackgroundColor: Color {
         switch self {
-        case .overview: .purple; case .general: .black; case .systemEnhance: .blue; case .apps: .purple; case .storage: .orange; case .widgets: .gray; case .liveActivities: .cyan; case .appActivities: .green; case .fileProgress: .blue; case .appearance: .indigo; case .lockScreen: .red; case .bluetoothUnlock: .indigo; case .shortcuts: .orange; case .keyboardShortcuts: .purple; case .snapZones: .blue; case .audio: .red; case .battery: .green; case .bluetooth: .blue; case .hud: .indigo; case .notifications: .red; case .nearbyShare: .blue; case .continuity: .green; case .fileShelf: .orange; case .notes: .yellow;        case .clipboard: .mint; case .emoji: .indigo; case .mouse: .teal; case .monitoring: .green; case .devActivity: .purple; case .archives: .brown; case .mirror: .indigo; case .caffeine: .brown; case .music: .pink; case .weather: .blue;        case .calendar: .red; case .eyeBreak: .teal; case .focusSession: .purple; case .appLock: .red; case .intelligence: .mint; case .sports: .green; case .finance: .green; case .dockLayouts: .cyan; case .mediaOptimizer: .orange; case .about: .blue
+        case .overview: .purple; case .general: .black; case .systemEnhance: .blue; case .apps: .purple; case .storage: .orange; case .widgets: .gray; case .liveActivities: .cyan; case .appActivities: .green; case .fileProgress: .blue; case .appearance: .indigo; case .lockScreen: .red; case .bluetoothUnlock: .indigo; case .shortcuts: .orange; case .keyboardShortcuts: .purple; case .snapZones: .blue; case .audio: .red; case .battery: .green; case .bluetooth: .blue; case .hud: .indigo; case .notifications: .red; case .nearbyShare: .blue; case .continuity: .green; case .fileShelf: .orange; case .notes: .yellow;        case .clipboard: .mint; case .emoji: .indigo; case .mouse: .teal; case .monitoring: .green; case .devActivity: .purple; case .archives: .brown; case .mirror: .indigo; case .caffeine: .brown; case .music: .pink; case .weather: .blue;        case .calendar: .red; case .eyeBreak: .teal; case .focusSession: .purple; case .productivity: .orange; case .appLock: .red; case .intelligence: .mint; case .sports: .green; case .finance: .green; case .dockLayouts: .cyan; case .mediaOptimizer: .orange; case .about: .blue
         }
     }
 
@@ -4045,6 +4056,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .weather: return [.blue, .mint]
         case .calendar: return [Color(hue: 0.01, saturation: 0.44, brightness: 0.89), Color(hue: 0.01, saturation: 0.58, brightness: 0.63)]
         case .eyeBreak: return [Color(hue: 0.48, saturation: 0.34, brightness: 0.84), Color(hue: 0.48, saturation: 0.48, brightness: 0.57)]
+        case .productivity: return [Color(hue: 0.06, saturation: 0.50, brightness: 0.92), Color(hue: 0.02, saturation: 0.62, brightness: 0.66)]
         case .focusSession: return [Color(hue: 0.74, saturation: 0.38, brightness: 0.84), Color(hue: 0.74, saturation: 0.52, brightness: 0.58)]
         case .appLock: return [Color(hue: 0.98, saturation: 0.48, brightness: 0.84), Color(hue: 0.98, saturation: 0.62, brightness: 0.54)]
         case .intelligence: return [Color(hue: 0.45, saturation: 0.42, brightness: 0.86), Color(hue: 0.78, saturation: 0.46, brightness: 0.78)]

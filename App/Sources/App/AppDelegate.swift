@@ -464,6 +464,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         FocusTriggerEngine.shared.start()
         CaffeineManager.shared.bootstrap()
 
+        LegacyNotchKitMigration.runIfNeeded(settingsModel)
         NearbyConnectionManager.shared.deviceDisplayName = settingsModel.current.nearbyShareDeviceDisplayName
         observeSettings()
 

@@ -19,7 +19,7 @@ extension SettingsSection {
         .init(title: "Notch", sections: [.appearance, .widgets, .liveActivities, .appActivities, .fileProgress, .lockScreen, .notifications, .hud]),
         .init(title: "Widgets & Content", sections: [.music, .weather, .calendar, .battery, .audio, .bluetooth, .shortcuts, .fileShelf, .notes, .clipboard, .mirror, .caffeine]),
         .init(title: "System & Utilities", sections: [.snapZones, .devActivity, .apps]),
-        .init(title: "Focus & Security", sections: [.eyeBreak, .focusSession]),
+        .init(title: "Focus & Security", sections: [.eyeBreak, .focusSession, .productivity]),
         .init(title: "", sections: [.about])
     ]
 }

@@ -70,6 +70,7 @@ struct SettingsDetailView: View {
         case .weather: WeatherSettingsView()
         case .calendar: CalendarSettingsView()
         case .eyeBreak: EyeBreakSettingsView()
+        case .productivity: ProductivitySettingsView()
         case .focusSession: FocusSessionSettingsView()
         case .appLock: AppLockSettingsView()
         case .intelligence: IntelligenceSettingsView()

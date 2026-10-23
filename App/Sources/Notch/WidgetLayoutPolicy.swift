@@ -29,6 +29,9 @@ enum WidgetLayoutPolicy {
         case .focusSession: return 190
         case .storage: return 210
         case .dev: return 200
+        case .pomodoro: return 280
+        case .todo: return 190
+        case .quickApps: return max(110, CGFloat(((UserDefaults.standard.stringArray(forKey: "quickApps")?.count ?? 0) + 1) / 2) * 50 + 12)
         }
     }
 

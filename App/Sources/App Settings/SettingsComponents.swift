@@ -197,6 +197,9 @@ struct WidgetRowView: View {
         case .storage: return $settings.settings.storageWidgetEnabled
         case .dev: return $settings.settings.devWidgetEnabled
         case .agent: return .constant(false)
+        case .pomodoro: return $settings.settings.pomodoroWidgetEnabled
+        case .todo: return $settings.settings.todoWidgetEnabled
+        case .quickApps: return $settings.settings.quickAppsWidgetEnabled
         }
     }
 

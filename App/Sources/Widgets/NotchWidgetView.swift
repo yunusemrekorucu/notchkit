@@ -322,6 +322,12 @@ private struct NotchDefaultWidgetsView: View {
                 return false
             case .focusSession:
                 return settings.settings.focusSessionWidgetEnabled
+            case .pomodoro:
+                return settings.settings.pomodoroWidgetEnabled
+            case .todo:
+                return settings.settings.todoWidgetEnabled
+            case .quickApps:
+                return settings.settings.quickAppsWidgetEnabled
             }
         }
 
@@ -460,6 +466,12 @@ private struct NotchDefaultWidgetsView: View {
             FocusWidgetView()
         case .timer:
             TimerWidgetView()
+        case .pomodoro:
+            PomodoroWidgetView()
+        case .todo:
+            TodoWidgetView()
+        case .quickApps:
+            QuickAppsWidgetView()
         case .battery:
             BatteryWidgetView()
         case .storage:
