@@ -1,0 +1,30 @@
+//
+//  KBPPulseManager.h
+//  Sapphire
+//
+//  Created by Shariq Charolia on 2025-08-22.
+//
+
+
+//
+//  KBPPulseManager.h
+//  Sapphire
+//
+//  Created by EthanRDoesMC on 10/20/21.
+//
+
+#import <Foundation/Foundation.h>
+#import "KeyboardBrightnessClient.h"
+#import "OSDManager.h"
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface KBPPulseManager : NSObject
+@property(nonatomic,strong) KeyboardBrightnessClient * brightnessClient;
+@property(atomic,readwrite) BOOL paused;
++(id)sharedInstance;
++(void)configure;
++(KeyboardBrightnessClient *)brightnessClient;
+@end
+
+NS_ASSUME_NONNULL_END

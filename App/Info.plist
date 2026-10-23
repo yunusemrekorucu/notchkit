@@ -12,17 +12,25 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>tr</string>
-	</array>
 	<key>CFBundleName</key>
 	<string>NotchKit</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>2.0.0</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.yunusemrekorucu.NotchKit</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>notchkit</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSApplicationCategoryType</key>
@@ -31,13 +39,101 @@
 	<string>14.6</string>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
 	<key>NSAppleEventsUsageDescription</key>
-	<string>Used to show and control the track that is playing.</string>
+	<string>NotchKit controls playback in Music and Spotify, and reads your Terminal or iTerm tabs for developer activities.</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Used to show upcoming songs and playlists from Apple Music.</string>
+	<key>NSAudioCaptureUsageDescription</key>
+	<string>NotchKit listens to your music app's audio on this Mac to time lyrics word by word. The audio never leaves your Mac.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Used to show your connected Bluetooth devices.</string>
+	<string>Used to show new Bluetooth connections and low battery notices.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
-	<string>Used by the Calendar widget and the upcoming event indicator.</string>
+	<string>Used to show upcoming events.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Used to show upcoming events.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Used by the Mirror widget.</string>
+	<string>Used by the Mirror widget so you can see yourself in the notch.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Used to find the right contact when replying to a notification.</string>
+	<key>NSFocusStatusUsageDescription</key>
+	<string>Used to show live Focus updates.</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>© 2026 Yunus Emre Korucu. Based on Sapphire © Shariq Charolia. AGPL-3.0.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Used for live local weather.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Used for live local weather.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Used for live local weather.</string>
+	<key>NSMainStoryboardFile</key>
+	<string>Main</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSRemindersFullAccessUsageDescription</key>
+	<string>Used to show upcoming reminders.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Used to show upcoming reminders.</string>
+	<key>NSScreenCaptureUsageDescription</key>
+	<string>Used to tint the menu bar to match your wallpaper.</string>
+	<key>NSServices</key>
+	<array>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Take a Photo with NotchKit</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>takePhotoWithSapphire</string>
+			<key>NSPortName</key>
+			<string>NotchKit</string>
+			<key>NSRequiredContext</key>
+			<dict/>
+			<key>NSSendFileTypes</key>
+			<array/>
+		</dict>
+		<dict>
+			<key>NSMenuItem</key>
+			<dict>
+				<key>default</key>
+				<string>Scan Documents with NotchKit</string>
+			</dict>
+			<key>NSMessage</key>
+			<string>scanDocumentWithSapphire</string>
+			<key>NSPortName</key>
+			<string>NotchKit</string>
+			<key>NSRequiredContext</key>
+			<dict/>
+			<key>NSSendFileTypes</key>
+			<array/>
+		</dict>
+	</array>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.json</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>NotchKit Settings Backup</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.yunusemrekorucu.notchkit.settings-backup</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>notchkitbackup</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>

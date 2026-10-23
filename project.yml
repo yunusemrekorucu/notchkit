@@ -7,7 +7,7 @@ options:
   developmentLanguage: en
 settings:
   base:
-    SWIFT_VERSION: "5.10"
+    SWIFT_VERSION: "5.0"
     MACOSX_DEPLOYMENT_TARGET: "14.6"
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
@@ -15,64 +15,63 @@ settings:
     ENABLE_HARDENED_RUNTIME: NO
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
 packages:
-  Defaults:
-    url: https://github.com/sindresorhus/Defaults
-    from: 9.0.0
   LaunchAtLogin:
     url: https://github.com/sindresorhus/LaunchAtLogin-Modern
     from: 1.1.0
+  SQLite:
+    url: https://github.com/stephencelis/SQLite.swift
+    from: 0.15.4
+  Yams:
+    url: https://github.com/jpsim/Yams.git
+    exactVersion: 6.2.2
 targets:
   NotchKit:
     type: application
     platform: macOS
     sources:
       - path: App/Sources
+        excludes:
+          - "App/Info.plist"
+          - "**/*.framework"
+          - "**/*.framework/**"
+      - path: App/ObjC
+        excludes:
+          - "Miscellaneous/NDNotificationCenterHackery.m"
+      - path: App/PrivateHeaders
+        buildPhase: none
       - path: App/Resources
         buildPhase: resources
     dependencies:
-      - package: Defaults
       - package: LaunchAtLogin
-    info:
-      path: App/Info.plist
-      properties:
-        CFBundleDisplayName: NotchKit
-        CFBundleName: NotchKit
-        CFBundleDevelopmentRegion: en
-        CFBundleLocalizations: [en, tr]
-        CFBundleShortVersionString: "1.1.0"
-        CFBundleVersion: "1"
-        LSUIElement: true
-        LSMinimumSystemVersion: "14.6"
-        LSApplicationCategoryType: public.app-category.utilities
-        NSCameraUsageDescription: Used by the Mirror widget.
-        NSCalendarsFullAccessUsageDescription: Used by the Calendar widget and the upcoming event indicator.
-        NSBluetoothAlwaysUsageDescription: Used to show your connected Bluetooth devices.
-        NSAppleEventsUsageDescription: Used to show and control the track that is playing.
-    entitlements:
-      path: App/NotchKit.entitlements
-      properties:
-        com.apple.security.app-sandbox: false
-        com.apple.security.device.camera: true
-        com.apple.security.personal-information.calendars: true
-        com.apple.security.automation.apple-events: true
+      - package: SQLite
+      - package: Yams
+      - sdk: IOKit.framework
+      - sdk: CoreGraphics.framework
+      - sdk: UserNotifications.framework
+      - sdk: UserNotificationsUI.framework
+      - sdk: CoreDisplay.framework
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yunusemrekorucu.NotchKit
+        INFOPLIST_FILE: App/Info.plist
+        CODE_SIGN_ENTITLEMENTS: App/NotchKit.entitlements
+        SWIFT_OBJC_BRIDGING_HEADER: App/ObjC/Bridging-Header.h
+        HEADER_SEARCH_PATHS: "$(PROJECT_DIR)/App/PrivateHeaders $(PROJECT_DIR)/App/ObjC/**"
+        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(SDKROOT)/System/Library/PrivateFrameworks"
+        SYSTEM_FRAMEWORK_SEARCH_PATHS: "$(inherited) $(SDKROOT)/System/Library/PrivateFrameworks"
+        OTHER_LDFLAGS: "$(inherited) -framework OSD -framework MultitouchSupport -framework DisplayServices -framework MobileTimer -framework MobileTimerSupport -framework IMCore -framework IMSharedUtilities -framework IDS -framework FTServices -framework TelephonyUtilities"
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        SWIFT_EMIT_LOC_STRINGS: NO
     postBuildScripts:
-      - name: Embed MediaRemoteAdapter
+      - name: Embed media adapters
         basedOnDependencyAnalysis: false
         script: |
           set -e
-          SRC="${PROJECT_DIR}/vendor/mediaremote-adapter"
-          DST="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MediaRemoteAdapter"
-          # Adapter henüz derlenmediyse derle (cmake gerekir: brew install cmake).
-          if [ ! -d "$SRC/build/MediaRemoteAdapter.framework" ]; then
-            export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
-            if ! command -v cmake >/dev/null; then
-              echo "error: mediaremote-adapter için cmake gerekli (brew install cmake)"; exit 1
-            fi
-            cmake -S "$SRC" -B "$SRC/build" -DCMAKE_BUILD_TYPE=Release
-            cmake --build "$SRC/build" --target MediaRemoteAdapter
-          fi
-          mkdir -p "$DST"
-          rm -rf "$DST/MediaRemoteAdapter.framework"
-          cp -R "$SRC/build/MediaRemoteAdapter.framework" "$DST/"
-          cp "$SRC/bin/mediaremote-adapter.pl" "$DST/"
-          codesign --force --sign - "$DST/MediaRemoteAdapter.framework" || true
+          MUSIC="${PROJECT_DIR}/App/Sources/Services/Music"
+          DST="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
+          for fw in MediaRemoteAdapter SapphireMediaQueue; do
+            rm -rf "$DST/$fw.framework"
+            cp -R "$MUSIC/$fw.framework" "$DST/"
+            codesign --force --sign - "$DST/$fw.framework" || true
+          done
+          cp "$MUSIC/mediaremote-adapter.pl" "$MUSIC/mediaremote-queue.pl" "$DST/"

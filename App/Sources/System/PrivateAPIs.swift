@@ -1,0 +1,555 @@
+//
+//  PrivateAPIs.swift
+//  Sapphire
+//
+//  Created by Shariq Charolia on 2025-07-04.
+//
+
+import SwiftUI
+import Cocoa
+import AudioToolbox
+import IOKit.hidsystem
+
+// MARK: - Bridged Types
+internal typealias CGSConnectionID = Int32
+internal typealias CGSSpaceID = UInt64
+internal typealias CGError = Int32
+
+internal let kCGErrorSuccess: CGError = 0
+
+internal enum CGSSpaceType: UInt32 {
+    case user = 0
+    case system = 2
+    case fullscreen = 4
+}
+
+internal struct CGSSpaceMask: OptionSet {
+    let rawValue: UInt32
+
+    static let includesCurrent = CGSSpaceMask(rawValue: 1 << 0)
+    static let includesOthers = CGSSpaceMask(rawValue: 1 << 1)
+    static let includesUser = CGSSpaceMask(rawValue: 1 << 2)
+    static let includesVisible = CGSSpaceMask(rawValue: 1 << 16)
+    static let currentSpace: CGSSpaceMask = [.includesUser, .includesCurrent]
+    static let otherSpaces: CGSSpaceMask = [.includesOthers, .includesCurrent]
+    static let allSpaces: CGSSpaceMask = [.includesUser, .includesOthers, .includesCurrent]
+    static let allVisibleSpaces: CGSSpaceMask = [.includesVisible, .allSpaces]
+}
+
+// MARK: - CGSConnection Functions
+@_silgen_name("CGSMainConnectionID")
+internal func CGSMainConnectionID() -> CGSConnectionID
+
+@_silgen_name("CGSCopyConnectionProperty")
+internal func CGSCopyConnectionProperty(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ key: CFString,
+    _ outValue: inout Unmanaged<CFTypeRef>?
+) -> CGError
+
+@_silgen_name("CGSSetConnectionProperty")
+internal func CGSSetConnectionProperty(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ key: CFString,
+    _ value: CFTypeRef
+) -> CGError
+
+// MARK: - CGSEvent Functions
+@_silgen_name("CGSEventIsAppUnresponsive")
+internal func CGSEventIsAppUnresponsive(
+    _ cid: CGSConnectionID,
+    _ psn: inout ProcessSerialNumber
+) -> Bool
+
+// MARK: - CGSSpace Functions
+@_silgen_name("CGSGetActiveSpace")
+internal func CGSGetActiveSpace(_ cid: CGSConnectionID) -> CGSSpaceID
+
+@_silgen_name("CGSCopySpacesForWindows")
+internal func CGSCopySpacesForWindows(
+    _ cid: CGSConnectionID,
+    _ mask: CGSSpaceMask,
+    _ windowIDs: CFArray
+) -> Unmanaged<CFArray>?
+
+@_silgen_name("CGSSpaceGetType")
+internal func CGSSpaceGetType(
+    _ cid: CGSConnectionID,
+    _ sid: CGSSpaceID
+) -> CGSSpaceType
+
+// MARK: - CGSWindow Functions
+@_silgen_name("CGSGetWindowList")
+internal func CGSGetWindowList(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ count: Int32,
+    _ list: UnsafeMutablePointer<CGWindowID>,
+    _ outCount: inout Int32
+) -> CGError
+
+@_silgen_name("CGSGetOnScreenWindowList")
+internal func CGSGetOnScreenWindowList(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ count: Int32,
+    _ list: UnsafeMutablePointer<CGWindowID>,
+    _ outCount: inout Int32
+) -> CGError
+
+@_silgen_name("CGSGetProcessMenuBarWindowList")
+internal func CGSGetProcessMenuBarWindowList(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ count: Int32,
+    _ list: UnsafeMutablePointer<CGWindowID>,
+    _ outCount: inout Int32
+) -> CGError
+
+@_silgen_name("CGSGetWindowCount")
+internal func CGSGetWindowCount(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ outCount: inout Int32
+) -> CGError
+
+@_silgen_name("CGSGetOnScreenWindowCount")
+internal func CGSGetOnScreenWindowCount(
+    _ cid: CGSConnectionID,
+    _ targetCID: CGSConnectionID,
+    _ outCount: inout Int32
+) -> CGError
+
+@_silgen_name("CGSGetScreenRectForWindow")
+internal func CGSGetScreenRectForWindow(
+    _ cid: CGSConnectionID,
+    _ wid: CGWindowID,
+    _ outRect: inout CGRect
+) -> CGError
+
+// MARK: - CGSWindow Group Functions (child window attachment)
+
+@_silgen_name("CGSAddWindowToWindowOrderingGroup")
+internal func CGSAddWindowToWindowOrderingGroup(
+    _ cid: CGSConnectionID,
+    _ child: CGWindowID,
+    _ parent: CGWindowID
+) -> CGError
+
+@_silgen_name("CGSRemoveFromOrderingGroup")
+internal func CGSRemoveFromOrderingGroup(
+    _ cid: CGSConnectionID,
+    _ window: CGWindowID
+) -> CGError
+
+@_silgen_name("CGSAddWindowToWindowMovementGroup")
+internal func CGSAddWindowToWindowMovementGroup(
+    _ cid: CGSConnectionID,
+    _ child: CGWindowID,
+    _ parent: CGWindowID
+) -> CGError
+
+@_silgen_name("CGSRemoveWindowFromWindowMovementGroup")
+internal func CGSRemoveWindowFromWindowMovementGroup(
+    _ cid: CGSConnectionID,
+    _ window: CGWindowID
+) -> CGError
+
+@_silgen_name("CGSOrderWindow")
+internal func CGSOrderWindow(
+    _ cid: CGSConnectionID,
+    _ wid: CGWindowID,
+    _ place: Int32,
+    _ relativeToWid: CGWindowID
+) -> CGError
+
+// MARK: - CGSConnection Functions
+@_silgen_name("_CGSDefaultConnection") internal func _CGSDefaultConnection() -> CGSConnectionID
+@_silgen_name("CGSGetConnectionProperty") internal func CGSGetConnectionProperty(_ cid: CGSConnectionID, _ key: CFString) -> Unmanaged<CFTypeRef>
+@_silgen_name("CGSSetConnectionProperty") internal func CGSSetConnectionProperty(_ cid: CGSConnectionID, _ key: CFString, _ value: CFTypeRef) -> CGError
+
+@_silgen_name("CGSSpaceCreate")
+fileprivate func CGSSpaceCreate(_ cid: CGSConnectionID, _ unknown: Int, _ options: NSDictionary?) -> CGSSpaceID
+@_silgen_name("CGSSpaceDestroy")
+fileprivate func CGSSpaceDestroy(_ cid: CGSConnectionID, _ space: CGSSpaceID)
+@_silgen_name("CGSSpaceSetAbsoluteLevel")
+fileprivate func CGSSpaceSetAbsoluteLevel(_ cid: CGSConnectionID, _ space: CGSSpaceID, _ level: Int)
+@_silgen_name("CGSAddWindowsToSpaces")
+internal func CGSAddWindowsToSpaces(_ cid: CGSConnectionID, _ windows: NSArray, _ spaces: NSArray)
+@_silgen_name("CGSRemoveWindowsFromSpaces")
+internal func CGSRemoveWindowsFromSpaces(_ cid: CGSConnectionID, _ windows: NSArray, _ spaces: NSArray)
+@_silgen_name("CGSHideSpaces")
+fileprivate func CGSHideSpaces(_ cid: CGSConnectionID, _ spaces: NSArray)
+@_silgen_name("CGSShowSpaces")
+fileprivate func CGSShowSpaces(_ cid: CGSConnectionID, _ spaces: NSArray)
+@_silgen_name("CGSCopyManagedDisplaySpaces")
+internal func CGSCopyManagedDisplaySpaces(_ cid: CGSConnectionID) -> CFArray
+
+@_silgen_name("CGSMoveWindowsToManagedSpace")
+internal func CGSMoveWindowsToManagedSpace(
+    _ cid: CGSConnectionID,
+    _ windows: NSArray,
+    _ space: CGSSpaceID
+)
+
+@_silgen_name("CoreDockSendNotification")
+internal func CoreDockSendNotification(_ notification: CFString, _ unknown: CInt) -> Void
+
+// MARK: - DisplayServices Private APIs
+@_silgen_name("DisplayServicesGetBrightness")
+internal func DisplayServicesGetBrightness(_ display: CGDirectDisplayID, _ brightness: UnsafeMutablePointer<Float>) -> Int32
+@_silgen_name("DisplayServicesSetBrightness")
+internal func DisplayServicesSetBrightness(_ display: CGDirectDisplayID, _ brightness: Float) -> Int32
+
+// MARK: - SwiftUI Private APIs
+@_silgen_name("$s7SwiftUI5ImageV19_internalSystemNameACSS_tcfC")
+private func _swiftUI_image(internalSystemName: String) -> Image?
+
+extension Image {
+    init?(privateName: String) {
+        guard let systemImage = _swiftUI_image(internalSystemName: privateName) else {
+            return nil
+        }
+        self = systemImage
+    }
+}
+
+// MARK: - CGS Space Management (for Notch Window)
+public final class CGSSpace {
+    private let identifier: CGSSpaceID
+    private let createdByInit: Bool
+    private let connectionID: CGSConnectionID
+
+    public var windows: Set<NSWindow> = [] {
+        didSet {
+            let remove = oldValue.subtracting(self.windows)
+            let add = self.windows.subtracting(oldValue)
+
+            if connectionID != 0 {
+                 if !remove.isEmpty {
+                     CGSRemoveWindowsFromSpaces(connectionID, remove.map { $0.windowNumber } as NSArray, [self.identifier] as NSArray)
+                 }
+                if !add.isEmpty {
+                     CGSAddWindowsToSpaces(connectionID, add.map { $0.windowNumber } as NSArray, [self.identifier] as NSArray)
+                }
+            }
+        }
+    }
+
+    public func reassert(_ window: NSWindow) {
+        if !windows.contains(window) {
+            windows.insert(window)
+            return
+        }
+        guard connectionID != 0, window.windowNumber > 0 else { return }
+        CGSAddWindowsToSpaces(connectionID, [window.windowNumber] as NSArray, [self.identifier] as NSArray)
+    }
+
+    public func removeAllWindows() {
+        windows.removeAll()
+    }
+
+    public init(level: Int = Int(CGWindowLevelForKey(.normalWindow))) {
+        self.connectionID = _CGSDefaultConnection()
+        let flag = 0x1
+
+        self.identifier = CGSSpaceCreate(connectionID, flag, nil as NSDictionary?)
+        CGSSpaceSetAbsoluteLevel(connectionID, self.identifier, level)
+        CGSShowSpaces(connectionID, [self.identifier] as NSArray)
+        self.createdByInit = true
+    }
+
+    deinit {
+         if connectionID != 0 && identifier != 0 {
+             CGSHideSpaces(connectionID, [self.identifier] as NSArray)
+             if createdByInit {
+                 CGSSpaceDestroy(connectionID, self.identifier)
+             }
+         }
+    }
+}
+
+// MARK: - System HUD Management (Sapphire's placeholder)
+class SapphireOSDManager {
+    static func disableSystemHUD() {
+        print("[SapphireOSDManager] LOG: `disableSystemHUD` called.")
+    }
+
+    static func enableSystemHUD() {
+        print("[SapphireOSDManager] LOG: `enableSystemHUD` called.")
+    }
+}
+
+// MARK: - System Control Interface
+struct SystemControl {
+    private static var brightnessAnimationTask: Task<Void, Never>?
+
+    private static let keyboardManager = KeyboardBacklightManager.sharedManager() as! KeyboardBacklightManager
+
+    static func configureKeyboardBacklight() {
+        Self.keyboardManager.configure()
+    }
+
+    static func getKeyboardBrightness() -> Float {
+        return Self.keyboardManager.getBrightness()
+    }
+
+    static func setKeyboardBrightness(to level: Float) {
+        let clampedLevel = max(0.0, min(1.0, level))
+        Self.keyboardManager.setBrightness(clampedLevel)
+    }
+
+    private static let lastKnownVolumeLock = NSLock()
+    nonisolated(unsafe) private static var lastKnownVolume: Float = 0.5
+
+    static func getVolume() -> Float {
+        guard let volume = readOutputVolume() else {
+            lastKnownVolumeLock.lock(); defer { lastKnownVolumeLock.unlock() }
+            return lastKnownVolume
+        }
+        lastKnownVolumeLock.lock(); lastKnownVolume = volume; lastKnownVolumeLock.unlock()
+        return volume
+    }
+
+    private static func readOutputVolume() -> Float? {
+        guard let deviceID = getDefaultOutputDeviceID() else { return nil }
+        var address = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyVolumeScalar,
+            mScope: kAudioObjectPropertyScopeOutput,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        var volume: Float = 0.0
+        var size = UInt32(MemoryLayout<Float>.size)
+        if AudioObjectGetPropertyData(deviceID, &address, 0, nil, &size, &volume) == noErr {
+            return volume
+        }
+        size = UInt32(MemoryLayout<Float>.size)
+        var virtualMain = AudioObjectPropertyAddress(
+            mSelector: kAudioHardwareServiceDeviceProperty_VirtualMainVolume,
+            mScope: kAudioObjectPropertyScopeOutput,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        if AudioHardwareServiceHasProperty(deviceID, &virtualMain),
+           AudioHardwareServiceGetPropertyData(deviceID, &virtualMain, 0, nil, &size, &volume) == noErr {
+            return volume
+        }
+        return nil
+    }
+
+    private static func getDefaultOutputDeviceID() -> AudioDeviceID? {
+        var deviceID = kAudioObjectUnknown
+        var address = AudioObjectPropertyAddress(
+            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
+        guard AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &address, 0, nil, &size, &deviceID) == noErr,
+              deviceID != kAudioObjectUnknown else { return nil }
+        return deviceID
+    }
+
+    static func setVolume(to level: Float) {
+        let cleanLevel = max(0.0, min(1.0, level))
+
+        if let deviceID = getDefaultOutputDeviceID() {
+            var volumeValue: Float = cleanLevel
+            var address = AudioObjectPropertyAddress(
+                mSelector: kAudioDevicePropertyVolumeScalar,
+                mScope: kAudioObjectPropertyScopeOutput,
+                mElement: kAudioObjectPropertyElementMain
+            )
+            let size = UInt32(MemoryLayout<Float>.size)
+            if AudioObjectSetPropertyData(deviceID, &address, 0, nil, size, &volumeValue) == noErr {
+                lastKnownVolumeLock.lock(); lastKnownVolume = cleanLevel; lastKnownVolumeLock.unlock()
+                return
+            }
+            var virtualMain = AudioObjectPropertyAddress(
+                mSelector: kAudioHardwareServiceDeviceProperty_VirtualMainVolume,
+                mScope: kAudioObjectPropertyScopeOutput,
+                mElement: kAudioObjectPropertyElementMain
+            )
+            if AudioHardwareServiceHasProperty(deviceID, &virtualMain),
+               AudioHardwareServiceSetPropertyData(deviceID, &virtualMain, 0, nil, size, &volumeValue) == noErr {
+                lastKnownVolumeLock.lock(); lastKnownVolume = cleanLevel; lastKnownVolumeLock.unlock()
+                return
+            }
+        }
+
+        let scriptVolume: Int
+        if cleanLevel < 0.05 {
+            scriptVolume = Int(ceil(cleanLevel * 100))
+        } else {
+            scriptVolume = Int((cleanLevel * 100).rounded(.toNearestOrAwayFromZero))
+        }
+        let scriptSource = "set volume output volume \(scriptVolume)"
+        var error: NSDictionary?
+        AppleScriptRunner.execute(scriptSource, error: &error)
+        if let err = error {
+            print("[SystemControl] ERROR: AppleScript failed to set volume: \(err)")
+        }
+    }
+
+    static func isMuted() -> Bool {
+        if let deviceID = getDefaultOutputDeviceID() {
+            var address = AudioObjectPropertyAddress(
+                mSelector: kAudioDevicePropertyMute,
+                mScope: kAudioObjectPropertyScopeOutput,
+                mElement: kAudioObjectPropertyElementMain
+            )
+            if AudioObjectHasProperty(deviceID, &address) {
+                var muted: UInt32 = 0
+                var size = UInt32(MemoryLayout<UInt32>.size)
+                if AudioObjectGetPropertyData(deviceID, &address, 0, nil, &size, &muted) == noErr {
+                    return muted != 0
+                }
+            }
+            address.mElement = 0
+            if AudioObjectHasProperty(deviceID, &address) {
+                var muted: UInt32 = 0
+                var size = UInt32(MemoryLayout<UInt32>.size)
+                if AudioObjectGetPropertyData(deviceID, &address, 0, nil, &size, &muted) == noErr {
+                    return muted != 0
+                }
+            }
+        }
+
+        let scriptSource = "output muted of (get volume settings)"
+        var error: NSDictionary?
+        if let result = AppleScriptRunner.execute(scriptSource, error: &error),
+           error == nil {
+            return result.booleanValue
+        }
+        return false
+    }
+
+    static func setMuted(to isMuted: Bool) {
+        if let deviceID = getDefaultOutputDeviceID() {
+            var value: UInt32 = isMuted ? 1 : 0
+            var address = AudioObjectPropertyAddress(
+                mSelector: kAudioDevicePropertyMute,
+                mScope: kAudioObjectPropertyScopeOutput,
+                mElement: kAudioObjectPropertyElementMain
+            )
+            let size = UInt32(MemoryLayout<UInt32>.size)
+            if AudioObjectSetPropertyData(deviceID, &address, 0, nil, size, &value) == noErr {
+                return
+            }
+            address.mElement = 0
+            if AudioObjectSetPropertyData(deviceID, &address, 0, nil, size, &value) == noErr {
+                return
+            }
+        }
+
+        let scriptSource = isMuted ? "set volume with output muted" : "set volume without output muted"
+        var error: NSDictionary?
+        AppleScriptRunner.execute(scriptSource, error: &error)
+        if let err = error {
+            print("[SystemControl] ERROR: AppleScript failed to set mute state: \(err)")
+        }
+    }
+
+    private static func builtInDisplayID() -> CGDirectDisplayID? {
+        var onlineDisplayIDs = [CGDirectDisplayID](repeating: 0, count: 16)
+        var displayCount: UInt32 = 0
+        guard CGGetOnlineDisplayList(16, &onlineDisplayIDs, &displayCount) == .success else { return nil }
+        for id in onlineDisplayIDs.prefix(Int(displayCount)) where CGDisplayIsBuiltin(id) != 0 {
+            return id
+        }
+        return nil
+    }
+
+    static func getBrightness() -> Float {
+        var brightness: Float = 0.0
+        guard let displayID = builtInDisplayID() else { return 0.5 }
+        if DisplayServicesGetBrightness(displayID, &brightness) != 0 {
+            return 0.5
+        }
+        return brightness
+    }
+
+    static func setBrightness(to level: Float) {
+        let clampedLevel = min(1.0, max(0.0, level))
+        guard let displayID = builtInDisplayID() else { return }
+        let result = DisplayServicesSetBrightness(displayID, clampedLevel)
+        if result != 0 {
+            print("[SystemControl] ERROR: DisplayServicesSetBrightness failed for display \(displayID) with result code \(result).")
+        }
+    }
+
+    static func setBrightnessSmoothly(to targetBrightness: Float, duration: TimeInterval = 0.2) {
+        brightnessAnimationTask?.cancel()
+
+        brightnessAnimationTask = Task {
+            let startBrightness = getBrightness()
+            let startTime = Date()
+            let endTime = startTime.addingTimeInterval(duration)
+
+            while Date() < endTime {
+                if Task.isCancelled { break }
+
+                let elapsed = Date().timeIntervalSince(startTime)
+                let progress = min(1.0, elapsed / duration)
+
+                let interpolatedBrightness = startBrightness + (targetBrightness - startBrightness) * Float(progress)
+                setBrightness(to: interpolatedBrightness)
+
+                try? await Task.sleep(for: .milliseconds(16))
+            }
+
+            if !Task.isCancelled {
+                setBrightness(to: targetBrightness)
+            }
+        }
+    }
+}
+
+// MARK: - CGS Desktop Helper
+struct CGSHelper {
+    private static let connection = _CGSDefaultConnection()
+
+    static func getActiveDesktopNumber() -> Int? {
+        getActiveDesktopNumbers().main
+    }
+
+    static func getActiveDesktopNumbersByDisplay() -> [String: Int] {
+        getActiveDesktopNumbers().byDisplay
+    }
+
+    static func getActiveDesktopNumbers() -> (main: Int?, byDisplay: [String: Int]) {
+        let activeSpaceID = CGSGetActiveSpace(connection)
+        var result: [String: Int] = [:]
+
+        guard let displaySpaces = CGSCopyManagedDisplaySpaces(connection) as? [[String: Any]] else {
+            return (nil, result)
+        }
+
+        var main: Int?
+        if let spacesForMainDisplay = displaySpaces.first?["Spaces"] as? [[String: Any]],
+           let index = spacesForMainDisplay.firstIndex(where: { ($0["id64"] as? CGSSpaceID) == activeSpaceID }) {
+            main = index + 1
+        }
+
+        for displayEntry in displaySpaces {
+            guard let displayIdentifier = displayEntry["Display Identifier"] as? String,
+                  let spaces = displayEntry["Spaces"] as? [[String: Any]] else {
+                continue
+            }
+
+            var activeIndex: Int?
+            if let idx = spaces.firstIndex(where: { ($0["id64"] as? CGSSpaceID) == activeSpaceID }) {
+                activeIndex = idx
+            } else if let idx = spaces.firstIndex(where: { ($0["is-current"] as? Bool) == true }) {
+                activeIndex = idx
+            }
+
+            if let index = activeIndex {
+                result[displayIdentifier] = index + 1
+            }
+        }
+
+        return (main, result)
+    }
+}
