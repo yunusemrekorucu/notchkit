@@ -1088,7 +1088,7 @@ struct SystemHUDView: View {
         let isXDR = isBuiltIn && level > 1.0
         let currentDisplayScaleMax = (isBuiltIn && hudManager.isXDREnabled) ? settings.settings.xdrBrightnessLevel : 1.0
         let normalizedDisplayLevel = level / currentDisplayScaleMax
-        let percentageText = "\(Int(roundf(level * 100)))%"
+        let percentageText = String(localized: "\(Int(roundf(level * 100)))%")
 
         VStack(alignment: .leading, spacing: 4) {
              if let name = displayName {
@@ -1641,7 +1641,7 @@ struct SystemHUDSlimActivityView {
          if isXDR {
              let maxLevel = settings.settings.xdrBrightnessLevel
              displayLevel = level / maxLevel
-             percentageText = "\(Int(roundf(level * 100)))%"
+             percentageText = String(localized: "\(Int(roundf(level * 100)))%")
              percentageFrameWidth = 40
          } else {
              displayLevel = level

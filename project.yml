@@ -61,7 +61,7 @@ targets:
         SYSTEM_FRAMEWORK_SEARCH_PATHS: "$(inherited) $(SDKROOT)/System/Library/PrivateFrameworks"
         OTHER_LDFLAGS: "$(inherited) -framework OSD -framework MultitouchSupport -framework DisplayServices -framework MobileTimer -framework MobileTimerSupport -framework IMCore -framework IMSharedUtilities -framework IDS -framework FTServices -framework TelephonyUtilities"
         ENABLE_USER_SCRIPT_SANDBOXING: NO
-        SWIFT_EMIT_LOC_STRINGS: NO
+        SWIFT_EMIT_LOC_STRINGS: YES
     postBuildScripts:
       - name: Embed media adapters
         basedOnDependencyAnalysis: false

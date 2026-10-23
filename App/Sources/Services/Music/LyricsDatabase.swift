@@ -52,7 +52,7 @@ final class LyricsDatabase {
             LyricsLog.info("Lyrics database: curated lyrics (\(source), \(elapsed)ms), \(lines.count) lines")
         case .timing(let overlay, let samples, let confidence):
             LyricsLog.info(
-                "Lyrics database: timing for \(overlay.lines.count) lines (\(source), \(elapsed)ms), \(samples) listen(s), confidence \(Int(confidence * 100))%"
+                String(localized: "Lyrics database: timing for \(overlay.lines.count) lines (\(source), \(elapsed)ms), \(samples) listen(s), confidence \(Int(confidence * 100))%")
             )
         case .notFound:
             LyricsLog.info("Lyrics database: nothing for \(label ?? key) (\(source), \(elapsed)ms)")

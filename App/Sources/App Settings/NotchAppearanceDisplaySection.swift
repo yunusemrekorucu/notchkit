@@ -84,8 +84,8 @@ struct NotchAppearanceDisplaySection: View {
         }
         let name = screens.first { $0.displayIdentifier == selectedDisplay }?.displayLabel ?? "This display"
         return hasOverride
-            ? "\(name) has its own appearance."
-            : "\(name) uses the default. Changing anything below gives it its own appearance."
+            ? String(localized: "\(name) has its own appearance.")
+            : String(localized: "\(name) uses the default. Changing anything below gives it its own appearance.")
     }
 
     private func resetOverride(for key: String) {

@@ -84,7 +84,7 @@ struct NearbyTransferLiveActivityView: View {
                 .transition(.opacity)
 
         case .failed(let reason):
-            StatusTagView(text: "Failed: \(reason)", color: .red)
+            StatusTagView(text: String(localized: "Failed: \(reason)"), color: .red)
                 .transition(.opacity)
         }
     }

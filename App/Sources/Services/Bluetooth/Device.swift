@@ -43,7 +43,7 @@ class Device: NSObject, Identifiable {
         }
 
         if let mac = resolvedMacAddress {
-            return "Device (\(mac))"
+            return String(localized: "Device (\(mac))")
         }
 
         return "Unnamed Device"

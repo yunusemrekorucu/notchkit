@@ -37,7 +37,7 @@ struct SettingsSidebarView: View {
 
         return SettingsSection.sidebarGroups.compactMap { group in
             let matches = group.sections.filter { section in
-                let haystacks = [section.label, section.shortDescription] + section.searchTokens
+                let haystacks = [section.label, section.shortDescription, L(section.label), L(section.shortDescription)] + section.searchTokens
                 return haystacks.contains { $0.localizedCaseInsensitiveContains(query) }
             }
             return matches.isEmpty ? nil : SettingsSidebarGroup(title: group.title, sections: matches)

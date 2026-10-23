@@ -342,7 +342,7 @@ private struct DeviceDropTile: View {
             }
             .scaleEffect(isTargeted ? (style == .card ? 1.03 : 1.04) : 1.0)
             .animation(.spring(response: 0.2, dampingFraction: 0.6), value: isTargeted)
-            .help(isEnabled ? "Send to \(peer.displayName)" : "\(peer.displayName) is \(status.lowercased())")
+            .help(isEnabled ? String(localized: "Send to \(peer.displayName)") : "\(peer.displayName) is \(status.lowercased())")
     }
 
     private var fillOpacity: Double {

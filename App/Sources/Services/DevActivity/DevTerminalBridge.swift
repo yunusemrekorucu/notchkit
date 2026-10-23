@@ -127,7 +127,7 @@ nonisolated enum DevTerminalBridge {
     private static func pasteIntoFrontWindow(of host: DevTerminalHost, text: String) async -> DevTerminalSendResult {
         guard AXIsProcessTrusted() else { return .needsAccessibility }
         guard let app = NSRunningApplication(processIdentifier: host.pid) else {
-            return .failed("\(host.name) is not running")
+            return .failed(String(localized: "\(host.name) is not running"))
         }
 
         let pasteboard = NSPasteboard.general

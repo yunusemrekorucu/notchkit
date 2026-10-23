@@ -158,9 +158,9 @@ nonisolated enum UsageFormat {
         let days = seconds / 86_400
         let hours = (seconds % 86_400) / 3600
         let minutes = (seconds % 3600) / 60
-        if days > 0 { return "resets in \(days)d \(hours)h" }
-        if hours > 0 { return "resets in \(hours)h \(minutes)m" }
-        return "resets in \(max(1, minutes))m"
+        if days > 0 { return String(localized: "resets in \(days)d \(hours)h") }
+        if hours > 0 { return String(localized: "resets in \(hours)h \(minutes)m") }
+        return String(localized: "resets in \(max(1, minutes))m")
     }
 }
 
@@ -342,7 +342,7 @@ nonisolated final class ClaudeUsageReader {
             title: "Claude Code",
             symbol: DevToolCatalog.claude.symbol,
             tint: DevToolCatalog.claude.tint,
-            headline: "\(UsageFormat.tokens(todayTokens)) tokens today",
+            headline: String(localized: "\(UsageFormat.tokens(todayTokens)) tokens today"),
             subtitle: "≈ \(UsageFormat.dollars(todayCost)) API value · \(sessions) session\(sessions == 1 ? "" : "s")",
             stats: stats,
             daily: daily,
@@ -496,7 +496,7 @@ nonisolated final class CodexUsageReader {
             title: "Codex",
             symbol: DevToolCatalog.codex.symbol,
             tint: DevToolCatalog.codex.tint,
-            headline: "\(UsageFormat.tokens(todayTokens)) tokens today",
+            headline: String(localized: "\(UsageFormat.tokens(todayTokens)) tokens today"),
             subtitle: "\(sessions) session\(sessions == 1 ? "" : "s") today",
             meters: meters,
             stats: [
@@ -597,7 +597,7 @@ nonisolated final class GeminiCLIUsageReader {
             title: "Gemini CLI",
             symbol: DevToolCatalog.gemini.symbol,
             tint: DevToolCatalog.gemini.tint,
-            headline: "\(UsageFormat.tokens(todayTokens)) tokens today",
+            headline: String(localized: "\(UsageFormat.tokens(todayTokens)) tokens today"),
             subtitle: "\(today.count) repl\(today.count == 1 ? "y" : "ies") today",
             stats: [DevUsageStat(label: "7 days", value: UsageFormat.tokens(turns.reduce(0) { $0 + $1.tokens }))],
             daily: daily,
@@ -688,12 +688,12 @@ nonisolated enum AntigravityUsageReader {
             symbol: DevToolCatalog.antigravity.symbol,
             tint: DevToolCatalog.antigravity.tint,
             headline: "\(today) agent run\(today == 1 ? "" : "s") today",
-            subtitle: quotas.isEmpty ? nil : "\(quotas.count) models in your plan",
+            subtitle: quotas.isEmpty ? nil : String(localized: "\(quotas.count) models in your plan"),
             meters: Array(meters),
             stats: [DevUsageStat(label: "7 days", value: "\(runDates.filter { $0 >= window.weekStart }.count) runs")],
             daily: daily,
             footnote: "Model quotas as Antigravity last cached them.",
-            compactValue: meters.first.map { "\(Int(((1 - $0.usedFraction) * 100).rounded()))% left" } ?? "\(today) runs"
+            compactValue: meters.first.map { "\(Int(((1 - $0.usedFraction) * 100).rounded()))% left" } ?? String(localized: "\(today) runs")
         )
     }
 
@@ -864,9 +864,9 @@ nonisolated enum CursorUsageReader {
             sql: "SELECT value FROM ItemTable WHERE key = 'cursorAuth/stripeMembershipType'"
         ).first?.first??.trimmingCharacters(in: CharacterSet(charactersIn: "\" "))
 
-        var stats = [DevUsageStat(label: "7 days", value: "\(Int(daily.reduce(0, +))) lines")]
-        if let agent = bySource["composer"] { stats.append(DevUsageStat(label: "Agent today", value: "\(agent) lines")) }
-        if let tab = bySource["tab"] { stats.append(DevUsageStat(label: "Tab today", value: "\(tab) lines")) }
+        var stats = [DevUsageStat(label: "7 days", value: String(localized: "\(Int(daily.reduce(0, +))) lines"))]
+        if let agent = bySource["composer"] { stats.append(DevUsageStat(label: "Agent today", value: String(localized: "\(agent) lines"))) }
+        if let tab = bySource["tab"] { stats.append(DevUsageStat(label: "Tab today", value: String(localized: "\(tab) lines"))) }
         if let model = models.max(by: { $0.value < $1.value })?.key {
             stats.append(DevUsageStat(label: "Top model", value: model))
         }
@@ -876,12 +876,12 @@ nonisolated enum CursorUsageReader {
             title: "Cursor",
             symbol: DevToolCatalog.cursor.symbol,
             tint: DevToolCatalog.cursor.tint,
-            headline: "\(todayLines) AI lines today",
-            subtitle: plan.map { "\($0.capitalized) plan" },
+            headline: String(localized: "\(todayLines) AI lines today"),
+            subtitle: plan.map { String(localized: "\($0.capitalized) plan") },
             stats: stats,
             daily: daily,
             footnote: "Lines Cursor's AI wrote, from its local tracking database.",
-            compactValue: "\(todayLines) lines"
+            compactValue: String(localized: "\(todayLines) lines")
         )
     }
 }

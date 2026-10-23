@@ -129,6 +129,11 @@ private func wmcDescription(_ wmo: Int) -> String {
     }
 }
 
+/// Conditions get their own table so "Clear" (the sky) doesn't take the translation of the "Clear" button.
+private func localizedCondition(_ english: String) -> String {
+    Bundle.main.localizedString(forKey: english, value: english, table: "Weather")
+}
+
 // MARK: - Service
 
 enum OpenMeteoServiceError: LocalizedError {
@@ -286,15 +291,15 @@ final class OpenMeteoService {
             highTempMetric:     Int(todayMaxC.rounded()),
             lowTemp:            todayMinF,
             lowTempMetric:      Int(todayMinC.rounded()),
-            conditionDescription: wmcDescription(wmoCode),
+            conditionDescription: localizedCondition(wmcDescription(wmoCode)),
             iconCode:           twcIcon,
             feelsLike:          feelsF,
             feelsLikeMetric:    Int(feelsC.rounded()),
-            windInfo:           "\(windMph) mph",
+            windInfo:           String(localized: "\(windMph) mph"),
             windInfoMetric:     "\(windKmh) km/h",
             humidity:           "\(humidity)%",
             precipChance:       precipPct,
-            uvIndex:            "\(Int(uvRaw.rounded())) (\(uvDesc))",
+            uvIndex:            String(localized: "\(Int(uvRaw.rounded())) (\(uvDesc))"),
             sunriseTime:        sunriseStr,
             sunsetTime:         sunsetStr,
             visibility:         "-- mi",
@@ -371,7 +376,7 @@ final class OpenMeteoService {
                 time:             Self.hourlyFormatter.string(from: date).uppercased(),
                 iconName:         WeatherIconMapper.map(from: wmcCodeToTWCIcon(wmo, isDay: isDay)),
                 temperature:      "\(celsiusToFahrenheit(tempC))°",
-                temperatureMetric: "\(Int(tempC.rounded()))°"
+                temperatureMetric: String(localized: "\(Int(tempC.rounded()))°")
             ))
             if results.count == 8 { break }
         }

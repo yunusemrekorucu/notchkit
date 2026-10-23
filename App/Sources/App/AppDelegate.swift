@@ -1536,7 +1536,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     // MARK: - Status Bar Item (Launchpad / Main Toggle)
 
     private func statusItemPreferredPositionKey(for autosaveName: String) -> String {
-        "NSStatusItem Preferred Position \(autosaveName)"
+        String(localized: "NSStatusItem Preferred Position \(autosaveName)")
     }
 
     private func seedStatusItemPreferredPositionIfNeeded(autosaveName: String, seed: Int) {
@@ -1558,9 +1558,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
                     accessibilityDescription: "NotchKit Launchpad"
                 )
                 let menu = NSMenu()
-                menu.addItem(NSMenuItem(title: "Show Launchpad", action: #selector(showLaunchpadAction), keyEquivalent: ""))
+                menu.addItem(NSMenuItem(title: L("Show Launchpad"), action: #selector(showLaunchpadAction), keyEquivalent: ""))
                 menu.addItem(.separator())
-                menu.addItem(NSMenuItem(title: "Quit NotchKit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+                menu.addItem(NSMenuItem(title: L("Quit NotchKit"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
                 for item in menu.items { item.target = self }
                 statusItem?.menu = menu
             }
@@ -1943,7 +1943,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             backing: .buffered,
             defer: false
         )
-        window.title = "Settings"
+        window.title = L("Settings")
         window.titleVisibility = .hidden
         window.titlebarAppearsTransparent = true
         window.titlebarSeparatorStyle = .none
@@ -1993,7 +1993,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             backing: .buffered,
             defer: false
         )
-        window.title = "Lyrics"
+        window.title = L("Lyrics")
         window.isMovableByWindowBackground = false
         window.backgroundColor = .clear
         window.isOpaque = false

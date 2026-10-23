@@ -251,7 +251,7 @@ struct CaffeineAutoTaskSettingsView: View {
         let relevant = monitor.tasks.filter { kinds.contains($0.kind.rawValue) }
         guard let first = relevant.first else { return "Nothing running" }
         if relevant.count == 1 { return first.title }
-        return "\(first.title) + \(relevant.count - 1) more"
+        return String(localized: "\(first.title) + \(relevant.count - 1) more")
     }
 
     private func kindBinding(_ kind: DevTaskKind) -> Binding<Bool> {

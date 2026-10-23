@@ -415,7 +415,7 @@ enum FullScreenDetector {
             } else if axWindows.isEmpty {
                 detail = "(no AX windows readable)"
             } else {
-                detail = "(\(onDisplay.count) AX window(s) on display, none AXFullScreen)"
+                detail = String(localized: "(\(onDisplay.count) AX window(s) on display, none AXFullScreen)")
             }
             if isFullScreen { fullScreenIDs.insert(display.id) }
             results.append(DisplayResult(displayID: display.id, pid: front.pid, appName: front.appName, isFullScreen: isFullScreen, detail: detail))

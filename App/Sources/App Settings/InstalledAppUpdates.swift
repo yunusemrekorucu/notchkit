@@ -1275,13 +1275,13 @@ enum HomebrewCaskInventory {
     static func uninstall(_ record: HomebrewCaskRecord) async -> String? {
         let command = "brew uninstall --cask \(record.token)"
         guard !record.requiresAdministrator else {
-            return "Homebrew needs your administrator password to finish removing this cask. Run “\(command)” in Terminal."
+            return String(localized: "Homebrew needs your administrator password to finish removing this cask. Run “\(command)” in Terminal.")
         }
         switch await HomebrewClient.uninstallCask(token: record.token) {
         case .succeeded:
             return nil
         case .needsAdministrator:
-            return "Homebrew needs your administrator password to finish removing this cask. Run “\(command)” in Terminal."
+            return String(localized: "Homebrew needs your administrator password to finish removing this cask. Run “\(command)” in Terminal.")
         case .failed(let summary):
             return "Homebrew could not remove the cask receipt: \(summary ?? "run “\(command)” in Terminal for details")."
         }
@@ -3552,7 +3552,7 @@ final class InstalledAppUpdatesChecker: ObservableObject {
             guard let self else { return }
             let list = ListFormatter.localizedString(byJoining: names.isEmpty ? items.map { $0.token } : names)
             self.homebrewNotice = opened
-                ? "Opened Terminal to upgrade \(list) — Homebrew needs your administrator password."
+                ? String(localized: "Opened Terminal to upgrade \(list) — Homebrew needs your administrator password.")
                 : "Couldn't open Terminal. Run “brew upgrade --cask \(items.map { $0.token }.joined(separator: " "))” yourself."
         }
     }
@@ -3673,12 +3673,12 @@ final class InstalledAppUpdatesChecker: ObservableObject {
         let names = apps.prefix(3).map(\.name).joined(separator: ", ")
         let title: String
         if apps.count == 1 {
-            title = "Update available for \(names)"
+            title = String(localized: "Update available for \(names)")
         } else {
-            title = "\(apps.count) apps have updates available"
+            title = String(localized: "\(apps.count) apps have updates available")
         }
         let body = apps.count > 3
-            ? "\(names) and \(apps.count - 3) more. Open Settings → Apps to update them."
+            ? String(localized: "\(names) and \(apps.count - 3) more. Open Settings → Apps to update them.")
             : "Open Settings → Apps to update them."
         let center = UNUserNotificationCenter.current()
         center.getNotificationSettings { notificationSettings in

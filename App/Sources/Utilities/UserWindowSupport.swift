@@ -31,9 +31,9 @@ enum NotchKitStandardMenu {
             keyEquivalent: "q"
         )
 
-        let editMenuItem = NSMenuItem(title: "Edit", action: nil, keyEquivalent: "")
+        let editMenuItem = NSMenuItem(title: L("Edit"), action: nil, keyEquivalent: "")
         mainMenu.addItem(editMenuItem)
-        let editMenu = NSMenu(title: "Edit")
+        let editMenu = NSMenu(title: L("Edit"))
         editMenuItem.submenu = editMenu
 
         editMenu.addItem(withTitle: "Undo", action: Selector("undo:"), keyEquivalent: "z")
@@ -201,7 +201,7 @@ enum HelperAlertPresenter {
         }
 
         presentModal(
-            messageText: "NotchKit Helper  ·  \(issue.code)",
+            messageText: String(localized: "NotchKit Helper  ·  \(issue.code)"),
             informativeText: issue.instructions,
             alertStyle: issue == .spawnFailed ? .critical : .warning,
             buttonTitles: buttons

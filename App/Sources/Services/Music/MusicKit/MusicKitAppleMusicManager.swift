@@ -310,7 +310,7 @@ final class MusicKitAppleMusicManager {
         do {
             return try await request.response().items.first
         } catch {
-            record(error, context: "Album \(id)")
+            record(error, context: String(localized: "Album \(id)"))
             return nil
         }
     }
@@ -321,7 +321,7 @@ final class MusicKitAppleMusicManager {
         do {
             return try await request.response().items.first
         } catch {
-            record(error, context: "Artist \(id)")
+            record(error, context: String(localized: "Artist \(id)"))
             return nil
         }
     }

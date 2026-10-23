@@ -513,9 +513,9 @@ private struct LockScreenMusicPaneContent: View {
         let details = musicManager.appleNowPlaying
         let plays: String? = {
             if isAppleMusic, let count = details.playCount ?? musicManager.applePlayCount, count > 0 {
-                return count == 1 ? "Played once" : "Played \(count) times"
+                return count == 1 ? "Played once" : String(localized: "Played \(count) times")
             }
-            return musicManager.playCount.map { "\($0) plays" }
+            return musicManager.playCount.map { String(localized: "\($0) plays") }
         }()
 
         return HStack(spacing: 8 * m.k) {
@@ -873,7 +873,7 @@ private struct LockScreenMusicPaneContent: View {
         } else {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24 * m.k) {
-                    headline("Your Library", detail: "\(playlists.count) playlists", m)
+                    headline("Your Library", detail: String(localized: "\(playlists.count) playlists"), m)
                     LazyVGrid(
                         columns: [GridItem(.adaptive(minimum: 190 * m.k, maximum: 260 * m.k), spacing: 28 * m.k)],
                         alignment: .leading,
@@ -922,7 +922,7 @@ private struct LockScreenMusicPaneContent: View {
         let signedIn = isAppleMusic || musicManager.isPrivateAPIAuthenticated || musicManager.isOfficialAPIAuthenticated
         return Group {
             paneCard(m, key: "queue", padding: 28 * m.k) {
-                headline("Up Next", detail: tracks.isEmpty ? nil : "\(tracks.count) songs", m)
+                headline("Up Next", detail: tracks.isEmpty ? nil : String(localized: "\(tracks.count) songs"), m)
                 if !signedIn {
                     emptyState("Sign in to Spotify to see your queue", icon: "person.crop.circle.badge.questionmark", m)
                 } else if tracks.isEmpty {
@@ -1205,7 +1205,7 @@ private struct LockScreenMusicPaneContent: View {
     }
 
     private func eyebrow(_ text: String, _ m: PaneMetrics) -> some View {
-        Text(text.uppercased())
+        Text(verbatim: L(text).localizedUppercase)
             .font(.system(size: 12 * m.k, weight: .semibold, design: .rounded))
             .tracking(1.6 * m.k)
             .foregroundStyle(.white.opacity(0.55))

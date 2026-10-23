@@ -167,7 +167,7 @@ final class SystemAlertsManager: ObservableObject {
         postAlert(
             kind: .cpu,
             title: "High CPU Load",
-            body: "CPU has been at \(Int(average.rounded()))% for about a minute."
+            body: String(localized: "CPU has been at \(Int(average.rounded()))% for about a minute.")
         )
     }
 
@@ -224,7 +224,7 @@ final class SystemAlertsManager: ObservableObject {
         postAlert(
             kind: .temperature,
             title: "High Temperature",
-            body: "The CPU has been running at about \(Int(hottest.rounded()))°C for 30 seconds."
+            body: String(localized: "The CPU has been running at about \(Int(hottest.rounded()))°C for 30 seconds.")
         )
     }
 
@@ -376,7 +376,7 @@ final class SystemAlertsManager: ObservableObject {
             let onBattery = (info[kIOPSPowerSourceStateKey] as? String) == kIOPSBatteryPowerValue
             let threshold = Int(configuration.lowBatteryThreshold.rounded())
             if batteryLatch.update(level: level, onBattery: onBattery, threshold: threshold) {
-                postAlert(kind: .lowBattery, title: "Low Battery", body: "Battery is at \(level)%. Connect your Mac to power.")
+                postAlert(kind: .lowBattery, title: "Low Battery", body: String(localized: "Battery is at \(level)%. Connect your Mac to power."))
             }
             return
         }

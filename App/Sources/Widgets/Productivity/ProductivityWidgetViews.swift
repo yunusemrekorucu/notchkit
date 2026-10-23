@@ -42,7 +42,7 @@ struct PomodoroWidgetView: View {
             }
 
             VStack(alignment: .trailing, spacing: 6) {
-                CompactInfoRow(iconName: "checkmark.seal.fill", value: "\(pomodoro.completedToday) today")
+                CompactInfoRow(iconName: "checkmark.seal.fill", value: String(localized: "\(pomodoro.completedToday) today"))
                 HStack(spacing: 6) {
                     Button(action: pomodoro.reset) { Image(systemName: "arrow.counterclockwise") }
                         .buttonStyle(CircleIconButtonStyle(type: .normal, size: .small))

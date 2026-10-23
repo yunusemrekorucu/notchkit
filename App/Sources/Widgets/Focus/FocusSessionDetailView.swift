@@ -221,7 +221,7 @@ struct FocusSessionDetailView: View {
         case .idle, .finished:
             return focusManager.phase == .finished ? "Session finished" : "Ready"
         case .focusing:
-            return focusManager.isPaused ? "Paused" : "Block \(focusManager.currentBlockIndex + 1)"
+            return focusManager.isPaused ? "Paused" : String(localized: "Block \(focusManager.currentBlockIndex + 1)")
         case .onBreak:
             return focusManager.isPaused ? "Paused" : "Rest & recharge"
         }
@@ -235,7 +235,7 @@ struct FocusSessionDetailView: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
                 StreakFlame(size: 18, isActive: snapshot.streak > 0)
-                Text(snapshot.streak == 1 ? "1 day streak" : "\(snapshot.streak) day streak")
+                Text(snapshot.streak == 1 ? "1 day streak" : String(localized: "\(snapshot.streak) day streak"))
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(.white)
                     .lineLimit(1)

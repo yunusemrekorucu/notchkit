@@ -1077,7 +1077,7 @@ private struct SongCreditsView: View {
                 }
                 ForEach(info.creditSections) { section in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(section.title.uppercased())
+                        Text(verbatim: L(section.title).localizedUppercase)
                             .font(.system(size: 10, weight: .semibold))
                             .tracking(0.6)
                             .foregroundStyle(.white.opacity(0.35))

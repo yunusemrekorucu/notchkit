@@ -214,7 +214,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
         let settings = settings.settings
         guard settings.faceIDLocationPolicy == .selectedWiFiNetworks else { return "Everywhere" }
         guard let networkName = WiFiStatusMonitor.shared.state.networkName else { return "No Wi-Fi network" }
-        return settings.faceIDAllowedWiFiNetworks.contains(networkName) ? networkName : "\(networkName) is not allowed"
+        return settings.faceIDAllowedWiFiNetworks.contains(networkName) ? networkName : String(localized: "\(networkName) is not allowed")
     }
 
     func isFaceIDAllowedAtCurrentLocation() -> Bool {

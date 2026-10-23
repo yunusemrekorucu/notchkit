@@ -3100,7 +3100,7 @@ class MusicManager {
                     if anySourceFailed {
                         let retryAt = self.lyricsRetry.recordFailure(attemptKey, now: Date())
                         LyricsLog.info(
-                            "No lyrics for '\(title)' yet (a source failed); retrying after \(Int(retryAt.timeIntervalSinceNow))s"
+                            String(localized: "No lyrics for '\(title)' yet (a source failed); retrying after \(Int(retryAt.timeIntervalSinceNow))s")
                         )
                         self.scheduleLyricsRetry(at: retryAt)
                     } else {

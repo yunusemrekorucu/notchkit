@@ -752,7 +752,7 @@ struct DefaultBatteryActivityView {
         case .inhibited:
             iconName = "pause.fill"; text = "Charging Paused"; style = foregroundStyle(for: .inhibited)
         case .sailing:
-            iconName = "sailboat.fill"; text = "Sailing by \(state.level)%"; style = foregroundStyle(for: .sailing)
+            iconName = "sailboat.fill"; text = String(localized: "Sailing by \(state.level)%"); style = foregroundStyle(for: .sailing)
         case .heatProtectionOn:
             iconName = "thermometer.sun.fill"; text = "Heat Protection On"; style = foregroundStyle(for: .heatProtectionOn)
         case .heatProtectionOff:

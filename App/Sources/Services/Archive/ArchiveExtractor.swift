@@ -195,7 +195,7 @@ final class ArchiveExtractor: ObservableObject {
                 for: url,
                 preferredBundleIdentifiers: Self.systemArchiveHandlers
             ) else {
-                Task { await notify(title: "NotchKit Archives", body: "No other app can open \(url.lastPathComponent). Turn on Auto-Extract Archives to let NotchKit extract it.") }
+                Task { await notify(title: "NotchKit Archives", body: String(localized: "No other app can open \(url.lastPathComponent). Turn on Auto-Extract Archives to let NotchKit extract it.")) }
                 continue
             }
             NSWorkspace.shared.open([url], withApplicationAt: app, configuration: NSWorkspace.OpenConfiguration()) { _, _ in }
@@ -222,16 +222,16 @@ final class ArchiveExtractor: ObservableObject {
 
     private func extract(_ url: URL) async {
         let archiveName = url.lastPathComponent
-        currentActivity = "Preparing \(archiveName)…"
+        currentActivity = String(localized: "Preparing \(archiveName)…")
 
         await requestNotificationAuthorizationIfNeeded()
 
         guard FileManager.default.fileExists(atPath: url.path) else {
-            await notify(title: "NotchKit Archives", body: "\(archiveName) could not be found.")
+            await notify(title: "NotchKit Archives", body: String(localized: "\(archiveName) could not be found."))
             return
         }
 
-        currentActivity = "Reading \(archiveName)…"
+        currentActivity = String(localized: "Reading \(archiveName)…")
 
         let parent = url.deletingLastPathComponent()
         let baseName = Self.extractionBaseName(for: url)
@@ -242,7 +242,7 @@ final class ArchiveExtractor: ObservableObject {
         if let listing, Self.hasUnsafeEntry(listing) {
             await notify(
                 title: "NotchKit Archives",
-                body: "\(archiveName) was not extracted: it contains entries that would be written outside the destination folder."
+                body: String(localized: "\(archiveName) was not extracted: it contains entries that would be written outside the destination folder.")
             )
             return
         }
@@ -264,14 +264,14 @@ final class ArchiveExtractor: ObservableObject {
             appropriateFor: parent,
             create: true
         ) else {
-            await notify(title: "NotchKit Archives", body: "Could not prepare a temporary folder to extract \(archiveName).")
+            await notify(title: "NotchKit Archives", body: String(localized: "Could not prepare a temporary folder to extract \(archiveName)."))
             return
         }
         defer {
             Task.detached(priority: .utility) { try? FileManager.default.removeItem(at: staging) }
         }
 
-        currentActivity = "Extracting \(archiveName)…"
+        currentActivity = String(localized: "Extracting \(archiveName)…")
 
         let archiveAttrs = try? fileManager.attributesOfItem(atPath: url.path)
         let archiveBytes = (archiveAttrs?[.size] as? NSNumber)?.int64Value ?? 0
@@ -294,12 +294,12 @@ final class ArchiveExtractor: ObservableObject {
             currentTransferTask = nil
             await notify(
                 title: "NotchKit Archives",
-                body: "Could not extract \(archiveName). It may be damaged, unsupported, or password protected."
+                body: String(localized: "Could not extract \(archiveName). It may be damaged, unsupported, or password protected.")
             )
             return
         }
 
-        currentActivity = "Moving \(archiveName) into place…"
+        currentActivity = String(localized: "Moving \(archiveName) into place…")
 
         let placement: ExtractionPlacement
         do {
@@ -313,7 +313,7 @@ final class ArchiveExtractor: ObservableObject {
             }.value
         } catch {
             currentTransferTask = nil
-            await notify(title: "NotchKit Archives", body: "Could not move the extracted files of \(archiveName) into \(parent.lastPathComponent).")
+            await notify(title: "NotchKit Archives", body: String(localized: "Could not move the extracted files of \(archiveName) into \(parent.lastPathComponent)."))
             return
         }
 
@@ -334,7 +334,7 @@ final class ArchiveExtractor: ObservableObject {
             break
         }
 
-        await notify(title: "NotchKit Archives", body: "\(archiveName) extracted successfully.")
+        await notify(title: "NotchKit Archives", body: String(localized: "\(archiveName) extracted successfully."))
     }
 
     // MARK: - Placement
@@ -548,11 +548,11 @@ final class ArchiveExtractor: ObservableObject {
 
     private func promptForPassword(archiveName: String) async -> String? {
         let field = NSSecureTextField(frame: NSRect(x: 0, y: 0, width: 260, height: 24))
-        field.placeholderString = "Password"
+        field.placeholderString = L("Password")
 
         return await withCheckedContinuation { continuation in
             HelperAlertPresenter.presentModal(
-                messageText: "\"\(archiveName)\" is password protected",
+                messageText: String(localized: "\"\(archiveName)\" is password protected"),
                 informativeText: "Enter the password to extract this archive. NotchKit does not store it.",
                 alertStyle: .informational,
                 accessoryView: field,

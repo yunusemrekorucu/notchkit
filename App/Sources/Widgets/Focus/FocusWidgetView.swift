@@ -107,8 +107,8 @@ struct FocusWidgetView: View {
             CompactInfoRow(
                 iconName: focusManager.isSessionActive ? "square.stack.3d.up.fill" : "checkmark.seal.fill",
                 value: focusManager.isSessionActive
-                    ? "\(focusManager.blocksCompletedThisSession) blocks"
-                    : "\(focusManager.history.count) sessions"
+                    ? String(localized: "\(focusManager.blocksCompletedThisSession) blocks")
+                    : String(localized: "\(focusManager.history.count) sessions")
             )
         }
         .animation(.easeInOut(duration: 0.4), value: focusManager.isSessionActive)
@@ -132,7 +132,7 @@ struct FocusWidgetView: View {
 
     private var streakText: String {
         let s = focusManager.currentStreak
-        return s == 1 ? "1 day streak" : "\(s) day streak"
+        return s == 1 ? "1 day streak" : String(localized: "\(s) day streak")
     }
 }
 

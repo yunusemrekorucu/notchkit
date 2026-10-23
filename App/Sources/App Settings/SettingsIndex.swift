@@ -49,9 +49,9 @@ enum SettingsIndex {
         var description: String {
             switch self {
             case .unknownSetting(let key):
-                return "There is no setting named \(key). Search for it first."
+                return String(localized: "There is no setting named \(key). Search for it first.")
             case .invalidValue(let key, let expected):
-                return "\(key) can't take that value. Expected \(expected)."
+                return String(localized: "\(key) can't take that value. Expected \(expected).")
             }
         }
     }
@@ -119,11 +119,11 @@ enum SettingsIndex {
 
     private static let searchText: [SearchText] = entries.map { entry in
         SearchText(
-            title: words(entry.displayTitle),
+            title: words(entry.displayTitle) + words(L(entry.displayTitle)),
             key: words(humanized(entry.key)),
             rawKey: entry.key.lowercased(),
-            detail: words(entry.detail ?? ""),
-            pane: words(entry.section.map { ([$0.label] + $0.searchTokens).joined(separator: " ") } ?? "")
+            detail: words(entry.detail ?? "") + words(L(entry.detail ?? "")),
+            pane: words(entry.section.map { ([$0.label, L($0.label)] + $0.searchTokens).joined(separator: " ") } ?? "")
         )
     }
 

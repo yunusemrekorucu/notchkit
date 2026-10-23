@@ -890,7 +890,7 @@ struct NextTrackInline: View {
     private let cornerRadius: CGFloat = 10
 
     private var helpText: String {
-        artist.isEmpty ? "Up next: \(title)" : "Up next: \(title) — \(artist)"
+        artist.isEmpty ? String(localized: "Up next: \(title)") : String(localized: "Up next: \(title) — \(artist)")
     }
 
     var body: some View {

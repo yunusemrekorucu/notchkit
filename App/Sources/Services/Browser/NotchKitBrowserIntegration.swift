@@ -96,7 +96,7 @@ final class NotchKitBrowserIntegration {
             FileShelfManager.shared.addFiles(from: [url])
             postLocalNotification(
                 title: "Saved to File Shelf",
-                body: "\(url.lastPathComponent) from NotchKit Browser",
+                body: String(localized: "\(url.lastPathComponent) from NotchKit Browser"),
                 category: nil,
                 userInfo: nil
             )

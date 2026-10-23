@@ -374,7 +374,7 @@ struct FileActionView: View {
         let url = liveItem.storedAt
         isRunningOptimizer = true
         optimizerFailed = false
-        optimizerMessage = "Working on \(url.lastPathComponent)…"
+        optimizerMessage = String(localized: "Working on \(url.lastPathComponent)…")
         Task {
             let outcome = await MediaOptimizerManager.shared.optimizeFile(url)
             isRunningOptimizer = false
@@ -382,7 +382,7 @@ struct FileActionView: View {
             case .success(let result):
                 manager.addFiles(from: [result.outputURL])
                 optimizerFailed = false
-                optimizerMessage = "Saved \(result.savedPercent)% (\(ByteFormatter.string(result.savedBytes))) — \(result.outputURL.lastPathComponent) added to the shelf"
+                optimizerMessage = String(localized: "Saved \(result.savedPercent)% (\(ByteFormatter.string(result.savedBytes))) — \(result.outputURL.lastPathComponent) added to the shelf")
             case .failure(let error):
                 optimizerFailed = true
                 optimizerMessage = error.localizedDescription
@@ -400,20 +400,20 @@ struct FileActionView: View {
         let url = liveItem.storedAt
         isRunningOptimizer = true
         optimizerFailed = false
-        optimizerMessage = "Reading text in \(url.lastPathComponent)…"
+        optimizerMessage = String(localized: "Reading text in \(url.lastPathComponent)…")
         Task {
             let text = await MediaOptimizerManager.shared.recognizeText(in: url)
             isRunningOptimizer = false
             guard let text, !text.isEmpty else {
                 optimizerFailed = true
-                optimizerMessage = "No text found in \(url.lastPathComponent)"
+                optimizerMessage = String(localized: "No text found in \(url.lastPathComponent)")
                 NSSound.beep()
                 return
             }
             NSPasteboard.general.copyString(text)
             manager.addText(text, named: "\(url.deletingPathExtension().lastPathComponent) Text")
             optimizerFailed = false
-            optimizerMessage = "Copied \(text.count) characters and added a note to the shelf"
+            optimizerMessage = String(localized: "Copied \(text.count) characters and added a note to the shelf")
         }
     }
 

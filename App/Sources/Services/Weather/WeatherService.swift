@@ -364,7 +364,7 @@ final class WeatherService: NSObject, @MainActor CLLocationManagerDelegate {
             iconCode: observation?.wx_icon ?? 44,
             feelsLike: observation?.imperial?.feels_like ?? observation?.imperial?.temp ?? 0,
             feelsLikeMetric: observation?.metric?.feels_like ?? observation?.metric?.temp ?? 0,
-            windInfo: "\(observation?.imperial?.wspd ?? 0) mph",
+            windInfo: String(localized: "\(observation?.imperial?.wspd ?? 0) mph"),
             windInfoMetric: "\(observation?.metric?.wspd ?? 0) km/h",
             humidity: "\(observation?.rh ?? 0)%",
             precipChance: todayForecast?.day?.pop ?? 0,

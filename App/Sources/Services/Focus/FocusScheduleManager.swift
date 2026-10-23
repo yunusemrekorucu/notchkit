@@ -201,8 +201,8 @@ final class FocusScheduleManager: ObservableObject {
         center.getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional else { return }
             let content = UNMutableNotificationContent()
-            content.title = "Focus session started "
-            content.body = "Your scheduled focus session is running for \(Int(duration / 60)) minutes. Stay focused!"
+            content.title = L("Focus session started")
+            content.body = String(format: L("Your scheduled focus session is running for %lld minutes. Stay focused!"), Int(duration / 60))
             content.sound = .default
             center.add(UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil))
         }

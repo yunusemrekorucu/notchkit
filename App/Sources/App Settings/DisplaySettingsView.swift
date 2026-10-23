@@ -104,7 +104,7 @@ struct SoftwareDimmingRows: View {
             ForEach(rows) { row in
                 Divider().padding(.leading, 20)
                 ToggleRow(
-                    title: "Always Use Software Dimming on \(row.name)",
+                    title: String(localized: "Always Use Software Dimming on \(row.name)"),
                     description: "Dim this monitor in software even if it answers DDC, for monitors whose DDC is slow or unreliable.",
                     isOn: Binding(
                         get: { row.prefersSoftware },

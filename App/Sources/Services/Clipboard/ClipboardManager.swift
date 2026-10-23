@@ -542,7 +542,7 @@ final class ClipboardManager: ObservableObject {
             return wrote
         })
         let w = Int(image.size.width.rounded()), h = Int(image.size.height.rounded())
-        let preview = (w > 0 && h > 0) ? "Image \(w)×\(h)" : "Image"
+        let preview = (w > 0 && h > 0) ? String(localized: "Image \(w)×\(h)") : "Image"
         processingQueue.async { [weak self] in
             let hash = Self.sha256(pngData)
             DispatchQueue.main.async {
@@ -887,7 +887,7 @@ final class ClipboardManager: ObservableObject {
             png = encodePNG(thumbnail)
         }
         guard let png, !png.isEmpty, png.count <= maxBytes else { return nil }
-        let preview = (width > 0 && height > 0) ? "Image \(width)×\(height)" : "Image"
+        let preview = (width > 0 && height > 0) ? String(localized: "Image \(width)×\(height)") : "Image"
         return (png, preview, sha256(png))
     }
 

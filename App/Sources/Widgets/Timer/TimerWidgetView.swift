@@ -189,7 +189,7 @@ struct TimerDurationRuler: View {
         .clipped()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Timer duration")
-        .accessibilityValue("\(minutes) minutes")
+        .accessibilityValue(String(localized: "\(minutes) minutes"))
         .accessibilityAdjustableAction { direction in
             switch direction {
             case .increment: minutes = min(range.upperBound, minutes + 1)

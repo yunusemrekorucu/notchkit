@@ -175,7 +175,7 @@ struct RequiredPermissionsView: View {
             return "\(names[0]) permission has not been granted. Some features may not work until it is enabled."
         }
         let list = names.dropLast().joined(separator: ", ") + " and " + names.last!
-        return "\(list) permissions have not been granted. Some features may not work until they are enabled."
+        return String(localized: "\(list) permissions have not been granted. Some features may not work until they are enabled.")
     }
 }
 
@@ -553,7 +553,7 @@ private struct SystemEnhanceHingeAnimationSettingsCard: View {
     private var currentLidAngleText: String {
         guard lidAngleSensor.isAvailable else { return "Unavailable" }
         guard lidAngleSensor.isReporting else { return "Connecting…" }
-        return "\(Int(lidAngleSensor.angle.rounded()))°"
+        return String(localized: "\(Int(lidAngleSensor.angle.rounded()))°")
     }
 
     var body: some View {
@@ -954,8 +954,8 @@ struct AppsSettingsView: View {
                             VStack(alignment: .leading, spacing: 3) {
                                 Text(app.name).font(.headline)
                                 Text(app.isSystem
-                                    ? "Version \(app.version) · protected app"
-                                    : "Version \(app.version) · \(app.formattedSize)")
+                                    ? String(localized: "Version \(app.version) · protected app")
+                                    : String(localized: "Version \(app.version) · \(app.formattedSize)"))
                                     .font(.caption)
                                     .foregroundStyle(.secondary)
                                 Text(app.bundleIdentifier)
@@ -1642,6 +1642,9 @@ struct GeneralSettingsView: View {
             }.modifier(SettingsContainerModifier())
 
                 SettingsCard(title: "System") {
+
+                    AppLanguageRow()
+                    Divider().padding(.leading, 20)
 
                     ToggleRow(title: "Launch at Login", description: "Start NotchKit automatically when you log in to your Mac.", isOn: $settings.settings.launchAtLogin)
                     Divider().padding(.leading, 20)
@@ -4653,7 +4656,7 @@ fileprivate struct SnapZoneShortcutLayoutView: View {
                     }
                     .buttonStyle(.bordered)
                     .disabled(shortcutRecorder.isRecording && shortcutRecorder.recordingIdentifier != identifier)
-                    .help(zoneShortcut == nil ? "Record a shortcut for Zone \(index + 1)" : "Change the shortcut for Zone \(index + 1)")
+                    .help(zoneShortcut == nil ? String(localized: "Record a shortcut for Zone \(index + 1)") : String(localized: "Change the shortcut for Zone \(index + 1)"))
 
                     if zoneShortcut != nil {
                         Button {
@@ -5290,7 +5293,7 @@ struct ProximityUnlockSettingsView: View {
                 ),
                 validate: { authManager.verifyPassword($0) },
                 title: "Face ID Authentication Required",
-                message: "Enter your Mac's password to \(action.message)."
+                message: String(localized: "Enter your Mac's password to \(action.message).")
             ) { _ in
                 pendingFaceProfileAction = nil
                 performFaceProfileAction(action)
@@ -6146,9 +6149,9 @@ struct FanRowView: View {
         case .auto: return "Auto"
         case .constant(let rpm): return "Constant \(rpm) RPM"
         case .sensor(let key, _, _):
-            return "Sensor: \(SensorNameMap.name(for: key))"
+            return String(localized: "Sensor: \(SensorNameMap.name(for: key))")
         case .customCurve(let key, let points):
-            return "Curve (\(points.count) pts): \(SensorNameMap.name(for: key))"
+            return String(localized: "Curve (\(points.count) pts): \(SensorNameMap.name(for: key))")
         case nil: return "Auto"
         }
     }
@@ -6156,7 +6159,7 @@ struct FanRowView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text(fan.name.contains("Fan") ? "Fan \(fan.id + 1)" : fan.name)
+                Text(fan.name.contains("Fan") ? String(localized: "Fan \(fan.id + 1)") : fan.name)
                     .font(.headline)
 
                 Text("Min: \(fan.minRPM) | Current: \(fan.currentRPM) | Max: \(fan.maxRPM) RPM")
@@ -6348,7 +6351,7 @@ private struct FanCurveEditorView: View {
             ForEach(Array(points.enumerated()), id: \.element.id) { index, point in
                 VStack(spacing: 8) {
                     CustomSliderRowView(
-                        label: "Point \(index + 1) Temperature",
+                        label: String(localized: "Point \(index + 1) Temperature"),
                         value: Binding(
                             get: { Double(points[index].temperature) },
                             set: { points[index].temperature = Int($0) }
@@ -6357,7 +6360,7 @@ private struct FanCurveEditorView: View {
                         specifier: "%.0f °C"
                     )
                     CustomSliderRowView(
-                        label: "Point \(index + 1) RPM",
+                        label: String(localized: "Point \(index + 1) RPM"),
                         value: Binding(
                             get: { Double(points[index].rpm) },
                             set: { points[index].rpm = Int($0) }
@@ -6467,7 +6470,7 @@ struct LidAngleCaffeineSettingsView: View {
 
     private var currentAngleText: String {
         guard lidAngleSensor.isAvailable else { return "Unavailable" }
-        return "\(Int(lidAngleSensor.angle.rounded()))°"
+        return String(localized: "\(Int(lidAngleSensor.angle.rounded()))°")
     }
 
     var body: some View {
@@ -7299,7 +7302,7 @@ struct CycleCountGraphCard: View {
             yAxisMarkCount: 3,
             metricLabel: "Cycles",
             metricValue: { $0.cycleCount },
-            annotationText: { "\($0.cycleCount) cycles" }
+            annotationText: { String(localized: "\($0.cycleCount) cycles") }
         )
     }
 }
@@ -7818,7 +7821,7 @@ struct BatteryDataPointCard: View {
             ) {
                 ForEach(detailRows, id: \.section) { section in
                     VStack(alignment: .leading, spacing: 8) {
-                        Text(section.section.uppercased())
+                        Text(verbatim: L(section.section).localizedUppercase)
                             .font(.system(size: 10, weight: .bold, design: .rounded))
                             .foregroundStyle(MaterialChartPalette.onSurfaceVariant)
                             .tracking(0.6)
@@ -8255,7 +8258,7 @@ struct OneTimeDischargeView: View {
             } else {
                 VStack(spacing: 15) {
                     Stepper(
-                        "Discharge Target: \(settings.settings.oneTimeDischargeTarget)%",
+                        String(localized: "Discharge Target: \(settings.settings.oneTimeDischargeTarget)%"),
                         value: $settings.settings.oneTimeDischargeTarget,
                         in: 1...95,
                         step: 5
@@ -9143,7 +9146,7 @@ struct MusicSettingsView: View {
                         Divider().padding(.horizontal, 20)
                         HStack {
                             if isOfficialAuth {
-                                HStack { Image(systemName: "checkmark.circle.fill").foregroundColor(.green); Text(officialDisplayName.map { "Logged in as \($0)" } ?? "Logged in") }
+                                HStack { Image(systemName: "checkmark.circle.fill").foregroundColor(.green); Text(officialDisplayName.map { String(localized: "Logged in as \($0)") } ?? "Logged in") }
                                 Spacer()
                                 Button("Log Out", role: .destructive) { MusicManager.shared.spotifyOfficialAPI.logout() }
                             } else {
@@ -9179,7 +9182,7 @@ struct MusicSettingsView: View {
                     Divider().padding(.horizontal, 20)
                     HStack {
                         if isTidalAuth {
-                            HStack { Image(systemName: "checkmark.circle.fill").foregroundColor(.green); Text(tidalDisplayName.map { "Logged in as \($0)" } ?? "Logged in") }
+                            HStack { Image(systemName: "checkmark.circle.fill").foregroundColor(.green); Text(tidalDisplayName.map { String(localized: "Logged in as \($0)") } ?? "Logged in") }
                             Spacer()
                             Button("Log Out", role: .destructive) { MusicManager.shared.tidalAPI.logout() }
                         } else {
@@ -9982,12 +9985,12 @@ struct EyeBreakGraphView: View {
                 value: "\(summaries.first?.completedBreaks ?? 0)",
                 icon: "eyes",
                 color: .blue,
-                trend: "+\(summaries.first?.completedBreaks ?? 0) today"
+                trend: String(localized: "+\(summaries.first?.completedBreaks ?? 0) today")
             )
 
             MetricCardView(
                 title: "Compliance",
-                value: "\(Int((summaries.first?.complianceRate ?? 0) * 100))%",
+                value: String(localized: "\(Int((summaries.first?.complianceRate ?? 0) * 100))%"),
                 icon: "checkmark.circle",
                 color: complianceColor,
                 trend: complianceTrend
@@ -10421,9 +10424,9 @@ struct AboutSettingsView: View {
 
     private var versionLabel: String {
         if BetaEntitlementRuntime.isBetaBuild {
-            return "Version \(currentAppVersion) Beta"
+            return String(localized: "Version \(currentAppVersion) Beta")
         }
-        return "Version \(currentAppVersion)"
+        return String(localized: "Version \(currentAppVersion)")
     }
 
     var body: some View {
@@ -10544,7 +10547,7 @@ struct AboutSettingsView: View {
                 backupStatusMessage = BackupStatusMessage(
                     icon: "xmark.octagon.fill",
                     color: .red,
-                    message: "Export failed: \(error.localizedDescription)"
+                    message: String(localized: "Export failed: \(error.localizedDescription)")
                 )
             }
         }
@@ -10559,20 +10562,20 @@ struct AboutSettingsView: View {
                     backupStatusMessage = BackupStatusMessage(
                         icon: "arrow.down.doc.fill",
                         color: .green,
-                        message: "Imported settings from \(url.lastPathComponent)."
+                        message: String(localized: "Imported settings from \(url.lastPathComponent).")
                     )
                 } catch {
                     backupStatusMessage = BackupStatusMessage(
                         icon: "xmark.octagon.fill",
                         color: .red,
-                        message: "Import failed: \(error.localizedDescription)"
+                        message: String(localized: "Import failed: \(error.localizedDescription)")
                     )
                 }
             case .failure(let error):
                 backupStatusMessage = BackupStatusMessage(
                     icon: "xmark.octagon.fill",
                     color: .red,
-                    message: "Import failed: \(error.localizedDescription)"
+                    message: String(localized: "Import failed: \(error.localizedDescription)")
                 )
             }
         }
@@ -11505,7 +11508,7 @@ private struct MenuBarProfileEditorView: View {
                 Text("Profiles").font(.headline)
                 Spacer()
                 Button {
-                    let newProfile = MenuBarProfile(name: "Profile \(settings.settings.menuBarProfiles.count + 1)")
+                    let newProfile = MenuBarProfile(name: String(localized: "Profile \(settings.settings.menuBarProfiles.count + 1)"))
                     _ = withAnimation(.easeInOut(duration: 0.2)) { expandedProfileIDs.insert(newProfile.id) }
                     settings.settings.menuBarProfiles.append(newProfile)
                 } label: {

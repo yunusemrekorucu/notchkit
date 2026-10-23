@@ -16,7 +16,7 @@ struct ClipboardPreviewPane: View {
     var body: some View {
         Group {
             if selectionCount > 1 {
-                placeholder(systemImage: "square.stack.3d.up", text: "\(selectionCount) items selected\n↵ pastes them together")
+                placeholder(systemImage: "square.stack.3d.up", text: String(localized: "\(selectionCount) items selected\n↵ pastes them together"))
             } else if let item {
                 VStack(alignment: .leading, spacing: 10) {
                     content(for: item)

@@ -85,7 +85,7 @@ enum AudioEQBandLayout: Int, CaseIterable, Identifiable {
     case thirtyOne = 31
 
     var id: Int { rawValue }
-    var displayName: String { "\(rawValue) Bands" }
+    var displayName: String { String(localized: "\(rawValue) Bands") }
 
     var canonicalIndices: [Int] {
         switch self {

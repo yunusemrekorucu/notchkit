@@ -80,7 +80,7 @@ struct DevWidgetView: View {
     private var statusLine: String {
         if !monitor.tasks.isEmpty {
             let count = monitor.tasks.count
-            return count == 1 ? "1 task running" : "\(count) tasks running"
+            return count == 1 ? "1 task running" : String(localized: "\(count) tasks running")
         }
         if runner.runningCount > 0 { return "Running a command" }
         return usage.cards.isEmpty ? "Idle" : "Today's usage"

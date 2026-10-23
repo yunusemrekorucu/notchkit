@@ -401,7 +401,7 @@ struct PlayCountIndicator: View {
             systemImage: "play.fill",
             text: playCount.compactFormatted,
             color: color,
-            help: "Total Plays: \(playCount.formatted())"
+            help: String(localized: "Total Plays: \(playCount.formatted())")
         )
     }
 }

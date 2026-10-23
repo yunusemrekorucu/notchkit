@@ -61,7 +61,7 @@ struct CalendarNotificationLayout<Details: View>: View {
                 .shadow(color: color.opacity(0.28), radius: 10, y: 5)
 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text(category.uppercased())
+                    Text(verbatim: L(category).localizedUppercase)
                         .font(.system(size: 10, weight: .bold, design: .rounded))
                         .tracking(1.15)
                         .foregroundStyle(color)

@@ -29,7 +29,7 @@ struct InstalledAppUpdatesBatchBar: View {
                         .buttonStyle(.link)
                         .font(.caption)
 
-                        Text(selectedCount == 0 ? "None selected" : "\(selectedCount) selected")
+                        Text(selectedCount == 0 ? "None selected" : String(localized: "\(selectedCount) selected"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -94,7 +94,7 @@ struct InstalledAppUpdateSelectionToggle: View {
     var body: some View {
         if checker.isSelectable(entry) {
             Toggle(
-                "Select \(entry.name)",
+                String(localized: "Select \(entry.name)"),
                 isOn: Binding(
                     get: { checker.isSelected(entry.id) },
                     set: { checker.setSelected($0, for: entry.id) }

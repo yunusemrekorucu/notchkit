@@ -96,7 +96,7 @@ struct EarbudControlSnapshot: Equatable {
     var batterySummary: String {
         if batteryLeft > 0 || batteryRight > 0 {
             var parts = ["L \(batteryLeft)%", "R \(batteryRight)%"]
-            if batteryCase > 0 { parts.append("Case \(batteryCase)%") }
+            if batteryCase > 0 { parts.append(String(localized: "Case \(batteryCase)%")) }
             return parts.joined(separator: " · ")
         }
         if batteryMain > 0 { return "\(batteryMain)%" }

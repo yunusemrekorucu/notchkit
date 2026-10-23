@@ -314,7 +314,7 @@ private struct MicrophoneAmplifierSettingsView: View {
                     }
                 }
                 .frame(height: 8)
-                Text(mic.isMicInUse ? (mic.isClipping ? "Lower the gain or microphone input level." : "Peak: \(Int(mic.peakLevel * 100))%") : "Start using the microphone to see its level.")
+                Text(mic.isMicInUse ? (mic.isClipping ? "Lower the gain or microphone input level." : String(localized: "Peak: \(Int(mic.peakLevel * 100))%")) : "Start using the microphone to see its level.")
                     .font(.caption)
                     .foregroundStyle(mic.isClipping ? .red : .secondary)
             }

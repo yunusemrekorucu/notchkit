@@ -91,10 +91,10 @@ enum NotchKitInstanceCoordination {
         let others = otherPeers ?? otherRunningPeers()
         if let installed = others.first(where: { isApplicationsURL($0.bundleURL) }),
            !isApplicationsURL(bundleURL) {
-            return "Finder phone drive is owned by \(installed.bundleURL.path). This copy is running from a build folder, so it is not registering a second File Provider."
+            return String(localized: "Finder phone drive is owned by \(installed.bundleURL.path). This copy is running from a build folder, so it is not registering a second File Provider.")
         }
         if let other = others.first {
-            return "Another NotchKit process (pid \(other.processIdentifier)) is already running, so this copy is not registering the Finder phone drive."
+            return String(localized: "Another NotchKit process (pid \(other.processIdentifier)) is already running, so this copy is not registering the Finder phone drive.")
         }
         return "File Provider registration was skipped."
     }
@@ -106,12 +106,12 @@ enum NotchKitInstanceCoordination {
             if fromBuildFolder {
                 return "Finder refused to attach the phone drive while NotchKit is running from \(bundleURL.path). A signed copy in /Applications usually works; if one is already installed, quit it before using this build, or use Repair after replacing that copy."
             }
-            return "Finder refused to attach the phone drive (\(description)). Try Repair, or quit other NotchKit copies and reopen this one."
+            return String(localized: "Finder refused to attach the phone drive (\(description)). Try Repair, or quit other NotchKit copies and reopen this one.")
         }
         if fromBuildFolder {
             return "Could not register the phone drive with Finder (\(description)). This build is not in /Applications; registration was still attempted."
         }
-        return "Could not register the phone drive with Finder (\(description))."
+        return String(localized: "Could not register the phone drive with Finder (\(description)).")
     }
 
     static func isApplicationCannotBeUsed(_ error: Error) -> Bool {

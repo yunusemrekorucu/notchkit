@@ -817,8 +817,8 @@ class TimerManager: ObservableObject {
                 switch settings.authorizationStatus {
                 case .authorized, .provisional:
                     let content = UNMutableNotificationContent()
-                    content.title = "Timer Done"
-                    content.body = "\(currentTimer.label) finished."
+                    content.title = L("Timer Done")
+                    content.body = String(format: L("%@ finished."), currentTimer.label)
                     content.sound = .default
                     let delay = max(fireDate.timeIntervalSinceNow, 1)
                     let trigger = UNTimeIntervalNotificationTrigger(timeInterval: delay, repeats: false)

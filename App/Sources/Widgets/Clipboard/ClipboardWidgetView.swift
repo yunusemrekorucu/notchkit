@@ -112,7 +112,7 @@ struct ClipboardPlayerView: View {
     var body: some View {
         NotchSwipeListPanel(
             title: "Clipboard",
-            subtitle: "\(clipboardManager.recentItems.count) items",
+            subtitle: String(localized: "\(clipboardManager.recentItems.count) items"),
             accent: .blue,
             searchPlaceholder: "Search clipboard",
             searchText: $searchText,

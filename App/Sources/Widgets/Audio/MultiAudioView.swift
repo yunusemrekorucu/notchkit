@@ -362,7 +362,7 @@ fileprivate struct HiddenAppsMenu: View {
             Divider()
             Button("Show All") { audioManager.unhideAllApps() }
         } label: {
-            Label(hidden.count == 1 ? "1 hidden app" : "\(hidden.count) hidden apps", systemImage: "eye.slash")
+            Label(hidden.count == 1 ? "1 hidden app" : String(localized: "\(hidden.count) hidden apps"), systemImage: "eye.slash")
                 .font(.system(size: 10, weight: .semibold))
                 .foregroundStyle(.secondary)
         }

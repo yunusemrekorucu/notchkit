@@ -572,11 +572,11 @@ enum AppUninstaller {
             case .applicationDidNotQuit:
                 return "The application did not quit. Save your work, quit it manually, and try again."
             case .artifactChanged(let url):
-                return "A related item changed after it was scanned and was left in place: \(url.path)"
+                return String(localized: "A related item changed after it was scanned and was left in place: \(url.path)")
             case .unsafePath(let url):
-                return "NotchKit refused to remove an unsafe path: \(url.path)"
+                return String(localized: "NotchKit refused to remove an unsafe path: \(url.path)")
             case .launchItemDeactivationFailed(let url, let reason):
-                return "The launch item could not be stopped and was left in place: \(url.path). \(reason)"
+                return String(localized: "The launch item could not be stopped and was left in place: \(url.path). \(reason)")
             }
         }
     }
@@ -775,7 +775,7 @@ enum AppUninstaller {
             let reason = result.errorOutput.trimmingCharacters(in: .whitespacesAndNewlines)
             throw ValidationError.launchItemDeactivationFailed(
                 url,
-                reason.isEmpty ? "launchctl exited with status \(result.terminationStatus)." : reason
+                reason.isEmpty ? String(localized: "launchctl exited with status \(result.terminationStatus).") : reason
             )
         }
     }

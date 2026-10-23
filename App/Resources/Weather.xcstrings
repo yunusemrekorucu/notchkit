@@ -1,0 +1,281 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Clear": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Açık"
+          }
+        }
+      }
+    },
+    "Drizzle": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çisenti"
+          }
+        }
+      }
+    },
+    "Foggy": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sisli"
+          }
+        }
+      }
+    },
+    "Freezing Drizzle": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dondurucu Çisenti"
+          }
+        }
+      }
+    },
+    "Freezing Rain": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dondurucu Yağmur"
+          }
+        }
+      }
+    },
+    "Heavy Drizzle": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yoğun Çisenti"
+          }
+        }
+      }
+    },
+    "Heavy Rain": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şiddetli Yağmur"
+          }
+        }
+      }
+    },
+    "Heavy Showers": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şiddetli Sağanak"
+          }
+        }
+      }
+    },
+    "Heavy Snow": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yoğun Kar"
+          }
+        }
+      }
+    },
+    "Icy Fog": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dondurucu Sis"
+          }
+        }
+      }
+    },
+    "Light Drizzle": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hafif Çisenti"
+          }
+        }
+      }
+    },
+    "Light Rain": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hafif Yağmur"
+          }
+        }
+      }
+    },
+    "Light Showers": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hafif Sağanak"
+          }
+        }
+      }
+    },
+    "Light Snow": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hafif Kar"
+          }
+        }
+      }
+    },
+    "Mostly Clear": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çoğunlukla Açık"
+          }
+        }
+      }
+    },
+    "Overcast": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapalı"
+          }
+        }
+      }
+    },
+    "Partly Cloudy": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parçalı Bulutlu"
+          }
+        }
+      }
+    },
+    "Rain": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yağmur"
+          }
+        }
+      }
+    },
+    "Showers": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sağanak"
+          }
+        }
+      }
+    },
+    "Snow": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kar"
+          }
+        }
+      }
+    },
+    "Snow Grains": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kar Taneleri"
+          }
+        }
+      }
+    },
+    "Snow Showers": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kar Sağanağı"
+          }
+        }
+      }
+    },
+    "Thunderstorm": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gök Gürültülü Fırtına"
+          }
+        }
+      }
+    },
+    "Thunderstorm w/ Hail": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dolu ile Gök Gürültülü Fırtına"
+          }
+        }
+      }
+    },
+    "Unknown": {
+      "extractionState": "manual",
+      "localizations": {
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bilinmiyor"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

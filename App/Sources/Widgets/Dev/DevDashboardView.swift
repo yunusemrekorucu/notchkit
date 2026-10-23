@@ -237,7 +237,7 @@ struct DevTaskDetailPane: View {
     private var subtitle: String {
         var parts: [String] = []
         if model.detail?.agent?.sessionName != nil { parts.append(task.title) }
-        if let status = model.detail?.agent?.status { parts.append(status == "busy" ? "Working" : status.capitalized) }
+        if let status = model.detail?.agent?.status { parts.append(status == "busy" ? L("Working") : L(status.capitalized)) }
         if !task.detail.isEmpty { parts.append(task.detail) }
         if let host = model.detail?.host { parts.append(host.name) }
         if parts.isEmpty { parts.append(task.kind.displayName) }
@@ -265,10 +265,10 @@ struct DevTaskDetailPane: View {
                         DevChip(symbol: "cpu.fill", text: ClaudePricing.displayName(for: model), tint: task.tool.tint)
                     }
                     if let context = detail.agent?.contextTokens {
-                        DevChip(symbol: "text.alignleft", text: "\(UsageFormat.tokens(context)) ctx", tint: .white)
+                        DevChip(symbol: "text.alignleft", text: String(localized: "\(UsageFormat.tokens(context)) ctx"), tint: .white)
                     }
                     if let output = detail.agent?.sessionOutputTokens, output > 0 {
-                        DevChip(symbol: "arrow.up.right", text: "\(UsageFormat.tokens(output)) out", tint: .white)
+                        DevChip(symbol: "arrow.up.right", text: String(localized: "\(UsageFormat.tokens(output)) out"), tint: .white)
                     }
                     if let tty = detail.ttyPath {
                         DevChip(symbol: "terminal", text: (tty as NSString).lastPathComponent, tint: .white)
@@ -306,7 +306,7 @@ struct DevTaskDetailPane: View {
                 symbol: "text.bubble",
                 text: task.tool.id == DevToolCatalog.claude.id || task.tool.id == DevToolCatalog.codex.id
                     ? "No conversation recorded yet."
-                    : "\(task.tool.displayName) doesn't keep a transcript NotchKit can read. Processes are listed on the right tab."
+                    : String(localized: "\(task.tool.displayName) doesn't keep a transcript NotchKit can read. Processes are listed on the right tab.")
             )
         }
     }
@@ -335,7 +335,7 @@ struct DevTaskDetailPane: View {
         if host.kind.isScriptable {
             return "Reading \(host.name)… If nothing appears, allow NotchKit to control \(host.name) in System Settings › Privacy & Security › Automation."
         }
-        return "\(host.name) doesn't let other apps read its tabs. Send input below or open it to see the output."
+        return String(localized: "\(host.name) doesn't let other apps read its tabs. Send input below or open it to see the output.")
     }
 
     // MARK: Footer
@@ -418,7 +418,7 @@ struct DevTaskDetailPane: View {
     }
 
     private var placeholder: String {
-        if task.kind == .ai { return "Message \(task.tool.displayName)…" }
+        if task.kind == .ai { return String(localized: "Message \(task.tool.displayName)…") }
         return "Type into \(model.detail?.host?.name ?? "the terminal")…"
     }
 }

@@ -57,7 +57,7 @@ Gemini Live, Blip and other AI features, sports, finance and Shopify widgets, Ne
    xattr -dr com.apple.quarantine /Applications/NotchKit.app
    ```
 
-NotchKit runs on macOS 14.6 or later, natively on both Apple silicon and Intel Macs.
+NotchKit runs on macOS 14.6 or later, natively on both Apple silicon and Intel Macs. It's available in English and Turkish: it follows your Mac's language, or you can pick one under **Settings → General → Language**.
 
 Upgrading from NotchKit 1.x keeps your to-dos, pinned Quick Apps and Pomodoro durations, and turns on the widgets you had enabled.
 
@@ -92,6 +92,10 @@ The app is produced as `NotchKit.app`; copy it to `/Applications` and open it.
 ### Release DMG
 
 `scripts/build-release.sh` builds a universal app and packages it as `build/release/NotchKit-<version>.dmg` (it also needs `brew install create-dmg`). Pushing a tag such as `v2.0.0` runs the same script on GitHub Actions and attaches the DMG to a release. Release notes are read from `docs/release-notes/<tag>.md` when that file exists.
+
+### Translations
+
+User-facing text lives in `App/Resources/Localizable.xcstrings` (and permission prompts in `InfoPlist.xcstrings`). Xcode adds new string literals from SwiftUI views and `String(localized:)` to the catalog when you build; titles passed around as plain `String` values are looked up at display time through the helpers in `App/Sources/App/Localization.swift`, so add those keys to the catalog by hand.
 
 ## Permissions
 

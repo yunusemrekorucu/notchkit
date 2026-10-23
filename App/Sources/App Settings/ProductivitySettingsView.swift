@@ -77,7 +77,7 @@ struct ProductivitySettingsView: View {
         HStack {
             SettingsRowLabel(title: title)
             Spacer()
-            Stepper("\(value.wrappedValue) min", value: value, in: range)
+            Stepper(String(localized: "\(value.wrappedValue) min"), value: value, in: range)
                 .monospacedDigit()
         }
         .padding(.horizontal, 20)

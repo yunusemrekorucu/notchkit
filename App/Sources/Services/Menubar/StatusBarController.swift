@@ -1039,7 +1039,7 @@ final class StatusBarController {
         let menu = NSMenu()
         menu.addItem(withTitle: "Edit Menu Bar Items", action: #selector(enterEditMode), keyEquivalent: "").target = self
         menu.addItem(withTitle: "Search Menu Bar Items…", action: #selector(openItemSearch), keyEquivalent: "").target = self
-        let zenItem = NSMenuItem(title: "Zen Mode", action: #selector(toggleZenMode), keyEquivalent: "")
+        let zenItem = NSMenuItem(title: L("Zen Mode"), action: #selector(toggleZenMode), keyEquivalent: "")
         zenItem.target = self
         zenItem.state = isZenModeActive ? .on : .off
         menu.addItem(zenItem)
@@ -1055,7 +1055,7 @@ final class StatusBarController {
         if statusSettings.hideMenuBarIcon {
             menu.addItem(withTitle: "Edit Menu Bar Items", action: #selector(enterEditMode), keyEquivalent: "").target = self
             menu.addItem(withTitle: "Search Menu Bar Items…", action: #selector(openItemSearch), keyEquivalent: "").target = self
-            let zenItem = NSMenuItem(title: "Zen Mode", action: #selector(toggleZenMode), keyEquivalent: "")
+            let zenItem = NSMenuItem(title: L("Zen Mode"), action: #selector(toggleZenMode), keyEquivalent: "")
             zenItem.target = self
             zenItem.state = isZenModeActive ? .on : .off
             menu.addItem(zenItem)

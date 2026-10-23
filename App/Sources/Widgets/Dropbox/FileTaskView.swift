@@ -453,15 +453,15 @@ private struct UniversalTransferRowView: View {
 
     private var subtitle: String {
         let sizeString = ByteFormatter.string(task.currentSize)
-        guard !task.isComplete else { return "Complete (\(sizeString))" }
+        guard !task.isComplete else { return String(localized: "Complete (\(sizeString))") }
 
         if task.sourceType == .continuity {
             if let totalBytes = task.totalSize, totalBytes > 0 {
                 let total = ByteFormatter.string(totalBytes)
                 let pct = Int((Double(task.currentSize) / Double(totalBytes)) * 100)
-                return "Continuity · \(sizeString) of \(total) · \(pct)%"
+                return String(localized: "Continuity · \(sizeString) of \(total) · \(pct)%")
             }
-            return "Continuity · \(sizeString)"
+            return String(localized: "Continuity · \(sizeString)")
         }
 
         var parts = ["\(verb)..."]
@@ -478,7 +478,7 @@ private struct UniversalTransferRowView: View {
             totalBytes: task.totalSize,
             bytesPerSecond: task.speed
         ) {
-            parts.append("\(eta) left")
+            parts.append(String(localized: "\(eta) left"))
         }
         return parts.joined(separator: " • ")
     }

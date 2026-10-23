@@ -18,10 +18,10 @@ enum FileProgressFormat {
     }
 
     static func remaining(_ seconds: TimeInterval) -> String {
-        if seconds < 60 { return "\(max(1, Int(seconds))) s left" }
+        if seconds < 60 { return String(localized: "\(max(1, Int(seconds))) s left") }
         if seconds < 3600 { return "\(Int(seconds / 60)) min left" }
         let h = Int(seconds / 3600), m = Int(seconds.truncatingRemainder(dividingBy: 3600) / 60)
-        return m > 0 ? "\(h) h \(m) min left" : "\(h) h left"
+        return m > 0 ? String(localized: "\(h) h \(m) min left") : String(localized: "\(h) h left")
     }
 
     static func status(percent: Double?, speed: Double?, remaining: TimeInterval?, finished: Bool, failed: Bool,
@@ -75,7 +75,7 @@ struct FileProgressDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text(tracker.transfers.count == 1 ? "1 transfer" : "\(tracker.transfers.count) transfers")
+                Text(tracker.transfers.count == 1 ? "1 transfer" : String(localized: "\(tracker.transfers.count) transfers"))
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(.white.opacity(0.9))
                 Spacer()

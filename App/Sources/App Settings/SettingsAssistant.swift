@@ -236,7 +236,7 @@ final class SettingsAssistant: ObservableObject {
     func find(_ query: String, limit: Int = 6) -> String {
         let matches = SettingsIndex.search(query, limit: limit)
         guard !matches.isEmpty else {
-            return "No settings match \"\(query)\". Try other words."
+            return String(localized: "No settings match \"\(query)\". Try other words.")
         }
         let settings = currentSettings
         for entry in matches where !turnSuggestions.contains(entry) {
@@ -261,14 +261,14 @@ final class SettingsAssistant: ObservableObject {
         let current = currentSettings
         switch SettingsIndex.applying(key: key, rawValue: rawValue, to: current) {
         case .failure(let error):
-            return "Not changed: \(error.description)"
+            return String(localized: "Not changed: \(error.description)")
         case .success(let (updated, change)):
             if change.oldValue == change.newValue {
-                return "\"\(change.entry.displayTitle)\" was already \(change.newValue.description); nothing changed."
+                return String(localized: "\"\(change.entry.displayTitle)\" was already \(change.newValue.description); nothing changed.")
             }
             commit(updated)
             turnChanges.append(change)
-            return "Changed \"\(change.entry.displayTitle)\" from \(change.oldValue.description) to \(change.newValue.description)."
+            return String(localized: "Changed \"\(change.entry.displayTitle)\" from \(change.oldValue.description) to \(change.newValue.description).")
         }
     }
 

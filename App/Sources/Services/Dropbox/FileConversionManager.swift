@@ -341,7 +341,7 @@ class FileConversionManager {
         let settings = await center.notificationSettings()
         guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional else { return }
         let content = UNMutableNotificationContent()
-        content.title = "Couldn't convert \(fileName) to \(format)"
+        content.title = String(localized: "Couldn't convert \(fileName) to \(format)")
         content.body = error.localizedDescription
         try? await center.add(UNNotificationRequest(identifier: "file-conversion-\(UUID().uuidString)", content: content, trigger: nil))
     }

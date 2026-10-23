@@ -719,7 +719,7 @@ private enum StorageScannerError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case let .cannotRead(url, message): return "Could not scan \(url.path): \(message)"
+        case let .cannotRead(url, message): return String(localized: "Could not scan \(url.path): \(message)")
         }
     }
 }
@@ -819,8 +819,8 @@ private enum StorageScanner {
             label: children.isEmpty
                 ? "No items to inspect"
                 : (request.deepScan
-                    ? "Deep scanning \(children.count) items…"
-                    : "Surface scanning \(children.count) items…")
+                    ? String(localized: "Deep scanning \(children.count) items…")
+                    : String(localized: "Surface scanning \(children.count) items…"))
         ))
 
         let targetFileUnitCount = min(maximumConcurrentDirectories, max(1, children.count))
@@ -1273,7 +1273,7 @@ private enum StorageScanner {
         await progress(StorageScanProgress(
             state: .hashingDuplicates,
             fraction: 0.78,
-            label: "Screening \(sampleCandidates.count) duplicate candidates…"
+            label: String(localized: "Screening \(sampleCandidates.count) duplicate candidates…")
         ))
 
         var sampleBatch = try await hashCandidates(
@@ -1430,7 +1430,7 @@ private enum StorageScanner {
                     await progress(StorageScanProgress(
                         state: .hashingDuplicates,
                         fraction: fraction,
-                        label: "\(progressVerb) \(completed) of \(totalCount) files"
+                        label: String(localized: "\(progressVerb) \(completed) of \(totalCount) files")
                     ))
                 }
             }
@@ -1801,7 +1801,7 @@ private enum StorageDeletionPolicy {
         do {
             values = try entry.url.resourceValues(forKeys: keys)
         } catch {
-            return "The item could not be revalidated: \(error.localizedDescription)"
+            return String(localized: "The item could not be revalidated: \(error.localizedDescription)")
         }
 
         guard values.isDirectory == entry.isDirectory,
@@ -2790,7 +2790,7 @@ private enum InstalledAppScanner {
                     return !Task.isCancelled
                 }
             ) else {
-                scanErrors.append("Could not scan \(root.path).")
+                scanErrors.append(String(localized: "Could not scan \(root.path)."))
                 continue
             }
 
@@ -3846,9 +3846,9 @@ private struct StoragePresentedScan {
         }
         var message: String
         if pendingRemovalEntries.count == 1, let entry = pendingRemovalEntries.first {
-            message = "\(entry.name) (\(bytes.formatted(.byteCount(style: .file)))) will be moved to the Trash."
+            message = String(localized: "\(entry.name) (\(bytes.formatted(.byteCount(style: .file)))) will be moved to the Trash.")
         } else {
-            message = "\(pendingRemovalEntries.count) items (\(bytes.formatted(.byteCount(style: .file)))) will be moved to the Trash."
+            message = String(localized: "\(pendingRemovalEntries.count) items (\(bytes.formatted(.byteCount(style: .file)))) will be moved to the Trash.")
         }
         let cloudSyncedCount = pendingRemovalEntries.filter {
             StorageDeletionPolicy.isCloudSyncedLocation($0.url)
@@ -3858,7 +3858,7 @@ private struct StoragePresentedScan {
             if cloudSyncedCount == pendingRemovalEntries.count {
                 subject = pendingRemovalEntries.count == 1 ? "This item syncs" : "These items sync"
             } else {
-                subject = "\(cloudSyncedCount) of these sync"
+                subject = String(localized: "\(cloudSyncedCount) of these sync")
             }
             message += " \(subject) to the cloud: removal here also removes from iCloud Drive or your cloud storage and from your other devices."
         }
@@ -3903,7 +3903,7 @@ private struct StoragePresentedScan {
         updateScanPresentation(
             state: .loadingCache,
             progress: 0,
-            label: "Preparing \(target.lastPathComponent.isEmpty ? volumeName : target.lastPathComponent)…"
+            label: String(localized: "Preparing \(target.lastPathComponent.isEmpty ? volumeName : target.lastPathComponent)…")
         )
 
         let deepScan = deepScanEnabled
@@ -4018,9 +4018,9 @@ private struct StoragePresentedScan {
             progress: 1,
             label: snapshot.metrics.cacheHit
                 ? (snapshot.metrics.isTrimmed
-                    ? "Loaded cached \(modeName) scan (largest items only)"
-                    : "Loaded cached \(modeName) scan")
-                : "\(modeName) scan complete"
+                    ? String(localized: "Loaded cached \(modeName) scan (largest items only)")
+                    : String(localized: "Loaded cached \(modeName) scan"))
+                : String(localized: "\(modeName) scan complete")
         )
         if !snapshot.metrics.cacheHit {
             recordScanResult(duration: snapshot.metrics.duration)
@@ -4068,8 +4068,8 @@ private struct StoragePresentedScan {
                     : "App caches; system caches are rebuilt on demand and running apps may still be using theirs, so review before removing",
                 potentialSpaceFreed: size,
                 actionDescription: allSafe
-                    ? "Clear \(cacheEntries.count) cache files"
-                    : "Review \(cacheEntries.count) cache files",
+                    ? String(localized: "Clear \(cacheEntries.count) cache files")
+                    : String(localized: "Review \(cacheEntries.count) cache files"),
                 isAutomatic: allSafe,
                 entries: cacheEntries,
                 safetyOverride: allSafe ? nil : "Caution"

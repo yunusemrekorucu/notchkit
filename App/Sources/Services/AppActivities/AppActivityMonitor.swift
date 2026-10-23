@@ -133,7 +133,7 @@ final class AppActivityMonitor: ObservableObject {
                     let sessions = windows.filter { !$0.isEmpty && $0 != "Screen Sharing" }
                     if let first = sessions.first {
                         activity = Self.make(app, pid, bundleID, title: first,
-                                             subtitle: sessions.count > 1 ? "+\(sessions.count - 1) more" : nil,
+                                             subtitle: sessions.count > 1 ? String(localized: "+\(sessions.count - 1) more") : nil,
                                              previous: previous[app])
                     }
                 case .googleMeet:

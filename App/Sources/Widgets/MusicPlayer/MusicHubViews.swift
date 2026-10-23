@@ -499,7 +499,7 @@ struct QueueAndPlaylistsView: View {
         let parts = [
             details.genreNames.first,
             details.releaseDate.map { String(Calendar.current.component(.year, from: $0)) },
-            details.composer.map { "Written by \($0)" }
+            details.composer.map { String(localized: "Written by \($0)") }
         ].compactMap { $0 }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
@@ -1961,9 +1961,9 @@ struct AddToPlaylistMenuView: View {
                         _ = await MainActor.run {
                             containedPlaylistURIs.remove(playlist.uri)
                         }
-                        showFeedback("Removed from \(playlist.name)")
+                        showFeedback(String(localized: "Removed from \(playlist.name)"))
                     } else {
-                        showFeedback("Could not remove from \(playlist.name)")
+                        showFeedback(String(localized: "Could not remove from \(playlist.name)"))
                     }
                 } else {
                     let ok = await musicManager.spotifyPrivateAPI.addTracksToPlaylist(
@@ -1974,9 +1974,9 @@ struct AddToPlaylistMenuView: View {
                         _ = await MainActor.run {
                             containedPlaylistURIs.insert(playlist.uri)
                         }
-                        showFeedback("Added to \(playlist.name)")
+                        showFeedback(String(localized: "Added to \(playlist.name)"))
                     } else {
-                        showFeedback("Could not add to \(playlist.name)")
+                        showFeedback(String(localized: "Could not add to \(playlist.name)"))
                     }
                 }
             }
@@ -5213,7 +5213,7 @@ private final class AppleMusicSearchViewModel: ObservableObject {
     func openArtist(named name: String) {
         Task {
             guard let artist = await apple.findArtist(named: name) else {
-                showToast("Couldn’t find \(name) on Apple Music")
+                showToast(String(localized: "Couldn’t find \(name) on Apple Music"))
                 return
             }
             open(.artist(artist))
@@ -5261,33 +5261,33 @@ private final class AppleMusicSearchViewModel: ObservableObject {
     }
 
     func play(_ song: AppleMusicSong, in songs: [AppleMusicSong]) {
-        perform("Couldn’t play \(song.title).") { await self.apple.play(song: song, within: songs) }
+        perform(String(localized: "Couldn’t play \(song.title).")) { await self.apple.play(song: song, within: songs) }
     }
 
     func playNext(_ song: AppleMusicSong) {
-        perform("Couldn’t queue \(song.title).") {
+        perform(String(localized: "Couldn’t queue \(song.title).")) {
             let ok = await self.apple.playNext(songIDs: [song.catalogID ?? song.id])
-            if ok { self.showToast("Playing next: \(song.title)") }
+            if ok { self.showToast(String(localized: "Playing next: \(song.title)")) }
             return ok
         }
     }
 
     func playLater(_ song: AppleMusicSong) {
-        perform("Couldn’t queue \(song.title).") {
+        perform(String(localized: "Couldn’t queue \(song.title).")) {
             let ok = await self.apple.playLater(songIDs: [song.catalogID ?? song.id])
-            if ok { self.showToast("Added to queue: \(song.title)") }
+            if ok { self.showToast(String(localized: "Added to queue: \(song.title)")) }
             return ok
         }
     }
 
     func startStation(for song: AppleMusicSong) {
-        perform("No station for \(song.title).") { await self.apple.playSongStation(songID: song.catalogID ?? song.id) }
+        perform(String(localized: "No station for \(song.title).")) { await self.apple.playSongStation(songID: song.catalogID ?? song.id) }
     }
 
     func addToLibrary(_ song: AppleMusicSong) {
         Task {
             if await apple.addToLibrary(song: song) {
-                showToast("Added \(song.title) to your library")
+                showToast(String(localized: "Added \(song.title) to your library"))
             } else {
                 showToast("Opened in Music — add it from there")
             }
@@ -5395,7 +5395,7 @@ struct AppleMusicSearchView: View {
         } else if !vm.suggestions.isEmpty && vm.results.isEmpty && !vm.hasSearched {
             suggestionsList
         } else if vm.results.isEmpty && vm.hasSearched {
-            centeredPlaceholder(systemImage: "music.note", label: "No results for \"\(vm.query)\"")
+            centeredPlaceholder(systemImage: "music.note", label: String(localized: "No results for \"\(vm.query)\""))
         } else if vm.results.isEmpty {
             discoverSections
         } else {
@@ -5530,7 +5530,7 @@ struct AppleMusicSearchView: View {
             AppleMusicPlaylistRow(playlist: playlist) { vm.open(.playlist(playlist)) }
         case .station(let station):
             AppleMusicMediaTile(item: .station(station), width: 72) {
-                vm.perform("Couldn’t start \(station.name).") { await apple.playStation(stationID: station.id) }
+                vm.perform(String(localized: "Couldn’t start \(station.name).")) { await apple.playStation(stationID: station.id) }
             }
         }
     }
@@ -5574,7 +5574,7 @@ struct AppleMusicSearchView: View {
         case .artist(let artist): vm.open(.artist(artist))
         case .playlist(let playlist): vm.open(.playlist(playlist))
         case .station(let station):
-            vm.perform("Couldn’t start \(station.name).") { await apple.playStation(stationID: station.id) }
+            vm.perform(String(localized: "Couldn’t start \(station.name).")) { await apple.playStation(stationID: station.id) }
         }
     }
 
@@ -5582,19 +5582,19 @@ struct AppleMusicSearchView: View {
     private func tileMenu(_ item: AppleMusicTileItem) -> some View {
         switch item {
         case .album(let album):
-            Button("Play") { vm.perform("Couldn’t play \(album.title).") { await apple.playAlbum(albumID: album.id) } }
+            Button("Play") { vm.perform(String(localized: "Couldn’t play \(album.title).")) { await apple.playAlbum(albumID: album.id) } }
             Button("Go to Artist") { vm.openArtist(named: album.artistName) }
             Button("Open in Music") { apple.open(url: album.url) }
         case .artist(let artist):
-            Button("Play Top Songs") { vm.perform("Couldn’t play \(artist.name).") { await apple.playArtistTopTracks(artistID: artist.id) } }
-            Button("Start Station") { vm.perform("No station for \(artist.name).") { await apple.playArtistStation(artistID: artist.id) } }
+            Button("Play Top Songs") { vm.perform(String(localized: "Couldn’t play \(artist.name).")) { await apple.playArtistTopTracks(artistID: artist.id) } }
+            Button("Start Station") { vm.perform(String(localized: "No station for \(artist.name).")) { await apple.playArtistStation(artistID: artist.id) } }
             Button("Open in Music") { apple.open(url: artist.url) }
         case .playlist(let playlist):
-            Button("Play") { vm.perform("Couldn’t play \(playlist.name).") { await apple.playPlaylist(playlist) } }
-            Button("Shuffle") { vm.perform("Couldn’t play \(playlist.name).") { await apple.playPlaylist(playlist, shuffled: true) } }
+            Button("Play") { vm.perform(String(localized: "Couldn’t play \(playlist.name).")) { await apple.playPlaylist(playlist) } }
+            Button("Shuffle") { vm.perform(String(localized: "Couldn’t play \(playlist.name).")) { await apple.playPlaylist(playlist, shuffled: true) } }
             Button("Open in Music") { apple.open(url: playlist.url) }
         case .station(let station):
-            Button("Play") { vm.perform("Couldn’t start \(station.name).") { await apple.playStation(stationID: station.id) } }
+            Button("Play") { vm.perform(String(localized: "Couldn’t start \(station.name).")) { await apple.playStation(stationID: station.id) } }
         }
     }
 
@@ -5689,7 +5689,7 @@ struct AppleMusicSearchView: View {
     @ViewBuilder
     private var chartsSection: some View {
         if !vm.charts.songs.isEmpty || !vm.charts.albums.isEmpty || !vm.genres.isEmpty {
-            discoverSection(title: vm.selectedGenre.map { "Top \($0.name)" } ?? "Top Charts", systemImage: "chart.bar.fill") {
+            discoverSection(title: vm.selectedGenre.map { String(localized: "Top \($0.name)") } ?? "Top Charts", systemImage: "chart.bar.fill") {
                 if !vm.genres.isEmpty {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 6) {
@@ -5854,11 +5854,11 @@ struct AppleMusicSearchView: View {
             badges: []
         ) {
             pillButton("Play", systemImage: "play.fill", prominent: true) {
-                vm.perform("Couldn’t play \(artist.name).") { await apple.playArtistTopTracks(artistID: artist.id) }
+                vm.perform(String(localized: "Couldn’t play \(artist.name).")) { await apple.playArtistTopTracks(artistID: artist.id) }
             }
             if detail.station != nil {
                 pillButton("Station", systemImage: "dot.radiowaves.left.and.right") {
-                    vm.perform("No station for \(artist.name).") { await apple.playArtistStation(artistID: artist.id) }
+                    vm.perform(String(localized: "No station for \(artist.name).")) { await apple.playArtistStation(artistID: artist.id) }
                 }
             }
             pillButton("Open", systemImage: "arrow.up.right.square") { apple.open(url: artist.url) }
@@ -5911,7 +5911,7 @@ struct AppleMusicSearchView: View {
         let caption = [
             album.releaseDate.map { String(Calendar.current.component(.year, from: $0)) },
             detail.genreNames.first,
-            detail.tracks.isEmpty ? nil : "\(detail.tracks.count) songs"
+            detail.tracks.isEmpty ? nil : String(localized: "\(detail.tracks.count) songs")
         ].compactMap { $0 }.joined(separator: " · ")
         detailHero(
             artworkURL: album.artworkURL,
@@ -5923,10 +5923,10 @@ struct AppleMusicSearchView: View {
             onSubtitleTap: { vm.openArtist(named: album.artistName) }
         ) {
             pillButton("Play", systemImage: "play.fill", prominent: true) {
-                vm.perform("Couldn’t play \(album.title).") { await apple.playAlbum(albumID: album.id) }
+                vm.perform(String(localized: "Couldn’t play \(album.title).")) { await apple.playAlbum(albumID: album.id) }
             }
             pillButton("Shuffle", systemImage: "shuffle") {
-                vm.perform("Couldn’t play \(album.title).") {
+                vm.perform(String(localized: "Couldn’t play \(album.title).")) {
                     let ok = await apple.playAlbum(albumID: album.id)
                     if ok { apple.setShuffle(enabled: true) }
                     return ok
@@ -5943,7 +5943,7 @@ struct AppleMusicSearchView: View {
                             .foregroundStyle(.tertiary)
                             .frame(width: 18)
                         AppleMusicSongRow(song: song) {
-                            vm.perform("Couldn’t play \(song.title).") { await apple.playAlbum(albumID: album.id, startingAt: song.id) }
+                            vm.perform(String(localized: "Couldn’t play \(song.title).")) { await apple.playAlbum(albumID: album.id, startingAt: song.id) }
                         }
                         .contextMenu { songMenu(song, in: detail.tracks) }
                     }
@@ -5982,10 +5982,10 @@ struct AppleMusicSearchView: View {
             badges: []
         ) {
             pillButton("Play", systemImage: "play.fill", prominent: true) {
-                vm.perform("Couldn’t play \(playlist.name).") { await apple.playPlaylist(playlist) }
+                vm.perform(String(localized: "Couldn’t play \(playlist.name).")) { await apple.playPlaylist(playlist) }
             }
             pillButton("Shuffle", systemImage: "shuffle") {
-                vm.perform("Couldn’t play \(playlist.name).") { await apple.playPlaylist(playlist, shuffled: true) }
+                vm.perform(String(localized: "Couldn’t play \(playlist.name).")) { await apple.playPlaylist(playlist, shuffled: true) }
             }
             if playlist.url != nil {
                 pillButton("Open", systemImage: "arrow.up.right.square") { apple.open(url: playlist.url) }
@@ -5995,7 +5995,7 @@ struct AppleMusicSearchView: View {
             LazyVStack(spacing: 2) {
                 ForEach(detail.tracks) { song in
                     AppleMusicSongRow(song: song) {
-                        vm.perform("Couldn’t play \(song.title).") { await apple.playPlaylist(playlist, startingAt: song.id) }
+                        vm.perform(String(localized: "Couldn’t play \(song.title).")) { await apple.playPlaylist(playlist, startingAt: song.id) }
                     }
                     .contextMenu { songMenu(song, in: detail.tracks) }
                 }

@@ -88,7 +88,7 @@ class LaunchpadViewModel: ObservableObject {
         case .app:
             return "This will permanently remove the app from your Mac."
         case .folder(let folder):
-            return "The apps in \"\(folder.name)\" will be returned to the Launchpad."
+            return String(localized: "The apps in \"\(folder.name)\" will be returned to the Launchpad.")
         }
     }
 

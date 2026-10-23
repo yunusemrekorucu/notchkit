@@ -90,7 +90,7 @@ struct NotesPlayerView: View {
     private var listView: some View {
         NotchSwipeListPanel(
             title: "Notes",
-            subtitle: "\(notesManager.notes.count) saved",
+            subtitle: String(localized: "\(notesManager.notes.count) saved"),
             accent: .yellow,
             searchPlaceholder: "Search notes",
             searchText: $searchText,

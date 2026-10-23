@@ -604,7 +604,7 @@ struct EarbudControlsView: View {
     }
 
     private func sectionLabel(_ title: String) -> some View {
-        Text(title.uppercased())
+        Text(verbatim: L(title).localizedUppercase)
             .font(.system(size: 10, weight: .black))
             .foregroundStyle(.secondary)
             .tracking(1.1)

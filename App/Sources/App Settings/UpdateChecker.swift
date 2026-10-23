@@ -266,7 +266,7 @@ private enum UpdateMetadataError: LocalizedError {
         case .insecureRedirect: return "The update server redirected to an untrusted address."
         case .httpStatus(let status): return "The update server returned HTTP \(status)."
         case .rateLimited(let retry):
-            if let retry { return "GitHub rate-limited update checks. Retrying \(retry.formatted(date: .omitted, time: .shortened))." }
+            if let retry { return String(localized: "GitHub rate-limited update checks. Retrying \(retry.formatted(date: .omitted, time: .shortened)).") }
             return "GitHub rate-limited update checks. NotchKit will retry automatically."
         case .responseTooLarge: return "The update metadata was unexpectedly large."
         case .emptyCache: return "No cached update information is available."
@@ -367,8 +367,8 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             guard notificationSettings.authorizationStatus == .authorized
                 || notificationSettings.authorizationStatus == .provisional else { return }
             let content = UNMutableNotificationContent()
-            content.title = "NotchKit \(version) is available"
-            content.body = "A new version is ready to download. Open Settings → About → Updates to install it."
+            content.title = String(localized: "NotchKit \(version) is available")
+            content.body = L("A new version is ready to download. Open Settings → About → Updates to install it.")
             content.sound = .default
             let request = UNNotificationRequest(
                 identifier: "notchkit-update-available-\(version)",
