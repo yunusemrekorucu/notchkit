@@ -1147,7 +1147,7 @@ struct Settings: Codable, Equatable {
     var floatingIslandOnNotchlessDisplays: Bool = true
     var floatingIslandTopOffset: CGFloat = 3
     var floatingIslandStyle = FloatingIslandStyle()
-    var expandOnHover: Bool = false
+    var expandOnHover: Bool = true
     var expandOnHoverDelay: TimeInterval = 0.0
     var suppressHoverExpansionForTransientLiveActivities: Bool = false
     var showLiveActivitySatellites: Bool = true

@@ -8,7 +8,7 @@
 # Environment:
 #   BUILD_NUMBER  CFBundleVersion to stamp into the app (default: 1)
 #
-# Requires: Xcode, xcodegen, cmake, create-dmg (brew install xcodegen cmake create-dmg)
+# Requires: Xcode 26 or later, xcodegen, create-dmg (brew install xcodegen create-dmg)
 #
 # The app is ad-hoc signed. It is not notarized, so on first launch macOS asks the
 # user to allow it in System Settings > Privacy & Security.
@@ -20,11 +20,9 @@ BUILD_DIR="$ROOT/build/release"
 DERIVED="$BUILD_DIR/DerivedData"
 APP="$DERIVED/Build/Products/Release/NotchKit.app"
 
-for tool in xcodegen cmake create-dmg; do
+for tool in xcodegen create-dmg; do
   command -v "$tool" >/dev/null || { echo "error: $tool is required (brew install $tool)"; exit 1; }
 done
-
-git submodule update --init --recursive
 
 echo "==> Generating Xcode project"
 xcodegen generate --quiet
@@ -54,12 +52,16 @@ BUILD_NUMBER="${BUILD_NUMBER:-1}"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$APP/Contents/Info.plist"
 
 echo "==> Signing (ad-hoc)"
-codesign --force --sign - "$APP/Contents/Resources/MediaRemoteAdapter/MediaRemoteAdapter.framework"
+for framework in MediaRemoteAdapter SapphireMediaQueue; do
+  codesign --force --sign - "$APP/Contents/Resources/$framework.framework"
+done
 codesign --force --sign - --entitlements App/NotchKit.entitlements "$APP"
 codesign --verify --deep --strict "$APP"
 
 echo "==> Checking architectures"
-for binary in "$APP/Contents/MacOS/NotchKit" "$APP/Contents/Resources/MediaRemoteAdapter/MediaRemoteAdapter.framework/MediaRemoteAdapter"; do
+for binary in "$APP/Contents/MacOS/NotchKit" \
+  "$APP/Contents/Resources/MediaRemoteAdapter.framework/MediaRemoteAdapter" \
+  "$APP/Contents/Resources/SapphireMediaQueue.framework/SapphireMediaQueue"; do
   archs="$(lipo -archs "$binary")"
   echo "    $(basename "$binary"): $archs"
   [[ "$archs" == *arm64* && "$archs" == *x86_64* ]] || { echo "error: $binary is not universal"; exit 1; }

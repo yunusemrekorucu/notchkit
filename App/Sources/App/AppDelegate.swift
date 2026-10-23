@@ -932,7 +932,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         NearbyConnectionManager.shared.mainAppDelegate = self
         startNearbyShareIfNeeded()
         continuityManager.startIfEnabled()
-        UpdateChecker.shared.startPeriodicChecks(interval: 5 * 60 * 60)
+        // Sapphire's in-app updater expects Sapphire's signed ZIP releases; NotchKit
+        // points people at its GitHub releases from the About page instead.
         InstalledAppUpdatesChecker.shared.applySettings(
             installedAppUpdatesEnabled: settingsModel.current.installedAppUpdatesEnabled,
             notificationsEnabled: settingsModel.current.installedAppUpdateNotificationsEnabled
@@ -1493,7 +1494,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         guard
             let urlString = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject))?.stringValue,
             let url = URL(string: urlString),
-            url.scheme?.lowercased() == "sapphire"
+            url.scheme?.lowercased() == "notchkit"
         else { return }
         if url.host == "android-widgets" {
             let focus = URLComponents(url: url, resolvingAgainstBaseURL: false)?

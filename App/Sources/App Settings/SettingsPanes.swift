@@ -8855,7 +8855,7 @@ struct MusicSettingsView: View {
                 Text("Music").font(.largeTitle.bold())
 
                 Picker("Music section", selection: $selectedTab) {
-                    ForEach(MusicSettingsTab.allCases) { tab in
+                    ForEach(MusicSettingsTab.allCases.filter { $0 != .accounts }) { tab in
                         Label(tab.rawValue, systemImage: tab.icon).tag(tab)
                     }
                 }
@@ -10495,7 +10495,16 @@ struct AboutSettingsView: View {
                     Spacer()
                 }
 
-                sapphireUpdatesPane
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Updates").font(.headline)
+                    Text("New NotchKit versions are published as DMG files on GitHub.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Link("Open NotchKit Releases", destination: URL(string: "https://github.com/yunusemrekorucu/notchkit/releases")!)
+                }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .modifier(SettingsContainerModifier())
 
                 settingsBackupPane
 
