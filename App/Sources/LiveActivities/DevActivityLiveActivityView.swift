@@ -10,50 +10,100 @@ import SwiftUI
 struct DevActivityLiveActivityView {
 
     static func left(for task: DevTask) -> some View {
-        DevActivityGlyph(task: task)
+        DevActivityBadgeStack(primary: task)
     }
 
     static func right(for task: DevTask, additionalCount: Int) -> some View {
-        HStack(spacing: 9) {
-            VStack(alignment: .trailing, spacing: 1) {
-                Text(task.title)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .lineLimit(1)
+        HStack(spacing: 7) {
+            Image(systemName: "waveform")
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(Color(nsColor: NSColor(task.tool.tint).blended(withFraction: 0.55, of: .white) ?? .white))
+                .symbolEffect(.variableColor.iterative, options: .repeating)
 
-                Text(subtitle(for: task, additionalCount: additionalCount))
-                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.55))
-                    .lineLimit(1)
+            if additionalCount > 0 {
+                Text("\(additionalCount + 1)")
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 6)
+                    .frame(height: 16)
+                    .background(Capsule().fill(Color.white.opacity(0.16)))
+                    .transition(.scale.combined(with: .opacity))
+                    .help("\(additionalCount + 1) tasks running")
             }
 
-            DevActivityElapsedLabel(startedAt: task.startedAt, tint: task.tool.tint)
+            DevActivityElapsedLabel(startedAt: task.startedAt, tint: .white)
         }
-        .foregroundColor(.white.opacity(0.92))
-    }
-
-    private static func subtitle(for task: DevTask, additionalCount: Int) -> String {
-        if additionalCount > 0 {
-            let others = additionalCount == 1 ? "1 more task" : "\(additionalCount) more tasks"
-            return task.detail.isEmpty ? others : "\(task.detail) · \(others)"
-        }
-        return task.detail.isEmpty ? task.kind.displayName : task.detail
+        .animation(.snappy(duration: 0.25), value: additionalCount)
     }
 }
 
-private struct DevActivityGlyph: View {
-    let task: DevTask
+/// The running tools as rounded-square badges. With several tasks, up to three badges
+/// overlap so the count reads at a glance; the primary task's badge sits in front.
+private struct DevActivityBadgeStack: View {
+    let primary: DevTask
+    @ObservedObject private var monitor = DevActivityMonitor.shared
+
+    private static let badgeSize: CGFloat = 20
+    private static let overlap: CGFloat = 13
+
+    private var tools: [DevTool] {
+        var seen = Set<String>([primary.tool.id])
+        var result = [primary.tool]
+        for task in monitor.tasks where seen.insert(task.tool.id).inserted {
+            result.append(task.tool)
+            if result.count == 3 { break }
+        }
+        return result
+    }
+
+    var body: some View {
+        let tools = tools
+        ZStack(alignment: .leading) {
+            ForEach(Array(tools.enumerated().reversed()), id: \.element.id) { index, tool in
+                DevActivityBadge(tool: tool, isPrimary: index == 0)
+                    .offset(x: CGFloat(index) * Self.overlap)
+                    .zIndex(Double(tools.count - index))
+            }
+        }
+        .frame(
+            width: Self.badgeSize + CGFloat(tools.count - 1) * Self.overlap,
+            height: Self.badgeSize,
+            alignment: .leading
+        )
+        .animation(.snappy(duration: 0.25), value: tools.map(\.id))
+    }
+}
+
+private struct DevActivityBadge: View {
+    let tool: DevTool
+    let isPrimary: Bool
 
     var body: some View {
         ZStack {
-            DevActivityPulseCircle(color: NSColor(task.tool.tint.opacity(0.22)))
-                .frame(width: 22, height: 22)
-
-            Image(systemName: task.tool.symbol)
-                .font(.system(size: 11, weight: .bold))
-                .foregroundStyle(task.tool.tint)
+            if isPrimary {
+                DevActivityPulseCircle(color: NSColor(tool.tint.opacity(0.35)))
+                    .frame(width: 26, height: 26)
+            }
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [tool.tint.opacity(0.95), tool.tint.opacity(0.6)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .strokeBorder(Color.black.opacity(0.55), lineWidth: isPrimary ? 0 : 1.5)
+                )
+                .frame(width: 20, height: 20)
+            Image(systemName: tool.symbol)
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(.white)
         }
-        .frame(width: 24, height: 24)
-        .id(task.id)
+        .frame(width: 20, height: 20)
+        .opacity(isPrimary ? 1 : 0.85)
     }
 }
 
