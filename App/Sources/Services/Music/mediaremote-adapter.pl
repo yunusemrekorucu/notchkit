@@ -11,14 +11,14 @@ use File::Spec;
 use File::Basename;
 use POSIX ();
 
-# Sapphire: `stream` runs for the life of the host app, and a host that is
+# NotchKit: `stream` runs for the life of the host app, and a host that is
 # SIGKILLed (crash, Xcode stop) never gets to terminate it, so it was reparented
 # to launchd and kept streaming forever. When asked, stay behind as a watchdog
 # blocked on stdin: the host holds the pipe's write end, so EOF means it is gone.
 # The child execs a fresh perl at once - system perl has already touched the
 # ObjC runtime, and running any more of it in a forked child aborts.
-if ($ENV{SAPPHIRE_WATCH_PARENT_STDIN} && grep { $_ eq 'stream' } @ARGV) {
-  delete $ENV{SAPPHIRE_WATCH_PARENT_STDIN};
+if ($ENV{NOTCHKIT_WATCH_PARENT_STDIN} && grep { $_ eq 'stream' } @ARGV) {
+  delete $ENV{NOTCHKIT_WATCH_PARENT_STDIN};
   my $child = fork();
   die "fork failed: $!\n" unless defined $child;
   if ($child == 0) {
@@ -209,7 +209,7 @@ sub set_env_option_value {
   set_env_option_unsafe($key, $value);
 }
 
-# Sapphire: a long-lived command channel, so a play/pause or seek does not pay
+# NotchKit: a long-lived command channel, so a play/pause or seek does not pay
 # for a new perl plus framework load each time. Each stdin line is
 # "<send|seek|shuffle|repeat|speed> <number>"; one "ok" or "err" line answers it,
 # which lets the host keep exactly one command in flight. EOF (host gone) ends it.

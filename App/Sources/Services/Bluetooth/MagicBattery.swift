@@ -1,6 +1,6 @@
 //
 //  MagicBattery.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2024/2/9.
 //
@@ -30,7 +30,7 @@ class SPBluetoothDataModel {
 
     private var lastRefreshTime: Date?
     private var waiters: [(String?) -> Void] = []
-    private let refreshQueue = DispatchQueue(label: "com.sapphire.sp_refresh", qos: .utility)
+    private let refreshQueue = DispatchQueue(label: "com.notchkit.sp_refresh", qos: .utility)
     private static let processTimeout = 10
 
     func refeshData(force: Bool = false, maxAge: TimeInterval = 5 * 60, completion: @escaping (String) -> Void, error: (() -> Void)? = nil) {

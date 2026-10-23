@@ -1,6 +1,6 @@
 //
 //  LiveActivityComponents.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-06.
 //
@@ -1290,7 +1290,7 @@ struct UpdateAvailableWidgetView: View {
         (NSApp.delegate as? AppDelegate)?.openSettingsWindow()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             NotificationCenter.default.post(
-                name: NSNotification.Name("SapphireSelectSection"),
+                name: NSNotification.Name("NotchKitSelectSection"),
                 object: SettingsSection.about.rawValue
             )
         }
@@ -1416,7 +1416,7 @@ struct TimerFinishedActivityView: View {
     @ObservedObject var timerManager: TimerManager
     let timerID: String
 
-    private var timer: SapphireTimer? {
+    private var timer: NotchKitTimer? {
         timerManager.ringingTimers.first { $0.id == timerID }
     }
 

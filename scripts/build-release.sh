@@ -52,7 +52,7 @@ BUILD_NUMBER="${BUILD_NUMBER:-1}"
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "$APP/Contents/Info.plist"
 
 echo "==> Signing (ad-hoc)"
-for framework in MediaRemoteAdapter SapphireMediaQueue; do
+for framework in MediaRemoteAdapter NotchKitMediaQueue; do
   codesign --force --sign - "$APP/Contents/Resources/$framework.framework"
 done
 codesign --force --sign - --entitlements App/NotchKit.entitlements "$APP"
@@ -61,7 +61,7 @@ codesign --verify --deep --strict "$APP"
 echo "==> Checking architectures"
 for binary in "$APP/Contents/MacOS/NotchKit" \
   "$APP/Contents/Resources/MediaRemoteAdapter.framework/MediaRemoteAdapter" \
-  "$APP/Contents/Resources/SapphireMediaQueue.framework/SapphireMediaQueue"; do
+  "$APP/Contents/Resources/NotchKitMediaQueue.framework/NotchKitMediaQueue"; do
   archs="$(lipo -archs "$binary")"
   echo "    $(basename "$binary"): $archs"
   [[ "$archs" == *arm64* && "$archs" == *x86_64* ]] || { echo "error: $binary is not universal"; exit 1; }

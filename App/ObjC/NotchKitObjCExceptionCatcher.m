@@ -1,11 +1,11 @@
 //
-//  SapphireObjCExceptionCatcher.m
-//  Sapphire
+//  NotchKitObjCExceptionCatcher.m
+//  NotchKit
 //
 
-#import "SapphireObjCExceptionCatcher.h"
+#import "NotchKitObjCExceptionCatcher.h"
 
-BOOL SapphireTryObjC(void (NS_NOESCAPE ^block)(void), NSError *_Nullable *_Nullable error) {
+BOOL NotchKitTryObjC(void (NS_NOESCAPE ^block)(void), NSError *_Nullable *_Nullable error) {
     @try {
         block();
         return YES;
@@ -17,7 +17,7 @@ BOOL SapphireTryObjC(void (NS_NOESCAPE ^block)(void), NSError *_Nullable *_Nulla
             if (exception.reason != nil) {
                 info[@"exception.reason"] = exception.reason;
             }
-            *error = [NSError errorWithDomain:@"Sapphire.ObjCException" code:1 userInfo:info];
+            *error = [NSError errorWithDomain:@"NotchKit.ObjCException" code:1 userInfo:info];
         }
         return NO;
     }

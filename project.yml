@@ -69,7 +69,7 @@ targets:
           set -e
           MUSIC="${PROJECT_DIR}/App/Sources/Services/Music"
           DST="${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
-          for fw in MediaRemoteAdapter SapphireMediaQueue; do
+          for fw in MediaRemoteAdapter NotchKitMediaQueue; do
             rm -rf "$DST/$fw.framework"
             cp -R "$MUSIC/$fw.framework" "$DST/"
             codesign --force --sign - "$DST/$fw.framework" || true

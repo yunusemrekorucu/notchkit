@@ -1,6 +1,6 @@
 //
 //  AudioOutputSwitcher.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-07
 //
@@ -16,11 +16,11 @@ final class AudioOutputSwitcher: ObservableObject {
     static let shared = AudioOutputSwitcher()
 
     private enum Keys {
-        static let cycleShortcut = "SapphireAudioOutputCycleShortcut"
-        static let micMuteShortcut = "SapphireMicrophoneMuteShortcut"
-        static let cycleDeviceUIDs = "SapphireAudioOutputCycleDeviceUIDs"
-        static let lowerOnDisconnect = "SapphireLowerVolumeOnHeadphoneDisconnect"
-        static let disconnectLevel = "SapphireHeadphoneDisconnectVolumeLevel"
+        static let cycleShortcut = "NotchKitAudioOutputCycleShortcut"
+        static let micMuteShortcut = "NotchKitMicrophoneMuteShortcut"
+        static let cycleDeviceUIDs = "NotchKitAudioOutputCycleDeviceUIDs"
+        static let lowerOnDisconnect = "NotchKitLowerVolumeOnHeadphoneDisconnect"
+        static let disconnectLevel = "NotchKitHeadphoneDisconnectVolumeLevel"
     }
 
     @Published var cycleShortcut: KeyboardShortcut? {
@@ -212,8 +212,8 @@ final class AudioHotkeyTable: @unchecked Sendable {
 
 private final class HeadphoneDisconnectMonitor: @unchecked Sendable {
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "HeadphoneDisconnect")
-    private let queue = DispatchQueue(label: "com.sapphire.audio.headphone-disconnect", qos: .utility)
-    private static let savedVolumesKey = "SapphireSavedSpeakerVolumesByUID"
+    private let queue = DispatchQueue(label: "com.notchkit.audio.headphone-disconnect", qos: .utility)
+    private static let savedVolumesKey = "NotchKitSavedSpeakerVolumesByUID"
 
     private var isRunning = false
     private var targetLevel: Float = 0.25

@@ -1,6 +1,6 @@
 //
 //  NativeLockScreenWallpaperController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-15.
 //
@@ -483,7 +483,7 @@ actor NativeLockScreenWallpaperInstaller {
         let fileManager = FileManager.default
         try fileManager.createDirectory(at: destination.deletingLastPathComponent(), withIntermediateDirectories: true)
         let temporary = destination.deletingLastPathComponent()
-            .appendingPathComponent(".sapphire-\(UUID().uuidString).mov")
+            .appendingPathComponent(".notchkit-\(UUID().uuidString).mov")
         do {
             try fileManager.copyItem(at: source, to: temporary)
             if fileManager.fileExists(atPath: destination.path) {

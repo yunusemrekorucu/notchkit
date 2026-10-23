@@ -1,6 +1,6 @@
 //
 //  FaceIDEngine.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-22
 
@@ -98,7 +98,7 @@ enum FacePoseBucket: String, CaseIterable {
 struct FaceIDDebugger {
     static let debugFolder: URL = {
         let downloads = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
-        let dir = downloads.appendingPathComponent("Sapphire_Debug_Captures")
+        let dir = downloads.appendingPathComponent("NotchKit_Debug_Captures")
         if !FileManager.default.fileExists(atPath: dir.path) {
             try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         }
@@ -227,14 +227,14 @@ final class CameraController: NSObject, ObservableObject, Identifiable, AVCaptur
 
     private static let sessionQueueKey = DispatchSpecificKey<Bool>()
     private static let sharedSessionQueue: DispatchQueue = {
-        let queue = DispatchQueue(label: "com.sapphire.faceID.sessionQueue", qos: .userInteractive)
+        let queue = DispatchQueue(label: "com.notchkit.faceID.sessionQueue", qos: .userInteractive)
         queue.setSpecific(key: CameraController.sessionQueueKey, value: true)
         return queue
     }()
     private let sessionQueue = CameraController.sharedSessionQueue
     private var isOnSessionQueue: Bool { DispatchQueue.getSpecific(key: CameraController.sessionQueueKey) == true }
 
-    private let visionQueue = DispatchQueue(label: "com.sapphire.visionQueue", qos: .userInitiated)
+    private let visionQueue = DispatchQueue(label: "com.notchkit.visionQueue", qos: .userInitiated)
 
     private var isAuthenticating = false
     private var isRegistrationMode = false
@@ -1371,7 +1371,7 @@ struct FaceAligner {
 final class FaceIDModelManager {
     static let shared = FaceIDModelManager()
     private let lock = NSLock()
-    private let modelLoadingQueue = DispatchQueue(label: "com.sapphire.modelLoadingQueue", qos: .userInitiated)
+    private let modelLoadingQueue = DispatchQueue(label: "com.notchkit.modelLoadingQueue", qos: .userInitiated)
 
     private static let idleTimeout: TimeInterval = 20
     private var lastUse = DispatchTime.now()
@@ -1585,7 +1585,7 @@ final class FaceIDModelManager {
         Self.didPurgeLegacyModelCopies = true
         let fm = FileManager.default
         guard let caches = fm.urls(for: .cachesDirectory, in: .userDomainMask).first else { return }
-        try? fm.removeItem(at: caches.appendingPathComponent("com.sapphire.faceid", isDirectory: true))
+        try? fm.removeItem(at: caches.appendingPathComponent("com.notchkit.faceid", isDirectory: true))
         let defaults = UserDefaults.standard
         if !defaults.bool(forKey: "faceID.purgedE5Cache.v1"), let bundleID = Bundle.main.bundleIdentifier {
             try? fm.removeItem(at: caches.appendingPathComponent(bundleID).appendingPathComponent("com.apple.e5rt.e5bundlecache"))

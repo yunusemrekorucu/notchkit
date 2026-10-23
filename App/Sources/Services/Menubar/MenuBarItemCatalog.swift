@@ -1,6 +1,6 @@
 //
 //  MenuBarItemCatalog.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-27
 //
@@ -9,7 +9,7 @@ import AppKit
 import os
 
 extension Notification.Name {
-    static let menuBarItemCatalogDidChange = Notification.Name("com.sapphire.menuBarItemCatalogDidChange")
+    static let menuBarItemCatalogDidChange = Notification.Name("com.notchkit.menuBarItemCatalogDidChange")
 }
 
 struct MenuBarStatusItem: Identifiable {
@@ -25,7 +25,7 @@ struct MenuBarStatusItem: Identifiable {
 final class MenuBarItemCatalog: @unchecked Sendable {
     static let shared = MenuBarItemCatalog()
 
-    private let queue = DispatchQueue(label: "com.sapphire.menubar-item-catalog", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.notchkit.menubar-item-catalog", qos: .userInitiated)
     private let lock = NSLock()
 
     private var items: [MenuBarStatusItem] = []
@@ -37,7 +37,7 @@ final class MenuBarItemCatalog: @unchecked Sendable {
     private var negativeCache: [pid_t: (misses: Int, retryAfter: CFAbsoluteTime)] = [:]
 
     private var observers: [NSObjectProtocol] = []
-    private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.cshariq.sapphire", category: "MenuBarItemCatalog")
+    private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit", category: "MenuBarItemCatalog")
     private let ownPID = ProcessInfo.processInfo.processIdentifier
 
     private static let missBackoff: [CFTimeInterval] = [5, 30, 120, 600]

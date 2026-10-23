@@ -1,6 +1,6 @@
 //
 //  NowPlayingAdapterIO.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-07
 //
@@ -110,7 +110,7 @@ final class AdapterCommandChannel: @unchecked Sendable {
     static let commandTimeout: TimeInterval = 5
     static let idleTimeout: TimeInterval = 45
 
-    private let queue = DispatchQueue(label: "com.sapphire.mediaremote.commands", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.notchkit.mediaremote.commands", qos: .userInitiated)
     private var pending = AdapterCommandQueue()
     private var inFlight: AdapterCommand?
     private var dispatchGeneration: UInt64 = 0

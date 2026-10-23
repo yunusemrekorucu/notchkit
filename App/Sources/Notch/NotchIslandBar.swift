@@ -1,6 +1,6 @@
 //
 //  NotchIslandBar.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-15
 //

@@ -1,6 +1,6 @@
 //
 //  NotchController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-04
 //
@@ -686,7 +686,7 @@ struct NotchController: View {
 
     #if DEBUG
     private static let profilingHidden: Set<String> = Set(
-        (ProcessInfo.processInfo.environment["SAPPHIRE_PROF_HIDE"] ?? "").split(separator: ",").map(String.init)
+        (ProcessInfo.processInfo.environment["NOTCHKIT_PROF_HIDE"] ?? "").split(separator: ",").map(String.init)
     )
     #else
     private static let profilingHidden: Set<String> = []
@@ -937,10 +937,10 @@ struct NotchController: View {
 
     private static let notchNotifications = Publishers.MergeMany(
         [
-            Notification.Name.sapphireOpenMusicQueue,
-            .sapphireOpenMusicDevices,
-            .sapphireRevealHiddenNotch,
-            .sapphireOpenCircleToSearch
+            Notification.Name.notchKitOpenMusicQueue,
+            .notchKitOpenMusicDevices,
+            .notchKitRevealHiddenNotch,
+            .notchKitOpenCircleToSearch
         ].map { NotificationCenter.default.publisher(for: $0) }
     )
 
@@ -949,13 +949,13 @@ struct NotchController: View {
             .background(GeminiPickerBridge())
             .onReceive(Self.notchNotifications) { notification in
                 switch notification.name {
-                case .sapphireOpenMusicQueue:
+                case .notchKitOpenMusicQueue:
                     guard isTargetOfAppWideRequest(notification) else { return }
                     openMusicHub(mode: .musicQueueAndPlaylists)
-                case .sapphireOpenMusicDevices:
+                case .notchKitOpenMusicDevices:
                     guard isTargetOfAppWideRequest(notification) else { return }
                     openMusicHub(mode: .musicDevices)
-                case .sapphireRevealHiddenNotch:
+                case .notchKitRevealHiddenNotch:
                     guard isManuallyHidden,
                           let displayID = notchDisplayID,
                           (notification.object as? NSNumber)?.uint32Value == displayID else { return }
@@ -963,7 +963,7 @@ struct NotchController: View {
                     scratch.inactiveHideUserOverride = true
                     revealNotchFromCompleteHide()
                     scheduleInactiveRehideAfterReveal()
-                case .sapphireOpenCircleToSearch:
+                case .notchKitOpenCircleToSearch:
                     guard isTargetOfAppWideRequest(notification) else { return }
                     openCircleToSearch(object: notification.object as? String)
                 default:
@@ -1466,13 +1466,13 @@ struct NotchController: View {
         #if DEBUG
         let enabled = true
         #else
-        let enabled = ProcessInfo.processInfo.environment["SAPPHIRE_NOTCH_DEBUG_HOOKS"] == "1"
+        let enabled = ProcessInfo.processInfo.environment["NOTCHKIT_NOTCH_DEBUG_HOOKS"] == "1"
         #endif
         guard enabled else {
             return Empty().eraseToAnyPublisher()
         }
         return DistributedNotificationCenter.default()
-            .publisher(for: Notification.Name("com.cshariq.sapphire.debug.notch"))
+            .publisher(for: Notification.Name("com.yunusemrekorucu.notchkit.debug.notch"))
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }()
@@ -1545,7 +1545,7 @@ struct NotchController: View {
         guard let window = notchWindow,
               let image = CGWindowListCreateImage(.null, .optionIncludingWindow, CGWindowID(window.windowNumber), [.boundsIgnoreFraming, .bestResolution]) else { return }
         let rep = NSBitmapImageRep(cgImage: image)
-        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("sapphire-notch-\(ProcessInfo.processInfo.processIdentifier).png")
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("notchkit-notch-\(ProcessInfo.processInfo.processIdentifier).png")
         try? rep.representation(using: .png, properties: [:])?.write(to: url)
     }
 
@@ -1588,7 +1588,7 @@ struct NotchController: View {
             for sub in layer.sublayers ?? [] where depth < 40 { walk(sub, depth + 1) }
         }
         walk(root, 0)
-        let name = "sapphire-notch-layers-\(ProcessInfo.processInfo.processIdentifier)-\(notchDisplayID.map(String.init) ?? "unknown").txt"
+        let name = "notchkit-notch-layers-\(ProcessInfo.processInfo.processIdentifier)-\(notchDisplayID.map(String.init) ?? "unknown").txt"
         let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(name)
         try? lines.joined(separator: "\n").write(to: url, atomically: true, encoding: .utf8)
     }
@@ -1626,7 +1626,7 @@ struct NotchController: View {
             }
             walk(root, 1)
         }
-        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("sapphire-tracking.txt")
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("notchkit-tracking.txt")
         try? lines.joined(separator: "\n").write(to: url, atomically: true, encoding: .utf8)
     }
 

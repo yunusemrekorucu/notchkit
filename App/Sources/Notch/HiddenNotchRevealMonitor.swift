@@ -1,6 +1,6 @@
 //
 //  HiddenNotchRevealMonitor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-21
 
@@ -10,7 +10,7 @@ import os.log
 private let hiddenNotchRevealLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "HiddenNotchReveal")
 
 extension Notification.Name {
-    static let sapphireRevealHiddenNotch = Notification.Name("sapphireRevealHiddenNotch")
+    static let notchKitRevealHiddenNotch = Notification.Name("notchKitRevealHiddenNotch")
 }
 
 @MainActor
@@ -78,7 +78,7 @@ final class HiddenNotchRevealMonitor {
 
         let displayID = screen.displayID
         hiddenNotchRevealLog.info("Reveal swipe on displayID=\(displayID, privacy: .public)")
-        NotificationCenter.default.post(name: .sapphireRevealHiddenNotch, object: NSNumber(value: displayID))
+        NotificationCenter.default.post(name: .notchKitRevealHiddenNotch, object: NSNumber(value: displayID))
     }
 
     private static let maximumZoneDepth: CGFloat = 100

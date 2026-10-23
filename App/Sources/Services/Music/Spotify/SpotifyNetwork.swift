@@ -1,6 +1,6 @@
 //
 //  SpotifyNetwork.swift
-//  Sapphire
+//  NotchKit
 //
 //  Consolidated Spotify networking, crypto, protobuf, and APQ hash registry.
 //

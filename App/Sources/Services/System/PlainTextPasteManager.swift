@@ -1,6 +1,6 @@
 //
 //  PlainTextPasteManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-02
 
@@ -9,7 +9,7 @@ import ApplicationServices
 import Carbon.HIToolbox
 import Combine
 
-enum SapphireSyntheticEventMarker {
+enum NotchKitSyntheticEventMarker {
     static let plainTextPaste: Int64 = 0x5341505048495245
 }
 
@@ -86,7 +86,7 @@ final class PlainTextPasteManager: @unchecked Sendable {
     private var cancellables = Set<AnyCancellable>()
     private var shortcutRecordingObserver: ShortcutRecordingObserver?
     private var inputSourceObserver: NSObjectProtocol?
-    private let axQueue = DispatchQueue(label: "com.sapphire.plain-paste.ax", qos: .userInitiated)
+    private let axQueue = DispatchQueue(label: "com.notchkit.plain-paste.ax", qos: .userInitiated)
 
     private let stateLock = NSLock()
     private var trigger: Trigger?
@@ -192,7 +192,7 @@ final class PlainTextPasteManager: @unchecked Sendable {
 
     private func handle(event: CGEvent, type: CGEventType) -> EventTapDecision {
         guard type == .keyDown,
-              event.getIntegerValueField(.eventSourceUserData) != SapphireSyntheticEventMarker.plainTextPaste else {
+              event.getIntegerValueField(.eventSourceUserData) != NotchKitSyntheticEventMarker.plainTextPaste else {
             return .pass
         }
         stateLock.lock()
@@ -339,7 +339,7 @@ final class PlainTextPasteManager: @unchecked Sendable {
             guard pasteboard.changeCount == expectedChangeCount else { return false }
             let item = NSPasteboardItem()
             item.setDataProvider(provider, forTypes: [.string])
-            item.setData(Data(), forType: .sapphireTransient)
+            item.setData(Data(), forType: .notchKitTransient)
             pasteboard.clearContents()
             return pasteboard.writeObjects([item])
         }, completion: { [weak self] changeCount in
@@ -427,8 +427,8 @@ final class PlainTextPasteManager: @unchecked Sendable {
         }
         keyDown.flags = .maskCommand
         keyUp.flags = .maskCommand
-        keyDown.setIntegerValueField(.eventSourceUserData, value: SapphireSyntheticEventMarker.plainTextPaste)
-        keyUp.setIntegerValueField(.eventSourceUserData, value: SapphireSyntheticEventMarker.plainTextPaste)
+        keyDown.setIntegerValueField(.eventSourceUserData, value: NotchKitSyntheticEventMarker.plainTextPaste)
+        keyUp.setIntegerValueField(.eventSourceUserData, value: NotchKitSyntheticEventMarker.plainTextPaste)
         keyDown.post(tap: .cghidEventTap)
         keyUp.post(tap: .cghidEventTap)
     }

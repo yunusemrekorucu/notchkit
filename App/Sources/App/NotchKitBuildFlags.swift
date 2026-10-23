@@ -1,14 +1,14 @@
 //
-//  SapphireBuildFlags.swift
-//  Sapphire
+//  NotchKitBuildFlags.swift
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
 import Foundation
 
-enum SapphireBuildFlags {
+enum NotchKitBuildFlags {
     static var forceOnboarding: Bool {
-        #if SAPPHIRE_FORCE_ONBOARDING
+        #if NOTCHKIT_FORCE_ONBOARDING
         return true
         #else
         return false
@@ -18,7 +18,7 @@ enum SapphireBuildFlags {
 
 enum OnboardingLaunchPolicy {
     static var shouldShowOnboarding: Bool {
-        if SapphireBuildFlags.forceOnboarding {
+        if NotchKitBuildFlags.forceOnboarding {
             return true
         }
         if UserDefaults.standard.bool(forKey: "forceOnboarding") {

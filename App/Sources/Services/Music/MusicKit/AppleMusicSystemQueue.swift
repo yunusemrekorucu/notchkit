@@ -1,6 +1,6 @@
 //
 //  AppleMusicSystemQueue.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-26
 //
@@ -44,14 +44,14 @@ final class AppleMusicSystemQueue {
         let ok: Bool
     }
 
-    private let log = Logger(subsystem: "com.cshariq.sapphire", category: "AppleMusicQueue")
+    private let log = Logger(subsystem: "com.yunusemrekorucu.notchkit", category: "AppleMusicQueue")
 
     private init() {}
 
     nonisolated private static let paths: (script: String, framework: String)? = {
         guard let resources = Bundle.main.resourcePath else { return nil }
         let script = (resources as NSString).appendingPathComponent("mediaremote-queue.pl")
-        let framework = (resources as NSString).appendingPathComponent("SapphireMediaQueue.framework")
+        let framework = (resources as NSString).appendingPathComponent("NotchKitMediaQueue.framework")
         let fm = FileManager.default
         guard fm.fileExists(atPath: script), fm.fileExists(atPath: framework) else { return nil }
         return (script, framework)
@@ -117,7 +117,7 @@ final class AppleMusicSystemQueue {
 
     private func run(_ function: String, environment: [String: String]) async -> Data? {
         guard let paths = Self.paths else {
-            log.error("SapphireMediaQueue helper missing from the app bundle")
+            log.error("NotchKitMediaQueue helper missing from the app bundle")
             return nil
         }
         let log = self.log

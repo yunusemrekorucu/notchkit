@@ -1,6 +1,6 @@
 //
 //  TimerManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-09-27
 //
@@ -30,7 +30,7 @@ enum TimerDeadlineClock {
     }
 }
 
-struct SapphireTimer: Equatable, Identifiable {
+struct NotchKitTimer: Equatable, Identifiable {
     let id: String
     var label: String
     var state: ActiveTimerType
@@ -62,14 +62,14 @@ struct SapphireTimer: Equatable, Identifiable {
     }
 }
 
-private struct StoredSapphireTimer: Codable {
+private struct StoredNotchKitTimer: Codable {
     var id: String
     var label: String
     var stateRaw: Int
     var remaining: TimeInterval
     var fireDate: Date?
 
-    init(_ timer: SapphireTimer) {
+    init(_ timer: NotchKitTimer) {
         id = timer.id
         label = timer.label
         stateRaw = timer.isRunning ? 3 : 2
@@ -77,8 +77,8 @@ private struct StoredSapphireTimer: Codable {
         fireDate = timer.fireDate
     }
 
-    var asSapphireTimer: SapphireTimer {
-        var timer = SapphireTimer(
+    var asNotchKitTimer: NotchKitTimer {
+        var timer = NotchKitTimer(
             id: id,
             label: label,
             state: stateRaw == 3 ? .system : .none,
@@ -131,19 +131,19 @@ private struct LogEntry: Decodable {
 class TimerManager: ObservableObject {
     @Published private(set) var activeTimers: [SystemTimerInfo] = []
     @Published private(set) var activeStopwatches: [SystemStopwatchInfo] = []
-    @Published private(set) var sapphireTimers: [SapphireTimer] = []
-    @Published private(set) var ringingTimers: [SapphireTimer] = []
+    @Published private(set) var notchKitTimers: [NotchKitTimer] = []
+    @Published private(set) var ringingTimers: [NotchKitTimer] = []
     @Published var isRunning: Bool = false
     @Published private(set) var activeTimer: ActiveTimerType = .none
 
-    var ringingTimer: SapphireTimer? { ringingTimers.first }
+    var ringingTimer: NotchKitTimer? { ringingTimers.first }
     var hasRingingTimer: Bool { !ringingTimers.isEmpty }
     var displayTime: TimeInterval {
         guard let currentID = displayedTimerID else { return 0 }
         switch activeTimer {
         case .system:
-            if let sapphire = sapphireTimers.first(where: { $0.id == currentID }) {
-                return sapphire.remainingTime
+            if let notchkit = notchKitTimers.first(where: { $0.id == currentID }) {
+                return notchkit.remainingTime
             }
             return activeTimers.first(where: { $0.id == currentID })?.remainingTime ?? 0
         case .stopwatch:
@@ -173,24 +173,24 @@ class TimerManager: ObservableObject {
     private let maxLogRecordBytes = 1_048_576
     private var logSyncPending = false
     private var alarmSound: NSSound?
-    private lazy var sapphireTimerSaveURL: URL = {
+    private lazy var notchKitTimerSaveURL: URL = {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
             .appendingPathComponent("NotchKit", isDirectory: true)
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
-        return base.appendingPathComponent("sapphire-timers.json")
+        return base.appendingPathComponent("notchkit-timers.json")
     }()
 
     init() {
-        Publishers.CombineLatest3($activeTimers, $activeStopwatches, $sapphireTimers)
-            .map { timers, stopwatches, sapphire in
+        Publishers.CombineLatest3($activeTimers, $activeStopwatches, $notchKitTimers)
+            .map { timers, stopwatches, notchkit in
                 !timers.filter { $0.state == .system }.isEmpty
                     || !stopwatches.filter { $0.state == .stopwatch }.isEmpty
-                    || !sapphire.filter { $0.state == .system }.isEmpty
+                    || !notchkit.filter { $0.state == .system }.isEmpty
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$isRunning)
 
-        loadSapphireTimers()
+        loadNotchKitTimers()
         syncStateWithPlist()
         installSystemObservers()
         refreshClockAppRunningState()
@@ -206,12 +206,12 @@ class TimerManager: ObservableObject {
         alarmSound?.loops = false
     }
 
-    // MARK: - Sapphire-Owned Timers
+    // MARK: - NotchKit-Owned Timers
 
     @discardableResult
-    func startSapphireTimer(duration: TimeInterval, label: String? = nil) -> String? {
+    func startNotchKitTimer(duration: TimeInterval, label: String? = nil) -> String? {
         guard duration > 0 else { return nil }
-        var timer = SapphireTimer(
+        var timer = NotchKitTimer(
             id: UUID().uuidString,
             label: label ?? "Timer",
             state: .system,
@@ -220,64 +220,64 @@ class TimerManager: ObservableObject {
             deadline: nil
         )
         timer.arm(remaining: duration)
-        sapphireTimers.append(timer)
-        persistSapphireTimers()
+        notchKitTimers.append(timer)
+        persistNotchKitTimers()
         scheduleCompletionNotification(for: timer)
         selectTimerToDisplay()
         return timer.id
     }
 
-    func pauseSapphireTimer(id: String) {
-        guard let index = sapphireTimers.firstIndex(where: { $0.id == id }) else { return }
-        let remaining = sapphireTimers[index].remainingTime
-        sapphireTimers[index].state = .none
-        sapphireTimers[index].disarm(remaining: remaining)
+    func pauseNotchKitTimer(id: String) {
+        guard let index = notchKitTimers.firstIndex(where: { $0.id == id }) else { return }
+        let remaining = notchKitTimers[index].remainingTime
+        notchKitTimers[index].state = .none
+        notchKitTimers[index].disarm(remaining: remaining)
         removeCompletionNotification(for: id)
-        persistSapphireTimers()
+        persistNotchKitTimers()
         selectTimerToDisplay()
     }
 
-    func resumeSapphireTimer(id: String) {
-        guard let index = sapphireTimers.firstIndex(where: { $0.id == id }) else { return }
-        guard sapphireTimers[index].remainingTimeOnLastUpdate > 0 else {
-            removeSapphireTimer(id: id)
+    func resumeNotchKitTimer(id: String) {
+        guard let index = notchKitTimers.firstIndex(where: { $0.id == id }) else { return }
+        guard notchKitTimers[index].remainingTimeOnLastUpdate > 0 else {
+            removeNotchKitTimer(id: id)
             return
         }
-        sapphireTimers[index].state = .system
-        sapphireTimers[index].arm(remaining: sapphireTimers[index].remainingTimeOnLastUpdate)
-        scheduleCompletionNotification(for: sapphireTimers[index])
-        persistSapphireTimers()
+        notchKitTimers[index].state = .system
+        notchKitTimers[index].arm(remaining: notchKitTimers[index].remainingTimeOnLastUpdate)
+        scheduleCompletionNotification(for: notchKitTimers[index])
+        persistNotchKitTimers()
         selectTimerToDisplay()
     }
 
-    func addOneMinuteToSapphireTimer(id: String) {
-        guard let index = sapphireTimers.firstIndex(where: { $0.id == id }) else { return }
-        let extendedRemaining = sapphireTimers[index].remainingTime + 60
-        sapphireTimers[index].remainingTimeOnLastUpdate = extendedRemaining
-        if sapphireTimers[index].state == .system {
-            sapphireTimers[index].arm(remaining: extendedRemaining)
-            scheduleCompletionNotification(for: sapphireTimers[index])
+    func addOneMinuteToNotchKitTimer(id: String) {
+        guard let index = notchKitTimers.firstIndex(where: { $0.id == id }) else { return }
+        let extendedRemaining = notchKitTimers[index].remainingTime + 60
+        notchKitTimers[index].remainingTimeOnLastUpdate = extendedRemaining
+        if notchKitTimers[index].state == .system {
+            notchKitTimers[index].arm(remaining: extendedRemaining)
+            scheduleCompletionNotification(for: notchKitTimers[index])
         }
-        persistSapphireTimers()
+        persistNotchKitTimers()
         selectTimerToDisplay()
     }
 
-    func removeSapphireTimer(id: String) {
-        sapphireTimers.removeAll { $0.id == id }
+    func removeNotchKitTimer(id: String) {
+        notchKitTimers.removeAll { $0.id == id }
         ringingTimers.removeAll { $0.id == id }
         removeCompletionNotification(for: id)
         stopAlarmSoundIfIdle()
-        persistSapphireTimers()
+        persistNotchKitTimers()
         selectTimerToDisplay()
     }
 
     func dismissRingingTimer(id: String) {
         guard ringingTimers.contains(where: { $0.id == id }) else { return }
         ringingTimers.removeAll { $0.id == id }
-        sapphireTimers.removeAll { $0.id == id }
+        notchKitTimers.removeAll { $0.id == id }
         removeCompletionNotification(for: id)
         stopAlarmSoundIfIdle()
-        persistSapphireTimers()
+        persistNotchKitTimers()
         selectTimerToDisplay()
     }
 
@@ -285,59 +285,59 @@ class TimerManager: ObservableObject {
         let ringingIDs = Set(ringingTimers.map(\.id))
         guard !ringingIDs.isEmpty else { return }
         ringingTimers.removeAll()
-        sapphireTimers.removeAll { ringingIDs.contains($0.id) }
+        notchKitTimers.removeAll { ringingIDs.contains($0.id) }
         for id in ringingIDs {
             removeCompletionNotification(for: id)
         }
         stopAlarmSoundIfIdle()
-        persistSapphireTimers()
+        persistNotchKitTimers()
         selectTimerToDisplay()
     }
 
-    func clearFinishedSapphireTimers() {
-        let hadFinished = sapphireTimers.contains { $0.remainingTime <= 0 }
-        let finishedIDs = Set(sapphireTimers.lazy.filter { $0.remainingTime <= 0 }.map(\.id))
-        sapphireTimers.removeAll { $0.remainingTime <= 0 }
+    func clearFinishedNotchKitTimers() {
+        let hadFinished = notchKitTimers.contains { $0.remainingTime <= 0 }
+        let finishedIDs = Set(notchKitTimers.lazy.filter { $0.remainingTime <= 0 }.map(\.id))
+        notchKitTimers.removeAll { $0.remainingTime <= 0 }
         ringingTimers.removeAll { finishedIDs.contains($0.id) }
         if hadFinished {
             for id in finishedIDs {
                 removeCompletionNotification(for: id)
             }
             stopAlarmSoundIfIdle()
-            persistSapphireTimers()
+            persistNotchKitTimers()
             selectTimerToDisplay()
         }
     }
 
-    private func persistSapphireTimers() {
-        let stored = sapphireTimers.map(StoredSapphireTimer.init)
+    private func persistNotchKitTimers() {
+        let stored = notchKitTimers.map(StoredNotchKitTimer.init)
         guard let data = try? JSONEncoder().encode(stored) else { return }
-        try? data.write(to: sapphireTimerSaveURL, options: .atomic)
+        try? data.write(to: notchKitTimerSaveURL, options: .atomic)
     }
 
-    private func loadSapphireTimers() {
-        guard let data = try? Data(contentsOf: sapphireTimerSaveURL),
-              let stored = try? JSONDecoder().decode([StoredSapphireTimer].self, from: data) else {
+    private func loadNotchKitTimers() {
+        guard let data = try? Data(contentsOf: notchKitTimerSaveURL),
+              let stored = try? JSONDecoder().decode([StoredNotchKitTimer].self, from: data) else {
             return
         }
-        sapphireTimers = stored
-            .map(\.asSapphireTimer)
+        notchKitTimers = stored
+            .map(\.asNotchKitTimer)
             .filter { $0.remainingTime > 0 }
-        for timer in sapphireTimers where timer.isRunning {
+        for timer in notchKitTimers where timer.isRunning {
             scheduleCompletionNotification(for: timer)
         }
     }
 
     func pauseTimer(id: String) {
-        pauseSapphireTimer(id: id)
+        pauseNotchKitTimer(id: id)
     }
 
     func resumeTimer(id: String) {
-        resumeSapphireTimer(id: id)
+        resumeNotchKitTimer(id: id)
     }
 
     func stopTimer(id: String) {
-        removeSapphireTimer(id: id)
+        removeNotchKitTimer(id: id)
     }
 
     private struct PlistTimerEvent {
@@ -506,13 +506,13 @@ class TimerManager: ObservableObject {
 
     private func realignWallClockFireDates() {
         var changed = false
-        for index in sapphireTimers.indices where sapphireTimers[index].isRunning {
-            let remaining = sapphireTimers[index].remainingTime
-            sapphireTimers[index].fireDate = Date().addingTimeInterval(remaining)
-            scheduleCompletionNotification(for: sapphireTimers[index])
+        for index in notchKitTimers.indices where notchKitTimers[index].isRunning {
+            let remaining = notchKitTimers[index].remainingTime
+            notchKitTimers[index].fireDate = Date().addingTimeInterval(remaining)
+            scheduleCompletionNotification(for: notchKitTimers[index])
             changed = true
         }
-        if changed { persistSapphireTimers() }
+        if changed { persistNotchKitTimers() }
         scheduleNextCompletionTimer()
     }
 
@@ -552,7 +552,7 @@ class TimerManager: ObservableObject {
         let stdinPipe = Pipe()
         let process = Process()
         process.executableURL = URL(fileURLWithPath: "/bin/sh")
-        process.arguments = ["-c", Self.logStreamWrapperScript, "sapphire-timer-log", Self.logStreamPredicate]
+        process.arguments = ["-c", Self.logStreamWrapperScript, "notchkit-timer-log", Self.logStreamPredicate]
         process.standardOutput = newPipe
         process.standardError = FileHandle.nullDevice
         process.standardInput = stdinPipe
@@ -728,11 +728,11 @@ class TimerManager: ObservableObject {
     }
 
     private func selectTimerToDisplay() {
-        let runningSapphireTimers = sapphireTimers.filter { $0.state == .system }
+        let runningNotchKitTimers = notchKitTimers.filter { $0.state == .system }
         let runningSystemTimers = activeTimers.filter { $0.state == .system }
         var newTimerID: String? = nil
         var newActiveTimerType: ActiveTimerType = .none
-        if let timerWithLeastTime = runningSapphireTimers.min(by: { $0.remainingTime < $1.remainingTime }) {
+        if let timerWithLeastTime = runningNotchKitTimers.min(by: { $0.remainingTime < $1.remainingTime }) {
             newTimerID = timerWithLeastTime.id
             newActiveTimerType = .system
         } else if let timerWithLeastTime = runningSystemTimers.min(by: { $0.remainingTime < $1.remainingTime }) {
@@ -748,25 +748,25 @@ class TimerManager: ObservableObject {
         updateLogStreamDemand()
     }
 
-    // MARK: - Sapphire Timer Completion
+    // MARK: - NotchKit Timer Completion
 
-    private func checkSapphireTimerCompletion() {
+    private func checkNotchKitTimerCompletion() {
         var didFinishTimer = false
-        for index in sapphireTimers.indices {
-            guard sapphireTimers[index].state == .system,
-                  sapphireTimers[index].remainingTime <= 0 else { continue }
-            sapphireTimers[index].state = .none
-            sapphireTimers[index].disarm(remaining: 0)
+        for index in notchKitTimers.indices {
+            guard notchKitTimers[index].state == .system,
+                  notchKitTimers[index].remainingTime <= 0 else { continue }
+            notchKitTimers[index].state = .none
+            notchKitTimers[index].disarm(remaining: 0)
             didFinishTimer = true
-            beginRinging(for: sapphireTimers[index])
+            beginRinging(for: notchKitTimers[index])
         }
         if didFinishTimer {
-            persistSapphireTimers()
+            persistNotchKitTimers()
             selectTimerToDisplay()
         }
     }
 
-    private func beginRinging(for timer: SapphireTimer) {
+    private func beginRinging(for timer: NotchKitTimer) {
         if !ringingTimers.contains(where: { $0.id == timer.id }) {
             ringingTimers.append(timer)
         }
@@ -801,16 +801,16 @@ class TimerManager: ObservableObject {
     }
 
     private func completionNotificationIdentifier(for id: String) -> String {
-        "sapphire-timer-\(id)"
+        "notchkit-timer-\(id)"
     }
 
-    private func scheduleCompletionNotification(for timer: SapphireTimer) {
+    private func scheduleCompletionNotification(for timer: NotchKitTimer) {
         guard let fireDate = timer.fireDate else { return }
         let center = UNUserNotificationCenter.current()
         center.getNotificationSettings { settings in
             DispatchQueue.main.async { [weak self] in
                 guard let self,
-                      let currentTimer = self.sapphireTimers.first(where: { $0.id == timer.id }),
+                      let currentTimer = self.notchKitTimers.first(where: { $0.id == timer.id }),
                       currentTimer.isRunning,
                       currentTimer.fireDate == fireDate else { return }
 
@@ -846,12 +846,12 @@ class TimerManager: ObservableObject {
         completionTimer?.invalidate()
         completionTimer = nil
 
-        let deadlines = sapphireTimers.filter(\.isRunning).compactMap(\.deadline)
+        let deadlines = notchKitTimers.filter(\.isRunning).compactMap(\.deadline)
         guard let interval = TimerDeadlineClock.delayUntilNext(deadlines, now: TimerDeadlineClock.now()) else {
             return
         }
         guard interval > 0 else {
-            checkSapphireTimerCompletion()
+            checkNotchKitTimerCompletion()
             return
         }
 
@@ -862,7 +862,7 @@ class TimerManager: ObservableObject {
         ) { [weak self] _ in
             guard let self else { return }
             self.completionTimer = nil
-            self.checkSapphireTimerCompletion()
+            self.checkNotchKitTimerCompletion()
             self.scheduleNextCompletionTimer()
         }
     }

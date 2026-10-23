@@ -1,6 +1,6 @@
 //
 //  FocusProfileStore.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-21
 
@@ -224,5 +224,5 @@ final class FocusProfileStore: ObservableObject {
 }
 
 extension Notification.Name {
-    static let focusProfilesDidChange = Notification.Name("SapphireFocusProfilesDidChange")
+    static let focusProfilesDidChange = Notification.Name("NotchKitFocusProfilesDidChange")
 }

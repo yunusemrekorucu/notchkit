@@ -1,6 +1,6 @@
 //
 //  MusicKitAppleMusicManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30
 //
@@ -47,7 +47,7 @@ final class MusicKitAppleMusicManager {
     @ObservationIgnored private var libraryPlaylistTracksCache: [String: MusicItemCollection<Track>] = [:]
     @ObservationIgnored private var nowPlayingCache: (key: String, details: AppleMusicNowPlayingDetails)?
 
-    private let log = Logger(subsystem: "com.cshariq.sapphire", category: "AppleMusic")
+    private let log = Logger(subsystem: "com.yunusemrekorucu.notchkit", category: "AppleMusic")
 
     private init() {
         account.authorization = MusicAuthorization.currentStatus
@@ -140,7 +140,7 @@ final class MusicKitAppleMusicManager {
         if let tokenError = error as? MusicTokenRequestError {
             switch tokenError {
             case .developerTokenRequestFailed:
-                account.lastError = "MusicKit couldn't get a developer token. Enable the MusicKit App Service for com.cshariq.sapphire in the Apple Developer portal and re-sign."
+                account.lastError = "MusicKit couldn't get a developer token. Enable the MusicKit App Service for com.yunusemrekorucu.notchkit in the Apple Developer portal and re-sign."
             case .userNotSignedIn:
                 account.lastError = "Sign in to Apple Music in the Music app."
             case .privacyAcknowledgementRequired:

@@ -1,10 +1,10 @@
 //
 //  CircleToSearchManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30
 
-#if !SAPPHIRE_FULL_BUILD
+#if !NOTCHKIT_FULL_BUILD
 import Foundation
 
 final class CircleToSearchManager {
@@ -15,6 +15,6 @@ final class CircleToSearchManager {
 }
 
 extension Notification.Name {
-    static let sapphireOpenCircleToSearch = Notification.Name("sapphireOpenCircleToSearch")
+    static let notchKitOpenCircleToSearch = Notification.Name("notchKitOpenCircleToSearch")
 }
 #endif

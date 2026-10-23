@@ -1,6 +1,6 @@
 //
 //  IDeviceBattery.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2024/2/6.
 //
@@ -11,9 +11,9 @@ final class IDeviceBattery {
     static let shared = IDeviceBattery()
 
     private let defaults = UserDefaults.standard
-    private let scanQueue = DispatchQueue(label: "com.sapphire.idevice-scan", qos: .utility)
+    private let scanQueue = DispatchQueue(label: "com.notchkit.idevice-scan", qos: .utility)
     private let pencilQueue = DispatchQueue(
-        label: "com.sapphire.idevice-pencil-scan",
+        label: "com.notchkit.idevice-pencil-scan",
         qos: .utility,
         attributes: .concurrent
     )

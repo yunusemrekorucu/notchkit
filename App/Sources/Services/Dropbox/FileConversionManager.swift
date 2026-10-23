@@ -1,6 +1,6 @@
 //
 //  FileConversionManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -93,7 +93,7 @@ class FileConversionManager {
         let completion = completionPublisher
         Task.detached(priority: .userInitiated) {
             let staging = FileManager.default.temporaryDirectory
-                .appendingPathComponent("SapphireConversion-\(UUID().uuidString)", isDirectory: true)
+                .appendingPathComponent("NotchKitConversion-\(UUID().uuidString)", isDirectory: true)
             let ext = Self.fileExtension(for: format)
             let stagedURL = staging.appendingPathComponent("output").appendingPathExtension(ext)
             defer { try? FileManager.default.removeItem(at: staging) }
@@ -157,7 +157,7 @@ class FileConversionManager {
         let sourceFolder = source.deletingLastPathComponent()
         let directory: URL
         if !FileShelfManager.isVolatileLocation(source),
-           !source.path.contains("/com.shariq.Sapphire.FileShelf/"),
+           !source.path.contains("/com.yunusemrekorucu.notchkit.FileShelf/"),
            fileManager.isWritableFile(atPath: sourceFolder.path) {
             directory = sourceFolder
         } else {

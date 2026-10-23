@@ -271,7 +271,7 @@ For more information, please refer to <http://unlicense.org/>
 -   **Source**: [`github.com/thaw-app/Thaw`](https://github.com/thaw-app/Thaw)
 -   **License**: GNU General Public License v3.0
 
-Sapphire's macOS 27 menu bar handling (reading MenuBarAgent's drawn items, the forwarded primary action on status buttons, control item recovery and the hidden items bar) follows the approach Thaw documents and implements.
+The macOS 27 menu bar handling (reading MenuBarAgent's drawn items, the forwarded primary action on status buttons, control item recovery and the hidden items bar) follows the approach Thaw documents and implements.
 
 ```
 Copyright (Thaw) © 2026 Toni Förster

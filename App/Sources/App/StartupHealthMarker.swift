@@ -1,6 +1,6 @@
 //
 //  StartupHealthMarker.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-08
 
@@ -23,7 +23,7 @@ final class StartupHealthMarker {
     private(set) var mode: LaunchMode = .normal
     private var healthyWork: DispatchWorkItem?
 
-    private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.cshariq.sapphire", category: "StartupHealth")
+    private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit", category: "StartupHealth")
 
     init(defaults: UserDefaults) {
         self.defaults = defaults

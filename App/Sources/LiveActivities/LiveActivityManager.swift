@@ -1,6 +1,6 @@
 //
 //  LiveActivityManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-04
 //
@@ -483,7 +483,7 @@ class LiveActivityManager {
     private func installDebugActivityHook() {
         guard debugActivityObserver == nil else { return }
         debugActivityObserver = DistributedNotificationCenter.default().addObserver(
-            forName: Notification.Name("com.cshariq.sapphire.debug.activity"),
+            forName: Notification.Name("com.yunusemrekorucu.notchkit.debug.activity"),
             object: nil,
             queue: .main
         ) { [weak self] notification in
@@ -653,7 +653,7 @@ class LiveActivityManager {
             }
             .store(in: &cancellables)
 
-        NotificationCenter.default.publisher(for: .sapphireUpdateAvailable)
+        NotificationCenter.default.publisher(for: .notchKitUpdateAvailable)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self else { return }

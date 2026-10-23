@@ -1,6 +1,6 @@
 //
 //  KBPPulseManager.m
-//  Sapphire
+//  NotchKit
 //
 //  Created by EthanRDoesMC on 10/20/21.
 //

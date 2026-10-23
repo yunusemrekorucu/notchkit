@@ -1,6 +1,6 @@
 //
 //  LyricsAudioTap.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-15
 
@@ -25,7 +25,7 @@ final class LyricsAudioTap {
         }
     }
 
-    private let queue = DispatchQueue(label: "com.shariq.sapphire.lyrics-audio-tap", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.lyrics-audio-tap", qos: .userInitiated)
     private var tapID = AudioObjectID(kAudioObjectUnknown)
     private var aggregateID = AudioObjectID(kAudioObjectUnknown)
     private var ioProcID: AudioDeviceIOProcID?
@@ -62,7 +62,7 @@ final class LyricsAudioTap {
 
         let aggregateDescription: [String: Any] = [
             kAudioAggregateDeviceNameKey: "NotchKit Lyrics Timing",
-            kAudioAggregateDeviceUIDKey: "com.shariq.sapphire.lyrics-tap.\(UUID().uuidString)",
+            kAudioAggregateDeviceUIDKey: "com.yunusemrekorucu.notchkit.lyrics-tap.\(UUID().uuidString)",
             kAudioAggregateDeviceIsPrivateKey: true,
             kAudioAggregateDeviceIsStackedKey: false,
             kAudioAggregateDeviceTapAutoStartKey: true,

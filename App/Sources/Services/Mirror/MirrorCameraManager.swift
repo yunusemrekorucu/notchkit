@@ -1,6 +1,6 @@
 //
 //  MirrorCameraManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-11
 //
@@ -376,7 +376,7 @@ private final class MirrorSessionWorker: @unchecked Sendable {
     }
 
     let session = AVCaptureSession()
-    let queue = DispatchQueue(label: "com.sapphire.mirrorSession", qos: .userInitiated)
+    let queue = DispatchQueue(label: "com.notchkit.mirrorSession", qos: .userInitiated)
     private let currentGeneration = OSAllocatedUnfairLock<UInt64>(initialState: 0)
 
     func setCurrentGeneration(_ generation: UInt64) {

@@ -1,6 +1,6 @@
 //
 //  GlobalShortcutRecorder.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -10,8 +10,8 @@ import SwiftUI
 import Carbon.HIToolbox
 
 extension Notification.Name {
-    static let sapphireShortcutRecordingDidStart = Notification.Name("com.sapphire.shortcutRecordingDidStart")
-    static let sapphireShortcutRecordingDidEnd = Notification.Name("com.sapphire.shortcutRecordingDidEnd")
+    static let notchKitShortcutRecordingDidStart = Notification.Name("com.notchkit.shortcutRecordingDidStart")
+    static let notchKitShortcutRecordingDidEnd = Notification.Name("com.notchkit.shortcutRecordingDidEnd")
 }
 
 final class ShortcutRecordingObserver: @unchecked Sendable {
@@ -25,12 +25,12 @@ final class ShortcutRecordingObserver: @unchecked Sendable {
         self.center = center
         tokens = [
             center.addObserver(
-                forName: .sapphireShortcutRecordingDidStart,
+                forName: .notchKitShortcutRecordingDidStart,
                 object: nil,
                 queue: .main
             ) { _ in onChange(true) },
             center.addObserver(
-                forName: .sapphireShortcutRecordingDidEnd,
+                forName: .notchKitShortcutRecordingDidEnd,
                 object: nil,
                 queue: .main
             ) { _ in onChange(false) },
@@ -60,7 +60,7 @@ class GlobalShortcutRecorder: ObservableObject {
         self.onCapture = onCapture
         self.recordingIdentifier = identifier
         self.isRecording = true
-        NotificationCenter.default.post(name: .sapphireShortcutRecordingDidStart, object: nil)
+        NotificationCenter.default.post(name: .notchKitShortcutRecordingDidStart, object: nil)
 
         guard let mainScreen = NSScreen.main else { stopRecording(); return }
 
@@ -96,7 +96,7 @@ class GlobalShortcutRecorder: ObservableObject {
         self.onCapture = nil
         self.isRecording = false
         self.recordingIdentifier = nil
-        NotificationCenter.default.post(name: .sapphireShortcutRecordingDidEnd, object: nil)
+        NotificationCenter.default.post(name: .notchKitShortcutRecordingDidEnd, object: nil)
     }
 }
 

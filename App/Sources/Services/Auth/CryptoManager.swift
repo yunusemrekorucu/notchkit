@@ -1,6 +1,6 @@
 //
 //  CryptoManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-09-26
 //
@@ -10,8 +10,8 @@ import CryptoKit
 
 final class CryptoManager: @unchecked Sendable {
     static let shared = CryptoManager()
-    private let keyAccount = "SapphireEncryptionMasterKey"
-    private let fallbackKeyAccount = "SapphireEncryptionMasterKey.fallback"
+    private let keyAccount = "NotchKitEncryptionMasterKey"
+    private let fallbackKeyAccount = "NotchKitEncryptionMasterKey.fallback"
     private let keyLock = NSLock()
     private var cachedKey: SymmetricKey?
 

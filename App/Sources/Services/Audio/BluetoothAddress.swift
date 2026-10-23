@@ -2,9 +2,7 @@
 //  BluetoothAddress.swift
 //  NotchKit
 //
-//  Sapphire keeps these helpers in its private Continuity module. The earbud
-//  clients only need address normalisation and a log sink, so NotchKit provides
-//  them here.
+//  Bluetooth address helpers and a log sink for the earbud clients.
 
 import Foundation
 import os.log

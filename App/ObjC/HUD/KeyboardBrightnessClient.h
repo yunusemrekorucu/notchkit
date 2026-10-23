@@ -1,6 +1,6 @@
 //
 //  KeyboardBrightnessClient.h
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-22.
 //
@@ -8,7 +8,7 @@
 
 //
 //  KeyboardBrightnessClient.h
-//  Sapphire
+//  NotchKit
 //
 //  Created by EthanRDoesMC on 10/20/21.
 //

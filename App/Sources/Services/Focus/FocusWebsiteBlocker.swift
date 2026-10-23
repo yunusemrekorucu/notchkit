@@ -1,6 +1,6 @@
 //
 //  FocusWebsiteBlocker.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30
 
@@ -115,7 +115,7 @@ final class FocusWebsiteBlocker {
 private final class FocusBlockPageServer {
     var productiveAccessHandler: ((String) -> Bool)?
     private var listener: NWListener?
-    private let queue = DispatchQueue(label: "com.cshariq.sapphire.focus-block-redirect")
+    private let queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.focus-block-redirect")
 
     func start() {
         guard listener == nil else { return }
@@ -143,12 +143,11 @@ private final class FocusBlockPageServer {
                 return
             }
             let normalizedHost = host.split(separator: ":").first.map(String.init) ?? host
-            let requestParameter = self.productiveAccessHandler?(normalizedHost) == true
-                ? "&request=productive"
-                : ""
-            let location = "https://sapphire-app.tech/blocked?site=\(Self.urlEncode(normalizedHost))&source=focus\(requestParameter)"
-            let response = "HTTP/1.1 302 Found\r\nLocation: \(location)\r\nCache-Control: no-store\r\nContent-Length: 0\r\nConnection: close\r\n\r\n"
-            connection.send(content: Data(response.utf8), completion: .contentProcessed { _ in
+            let isProductive = self.productiveAccessHandler?(normalizedHost) == true
+            let body = Data(Self.blockedPage(for: normalizedHost, productive: isProductive).utf8)
+            let header = "HTTP/1.1 403 Forbidden\r\nContent-Type: text/html; charset=utf-8\r\nCache-Control: no-store\r\nContent-Length: \(body.count)\r\nConnection: close\r\n\r\n"
+            let response = Data(header.utf8) + body
+            connection.send(content: response, completion: .contentProcessed { _ in
                 connection.cancel()
             })
         }
@@ -161,7 +160,23 @@ private final class FocusBlockPageServer {
         return nil
     }
 
-    private static func urlEncode(_ value: String) -> String {
-        value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? value
+    /// A self-contained page shown in place of a blocked site, so blocking never depends on a website.
+    private static func blockedPage(for host: String, productive: Bool) -> String {
+        let site = host
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+        let detail = productive
+            ? "This site is allowed for productive use, but it is paused during this block."
+            : "Stay with it. This site will be available again when your focus session ends."
+        return """
+        <!doctype html><html><head><meta charset="utf-8"><title>Blocked by NotchKit</title>
+        <style>body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;
+        background:#0b0b10;color:#f2f2f7;font:15px -apple-system,system-ui,sans-serif;text-align:center}
+        h1{font-size:28px;margin:0 0 8px}p{color:#a1a1aa;max-width:420px;margin:6px auto}
+        .site{color:#c4b5fd;font-weight:600}</style></head>
+        <body><div><div style="font-size:44px">🌙</div><h1>Focus mode is on</h1>
+        <p><span class="site">\(site)</span> is blocked right now.</p><p>\(detail)</p></div></body></html>
+        """
     }
 }

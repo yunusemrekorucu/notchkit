@@ -1,6 +1,6 @@
 //
 //  UpdateChecker.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //
@@ -34,7 +34,7 @@ enum AppVersionOrdering {
         compare(candidate, current) == .orderedDescending
     }
 
-    fileprivate static func compareSapphireMarketing(_ lhs: String, _ rhs: String) -> ComparisonResult {
+    fileprivate static func compareNotchKitMarketing(_ lhs: String, _ rhs: String) -> ComparisonResult {
         let a = ParsedVersion(lhs)
         let b = ParsedVersion(rhs)
 
@@ -143,9 +143,9 @@ enum AppVersionOrdering {
     }
 }
 
-enum SapphireVersionOrdering {
+enum NotchKitVersionOrdering {
     static func compare(_ lhs: String, _ rhs: String) -> ComparisonResult {
-        AppVersionOrdering.compareSapphireMarketing(lhs, rhs)
+        AppVersionOrdering.compareNotchKitMarketing(lhs, rhs)
     }
 
     static func isNewer(_ candidate: String, than current: String) -> Bool {
@@ -309,16 +309,16 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
     private var activationObserver: NSObjectProtocol?
     private var initialCheckWorkItem: DispatchWorkItem?
     private var networkMonitor: NWPathMonitor?
-    private let networkMonitorQueue = DispatchQueue(label: "com.cshariq.sapphire.update-network", qos: .utility)
+    private let networkMonitorQueue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.update-network", qos: .utility)
     private var periodicCheckInterval: TimeInterval = 5 * 60 * 60
-    private let persistedAvailableUpdateKey = "SapphirePersistedAvailableUpdate"
-    private let releasesCacheKey = "SapphireReleasesCache"
-    private let releasesCacheETagKey = "SapphireReleasesCacheETag"
-    private let releasesCacheDateKey = "SapphireReleasesCacheDate"
-    private let lastSuccessfulCheckKey = "SapphireUpdateLastSuccessfulCheck"
-    private let nextScheduledCheckKey = "SapphireUpdateNextScheduledCheck"
-    private let failureCountKey = "SapphireUpdateFailureCount"
-    private let lastNotifiedUpdateVersionKey = "SapphireLastNotifiedUpdateVersion"
+    private let persistedAvailableUpdateKey = "NotchKitPersistedAvailableUpdate"
+    private let releasesCacheKey = "NotchKitReleasesCache"
+    private let releasesCacheETagKey = "NotchKitReleasesCacheETag"
+    private let releasesCacheDateKey = "NotchKitReleasesCacheDate"
+    private let lastSuccessfulCheckKey = "NotchKitUpdateLastSuccessfulCheck"
+    private let nextScheduledCheckKey = "NotchKitUpdateNextScheduledCheck"
+    private let failureCountKey = "NotchKitUpdateFailureCount"
+    private let lastNotifiedUpdateVersionKey = "NotchKitLastNotifiedUpdateVersion"
     private let maximumMetadataBytes = 5 * 1_024 * 1_024
     nonisolated private static let maximumDownloadBytes: Int64 = 1_024 * 1_024 * 1_024
     nonisolated private static let maximumArchiveListingBytes = 5 * 1_024 * 1_024
@@ -346,7 +346,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             persistAvailableUpdate(version: version, asset: asset)
             if UserDefaults.standard.string(forKey: lastNotifiedUpdateVersionKey) != version {
                 UserDefaults.standard.set(version, forKey: lastNotifiedUpdateVersionKey)
-                NotificationCenter.default.post(name: .sapphireUpdateAvailable, object: version)
+                NotificationCenter.default.post(name: .notchKitUpdateAvailable, object: version)
                 postUpdateAvailableUserNotification(version: version)
             }
         case .upToDate:
@@ -371,7 +371,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             content.body = "A new version is ready to download. Open Settings → About → Updates to install it."
             content.sound = .default
             let request = UNNotificationRequest(
-                identifier: "sapphire-update-available-\(version)",
+                identifier: "notchkit-update-available-\(version)",
                 content: content,
                 trigger: nil
             )
@@ -410,13 +410,13 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         let offerStableDowngrade = ReleaseChannelPolicy.shouldOfferStableDowngrade(
             for: SettingsModel.shared.settings
         )
-        let stillRelevant = SapphireVersionOrdering.isNewer(persisted.version, than: currentAppVersion)
+        let stillRelevant = NotchKitVersionOrdering.isNewer(persisted.version, than: currentAppVersion)
             || (offerStableDowngrade
-                && SapphireVersionOrdering.compare(persisted.version, currentAppVersion) != .orderedSame)
+                && NotchKitVersionOrdering.compare(persisted.version, currentAppVersion) != .orderedSame)
         guard stillRelevant,
               Self.isSafeReleaseAssetName(persisted.asset.name),
               persisted.asset.name.lowercased().hasSuffix(".zip"),
-              persisted.asset.name.lowercased().contains("sapphire"),
+              persisted.asset.name.lowercased().contains("notchkit"),
               persisted.asset.size.map({ $0 > 0 && $0 <= Self.maximumDownloadBytes }) == true,
               Self.isTrustedDownloadURL(persisted.asset.browserDownloadUrl) else {
             clearPersistedAvailableUpdate()
@@ -460,7 +460,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             let releases = fetched.releases.filter { !$0.draft }
             let eligible = channel == .beta ? releases : releases.filter { !$0.prerelease }
             guard let release = eligible.max(by: {
-                SapphireVersionOrdering.compare($0.marketingVersion, $1.marketingVersion) == .orderedAscending
+                NotchKitVersionOrdering.compare($0.marketingVersion, $1.marketingVersion) == .orderedAscending
             }) else {
                 throw UpdateMetadataError.noEligibleRelease
             }
@@ -468,9 +468,9 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             let latestVersion = release.marketingVersion
             let offerStableDowngrade = channel == .stable
                 && ReleaseChannelPolicy.shouldOfferStableDowngrade(for: SettingsModel.shared.settings)
-            let shouldOffer = SapphireVersionOrdering.isNewer(latestVersion, than: currentAppVersion)
+            let shouldOffer = NotchKitVersionOrdering.isNewer(latestVersion, than: currentAppVersion)
                 || (offerStableDowngrade
-                    && SapphireVersionOrdering.compare(latestVersion, currentAppVersion) != .orderedSame)
+                    && NotchKitVersionOrdering.compare(latestVersion, currentAppVersion) != .orderedSame)
 
             applyReleaseNotes(from: releases, offeredVersion: shouldOffer ? latestVersion : nil)
             if shouldOffer {
@@ -479,7 +479,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
                 }
                 applyStatus(.available(version: latestVersion, asset: asset))
                 if SettingsModel.shared.current.automaticUpdateChecksEnabled,
-                   SettingsModel.shared.current.automaticallyDownloadSapphireUpdates {
+                   SettingsModel.shared.current.automaticallyDownloadNotchKitUpdates {
                     downloadUpdate(asset: asset, version: latestVersion)
                 }
             } else {
@@ -635,7 +635,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             let lower = asset.name.lowercased()
             return isSafeReleaseAssetName(asset.name)
                 && lower.hasSuffix(".zip")
-                && lower.contains("sapphire")
+                && lower.contains("notchkit")
                 && isTrustedDownloadURL(asset.browserDownloadUrl)
                 && asset.size.map({ $0 > 0 && $0 <= maximumDownloadBytes }) == true
                 && isAssetNameCompatible(asset.name, with: architecture)
@@ -697,7 +697,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         var score = 0
         if name.contains("universal") { score += 30 }
         if name.contains(architecture) { score += 25 }
-        if name == "sapphire.zip" { score += 20 }
+        if name == "notchkit.zip" { score += 20 }
         if asset.digest?.lowercased().hasPrefix("sha256:") == true { score += 10 }
         return score
     }
@@ -824,8 +824,8 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
 
     private static func findRelease(version: String, in releases: [GitHubRelease]) -> GitHubRelease? {
         releases.first { release in
-            SapphireVersionOrdering.compare(release.marketingVersion, version) == .orderedSame
-                || SapphireVersionOrdering.compare(
+            NotchKitVersionOrdering.compare(release.marketingVersion, version) == .orderedSame
+                || NotchKitVersionOrdering.compare(
                     release.tagName
                         .trimmingCharacters(in: .whitespacesAndNewlines)
                         .replacingOccurrences(of: "v", with: "", options: .caseInsensitive),
@@ -856,7 +856,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
 
         let work = DispatchWorkItem { [weak self] in
             guard let self else { return }
-            if SettingsModel.shared.current.automaticallyDownloadSapphireUpdates,
+            if SettingsModel.shared.current.automaticallyDownloadNotchKitUpdates,
                case .available(_, let asset) = self.status {
                 self.downloadUpdate(asset: asset)
                 return
@@ -950,7 +950,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         guard Self.isTrustedDownloadURL(asset.browserDownloadUrl),
               Self.isSafeReleaseAssetName(asset.name),
               asset.name.lowercased().hasSuffix(".zip"),
-              asset.name.lowercased().contains("sapphire"),
+              asset.name.lowercased().contains("notchkit"),
               asset.size.map({ $0 > 0 && $0 <= Self.maximumDownloadBytes }) == true else {
             applyStatus(.error("The release download did not pass NotchKit's security policy."))
             return
@@ -991,7 +991,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         do {
             let generation = downloadGeneration
             let tempDir = fileManager.temporaryDirectory
-                .appendingPathComponent("SapphireUpdate-\(UUID().uuidString)", isDirectory: true)
+                .appendingPathComponent("NotchKitUpdate-\(UUID().uuidString)", isDirectory: true)
             try fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
             let destinationURL = tempDir.appendingPathComponent(asset.name)
             try fileManager.moveItem(at: location, to: destinationURL)
@@ -1107,7 +1107,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
     ) throws -> URL {
         let fileManager = FileManager.default
         let stagedURL = currentAppURL.deletingLastPathComponent()
-            .appendingPathComponent(".Sapphire-update-\(UUID().uuidString).app", isDirectory: true)
+            .appendingPathComponent(".NotchKit-update-\(UUID().uuidString).app", isDirectory: true)
 
         do {
             try fileManager.copyItem(at: candidate, to: stagedURL)
@@ -1115,7 +1115,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
 
             let stagedVersion = Bundle(url: stagedURL)?
                 .object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-            guard SapphireVersionOrdering.compare(stagedVersion, expectedVersion) == .orderedSame else {
+            guard NotchKitVersionOrdering.compare(stagedVersion, expectedVersion) == .orderedSame else {
                 throw NSError(
                     domain: "UpdateError",
                     code: 24,
@@ -1164,7 +1164,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         guard let version = await XPCClient.shared.helperProtocolVersion(timeout: 5) else {
             return .failure("The privileged update helper is unavailable. Reinstall or repair NotchKit's helper, then try again.")
         }
-        guard version >= SapphireHelperProtocolVersion else {
+        guard version >= NotchKitHelperProtocolVersion else {
             return .failure("The privileged update helper is out of date. Reinstall or repair NotchKit's helper, then try again.")
         }
 
@@ -1228,7 +1228,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
                 let fileManager = FileManager.default
                 try Self.validateArchiveEntries(downloadedZipPath)
                 let tempUnzipDirectory = fileManager.temporaryDirectory
-                    .appendingPathComponent("SapphireExtract-\(UUID().uuidString)", isDirectory: true)
+                    .appendingPathComponent("NotchKitExtract-\(UUID().uuidString)", isDirectory: true)
                 try fileManager.createDirectory(at: tempUnzipDirectory, withIntermediateDirectories: true, attributes: nil)
                 defer { try? fileManager.removeItem(at: tempUnzipDirectory) }
 
@@ -1264,7 +1264,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
                 try Self.validateUpdatePublisher(candidate: newAppURL, replacing: currentAppURL)
                 let candidateVersion = Bundle(url: newAppURL)?
                     .object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? ""
-                guard SapphireVersionOrdering.compare(candidateVersion, expectedVersion) == .orderedSame else {
+                guard NotchKitVersionOrdering.compare(candidateVersion, expectedVersion) == .orderedSame else {
                     throw NSError(
                         domain: "UpdateError",
                         code: 14,
@@ -1552,7 +1552,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         process.arguments = [
             "-c",
             "while kill -0 \"$1\" 2>/dev/null; do sleep 0.2; done; exec /usr/bin/open -n \"$2\"",
-            "sapphire-relaunch",
+            "notchkit-relaunch",
             String(ProcessInfo.processInfo.processIdentifier),
             appPath
         ]

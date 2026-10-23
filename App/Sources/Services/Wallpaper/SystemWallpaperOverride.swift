@@ -1,6 +1,6 @@
 //
 //  SystemWallpaperOverride.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-28.
 //
@@ -91,7 +91,7 @@ final class SystemWallpaperOverride {
                 guard let original = current.originals[key],
                       FileManager.default.fileExists(atPath: original.url.path) else { continue }
                 let shown = Self.currentImageURL(for: screen)
-                if let shown, !Self.isSapphireWallpaper(shown, applied: applied) { continue }
+                if let shown, !Self.isNotchKitWallpaper(shown, applied: applied) { continue }
                 do {
                     try NSWorkspace.shared.setDesktopImageURL(original.url, for: screen, options: original.options)
                 } catch {
@@ -105,10 +105,10 @@ final class SystemWallpaperOverride {
     nonisolated static func shouldAdoptAsOriginal(current: URL, applied: URL?, target: URL) -> Bool {
         let current = current.standardizedFileURL
         if current == target.standardizedFileURL { return false }
-        return !isSapphireWallpaper(current, applied: applied)
+        return !isNotchKitWallpaper(current, applied: applied)
     }
 
-    nonisolated static func isSapphireWallpaper(_ url: URL, applied: URL?) -> Bool {
+    nonisolated static func isNotchKitWallpaper(_ url: URL, applied: URL?) -> Bool {
         let url = url.standardizedFileURL
         return url == applied?.standardizedFileURL || WallpaperAssetStore.contains(url)
     }

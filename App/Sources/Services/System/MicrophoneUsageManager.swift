@@ -1,6 +1,6 @@
 //
 //  MicrophoneUsageManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
@@ -16,8 +16,8 @@ final class MicrophoneUsageManager: ObservableObject {
     static let shared = MicrophoneUsageManager()
 
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MicrophoneUsageManager")
-    private let gainDefaultsKey = "SapphireMicrophoneAmplifierGain"
-    private let amplifierEnabledDefaultsKey = "SapphireMicrophoneAmplifierEnabled"
+    private let gainDefaultsKey = "NotchKitMicrophoneAmplifierGain"
+    private let amplifierEnabledDefaultsKey = "NotchKitMicrophoneAmplifierEnabled"
 
     @Published private(set) var isMicInUse: Bool = false
     @Published private(set) var inputBundleIDs: Set<String> = []
@@ -49,7 +49,7 @@ final class MicrophoneUsageManager: ObservableObject {
     private var meteringClientCount = 0
     private var meterResetTask: Task<Void, Never>?
     private var activeBundlesObserver: NSObjectProtocol?
-    private let halQueue = DispatchQueue(label: "com.sapphire.microphone-usage", qos: .utility)
+    private let halQueue = DispatchQueue(label: "com.notchkit.microphone-usage", qos: .utility)
     private var usageGeneration = 0
     private var deviceScanGeneration = 0
 
@@ -351,7 +351,7 @@ enum MicrophoneUsageFilter {
 
     static func isMicrophoneInputDevice(name: String?) -> Bool {
         guard let name, !name.isEmpty else { return false }
-        return !name.hasPrefix("Sapphire-")
+        return !name.hasPrefix("NotchKit-")
     }
 }
 
@@ -362,7 +362,7 @@ private final class MicrophoneMeteringTap: @unchecked Sendable {
     private let callback: (Float, Float, Bool) -> Void
     private var ioProcID: AudioDeviceIOProcID?
     private var isRunning = false
-    private let queue = DispatchQueue(label: "com.sapphire.microphone-meter", qos: .userInteractive)
+    private let queue = DispatchQueue(label: "com.notchkit.microphone-meter", qos: .userInteractive)
     private var accumulator = MeterAccumulator(sampleRate: 48000)
 
     init(deviceID: AudioDeviceID, gain: Float, callback: @escaping (Float, Float, Bool) -> Void) {

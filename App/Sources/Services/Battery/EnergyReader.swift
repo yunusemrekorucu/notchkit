@@ -1,6 +1,6 @@
 //
 //  EnergyReader.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-11-08.
 //
@@ -28,7 +28,7 @@ final class EnergyReader {
     }
 
     private let callback: ([TopProcess]) -> Void
-    private let queue = DispatchQueue(label: "com.shariq.sapphire.energy-reader", qos: .utility)
+    private let queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.energy-reader", qos: .utility)
     private var timer: DispatchSourceTimer?
 
     private var previous: [pid_t: ProcessSample] = [:]

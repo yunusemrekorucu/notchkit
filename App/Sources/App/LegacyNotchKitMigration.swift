@@ -30,7 +30,7 @@ enum LegacyNotchKitMigration {
         settings.pomodoroWidgetEnabled = widgets.contains("pomodoro")
         settings.quickAppsWidgetEnabled = widgets.contains("quickApps")
 
-        // Bring the NotchKit-only widgets forward so they fit before Sapphire's extras.
+        // Bring the carried-over widgets forward so they fit before the newer ones.
         let carried: [WidgetType] = [.todo, .pomodoro, .quickApps].filter { widgets.contains($0.rawValue) }
         var order = settings.widgetOrder.filter { !carried.contains($0) }
         let anchor = order.firstIndex(of: .calendar).map { $0 + 1 } ?? order.count

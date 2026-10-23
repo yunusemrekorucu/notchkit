@@ -1,6 +1,6 @@
 //
 //  ClipboardHistoryPolicy.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-07
 //
@@ -164,7 +164,7 @@ nonisolated struct ClipboardSearchCache {
 final class ClipboardSearchModel: ObservableObject {
     @Published private(set) var results: [ClipboardItem] = []
 
-    private let queue = DispatchQueue(label: "com.sapphire.clipboard.search", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.notchkit.clipboard.search", qos: .userInitiated)
     private nonisolated(unsafe) var cache = ClipboardSearchCache()
     private var generation = 0
     private var pending: DispatchWorkItem?

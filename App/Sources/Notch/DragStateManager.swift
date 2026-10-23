@@ -1,6 +1,6 @@
 //
 //  DragStateManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -56,7 +56,7 @@ enum FileDragPasteboard {
 
     private static func writeTextFile(_ text: String) -> URL? {
         let directory = FileManager.default.temporaryDirectory
-            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.shariq.Sapphire")
+            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit")
             .appendingPathComponent("DroppedText")
             .appendingPathComponent(UUID().uuidString)
         let url = directory.appendingPathComponent("\(textFileName(for: text)).txt")

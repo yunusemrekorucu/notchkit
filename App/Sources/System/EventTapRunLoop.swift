@@ -1,6 +1,6 @@
 //
 //  EventTapRunLoop.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-13
 
@@ -29,7 +29,7 @@ final class EventTapRunLoop {
 
             CFRunLoopRun()
         }
-        thread.name = "com.sapphire.event-tap-runloop"
+        thread.name = "com.notchkit.event-tap-runloop"
         thread.qualityOfService = .userInteractive
         thread.stackSize = 512 * 1024
         thread.start()

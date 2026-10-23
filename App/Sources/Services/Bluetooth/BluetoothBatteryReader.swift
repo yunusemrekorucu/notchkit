@@ -1,6 +1,6 @@
 //
 //  BluetoothBatteryReader.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
@@ -377,7 +377,7 @@ private final class GATTBatteryReadSession: NSObject, CBCentralManagerDelegate, 
     private static let batteryLevelCharacteristic = CBUUID(string: "2A19")
     private static let modelNumberCharacteristic = CBUUID(string: "2A24")
 
-    private let queue = DispatchQueue(label: "com.sapphire.bluetooth.gatt-battery", qos: .utility)
+    private let queue = DispatchQueue(label: "com.notchkit.bluetooth.gatt-battery", qos: .utility)
     private var central: CBCentralManager?
     private var pending: [UUID: CBPeripheral] = [:]
     private var outstandingReads: [UUID: Int] = [:]

@@ -1,6 +1,6 @@
 //
 //  SettingsSidebar.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //
@@ -97,7 +97,7 @@ struct SettingsSidebarView: View {
             }
             .listStyle(.sidebar).scrollContentBackground(.hidden)
             .frame(maxHeight: .infinity, alignment: .top)
-            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("SapphireSelectSection"))) { notification in
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("NotchKitSelectSection"))) { notification in
                 if let sectionName = notification.object as? String,
                    let section = SettingsSection(rawValue: sectionName) {
                     withAnimation(.easeInOut(duration: 0.15)) {

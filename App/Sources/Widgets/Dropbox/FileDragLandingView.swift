@@ -1,6 +1,6 @@
 //
 //  FileDragLandingView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -469,7 +469,7 @@ private struct DropZoneView: View {
 // MARK: - File Provider Conversion Logic
 
 fileprivate let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
-    .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.shariq.Sapphire")
+    .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit")
 
 enum FileProviderError: Error, LocalizedError {
     case loadingFailed, noValidURLFound, duplicationFailed(Error)

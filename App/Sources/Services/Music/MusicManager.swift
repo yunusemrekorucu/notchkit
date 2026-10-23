@@ -1,6 +1,6 @@
 //
 //  MusicManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-05
 //
@@ -274,7 +274,7 @@ class MusicManager {
     var currentSourceKey: String?
     @ObservationIgnored private var sourcePinnedByUser = false
     private let spotifyLiveSourceKey = "com.spotify.client:spotify-live"
-    private let phoneMediaSourceKey = "com.shariq.sapphire.phone-media"
+    private let phoneMediaSourceKey = "com.yunusemrekorucu.notchkit.phone-media"
     @ObservationIgnored private var phoneMediaSource: TrackInfo?
     private(set) var phoneMediaDeviceName: String?
     private(set) var phoneMediaAppName: String?

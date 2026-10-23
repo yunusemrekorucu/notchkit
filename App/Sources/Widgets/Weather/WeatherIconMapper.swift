@@ -1,6 +1,6 @@
 //
 //  WeatherIconMapper.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-06-30.
 //

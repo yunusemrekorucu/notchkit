@@ -1,6 +1,6 @@
 //
 //  SettingsFields+Generated.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-15
 
@@ -152,7 +152,7 @@ extension SettingsField {
         SettingsField(\.preventNotchExpandWhenLocked),
         SettingsField(\.releaseChannel),
         SettingsField(\.automaticUpdateChecksEnabled),
-        SettingsField(\.automaticallyDownloadSapphireUpdates),
+        SettingsField(\.automaticallyDownloadNotchKitUpdates),
         SettingsField(\.updateAvailableNotificationsEnabled),
         SettingsField(\.showUpdateAvailableLiveActivity),
         SettingsField(\.installedAppUpdatesEnabled),

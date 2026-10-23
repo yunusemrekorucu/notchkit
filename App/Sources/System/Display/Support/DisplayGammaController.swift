@@ -1,6 +1,6 @@
 //
 //  DisplayGammaController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-07
 //
@@ -48,7 +48,7 @@ final class DisplayGammaController {
         }
     }
 
-    private let logger = Logger(subsystem: "com.shariq.sapphire", category: "DisplayGamma")
+    private let logger = Logger(subsystem: "com.yunusemrekorucu.notchkit", category: "DisplayGamma")
     private var entries: [CGDirectDisplayID: Entry] = [:]
     private var observers: [(center: NotificationCenter, token: NSObjectProtocol)] = []
     private var reapplyWorkItem: DispatchWorkItem?

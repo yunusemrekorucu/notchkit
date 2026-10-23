@@ -1,6 +1,6 @@
 //
 //  HelperManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-11-08.
 //
@@ -12,7 +12,7 @@ import SwiftUI
 import OSLog
 
 private let helperLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "HelperManager")
-private let sapphireHelperPlistName = "com.shariq.sapphireHelper.plist"
+private let notchKitHelperPlistName = "com.yunusemrekorucu.notchkitHelper.plist"
 
 // MARK: - Error codes
 
@@ -57,10 +57,10 @@ enum HelperIssue: Equatable {
             macOS can't find the helper.
 
             Do fix this:
-            1. Click “Reset Helper” below. Sapphire will unregister the helper with SMAppService and register it again.
-            2. If the helper still does not start, Sapphire will relaunch itself — or click “Relaunch Sapphire”.
-            3. When Sapphire opens, click Install if asked.
-            4. In System Settings → General → Login Items, enable Sapphire Helper under Allow in the Background.
+            1. Click “Reset Helper” below. NotchKit will unregister the helper with SMAppService and register it again.
+            2. If the helper still does not start, NotchKit will relaunch itself — or click “Relaunch NotchKit”.
+            3. When NotchKit opens, click Install if asked.
+            4. In System Settings → General → Login Items, enable NotchKit Helper under Allow in the Background.
 
             Try Reset Helper first. Only relaunch the app if the helper is still stuck after that.
             """
@@ -72,17 +72,17 @@ enum HelperIssue: Equatable {
 
             Do this:
             1. Click “Open Login Items” below.
-            2. Under Allow in the Background, turn on Sapphire.
+            2. Under Allow in the Background, turn on NotchKit.
             3. Authenticate if macOS asks for your password.
-            4. Return to Sapphire and click Install / Activate.
+            4. Return to NotchKit and click Install / Activate.
             """
         case .spawnFailed:
             return """
             Error code: SAP-H1
 
-            Login Items permission is already granted (status 1), but macOS still will not start the helper. This usually means Sapphire’s own helper registration is stuck.
+            Login Items permission is already granted (status 1), but macOS still will not start the helper. This usually means NotchKit’s own helper registration is stuck.
 
-            Click “Reset Helper” below. Sapphire will unregister the helper and register it again, then relaunch if the helper is still having issues.
+            Click “Reset Helper” below. NotchKit will unregister the helper and register it again, then relaunch if the helper is still having issues.
             """
         }
     }
@@ -170,7 +170,7 @@ struct HelperStatusBanner: View {
 class HelperManager: ObservableObject {
     static let shared = HelperManager()
 
-    let helperToolIdentifier = "com.shariq.sapphireHelper"
+    let helperToolIdentifier = "com.yunusemrekorucu.notchkitHelper"
 
     @Published var status: SMAppService.Status = .notRegistered
     @Published var isRunning: Bool = false
@@ -190,7 +190,7 @@ class HelperManager: ObservableObject {
     private static var bundledPlistURL: URL {
         Bundle.main.bundleURL
             .appendingPathComponent("Contents/Library/LaunchDaemons", isDirectory: true)
-            .appendingPathComponent(sapphireHelperPlistName, isDirectory: false)
+            .appendingPathComponent(notchKitHelperPlistName, isDirectory: false)
     }
 
     var bannerTitle: String {
@@ -239,10 +239,10 @@ class HelperManager: ObservableObject {
 
         let center = NotificationCenter.default
         connectionObservers = [
-            center.addObserver(forName: .sapphireHelperConnectionLost, object: nil, queue: .main) { [weak self] _ in
+            center.addObserver(forName: .notchKitHelperConnectionLost, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor in self?.helperConnectionDidFail() }
             },
-            center.addObserver(forName: .sapphireHelperConnectionRestored, object: nil, queue: .main) { [weak self] _ in
+            center.addObserver(forName: .notchKitHelperConnectionRestored, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor in self?.helperConnectionDidRecover() }
             }
         ]
@@ -321,13 +321,13 @@ class HelperManager: ObservableObject {
 
     nonisolated private static func fetchDaemonStatus() async -> SMAppService.Status {
         await Task.detached(priority: .utility) {
-            SMAppService.daemon(plistName: sapphireHelperPlistName).status
+            SMAppService.daemon(plistName: notchKitHelperPlistName).status
         }.value
     }
 
     nonisolated private static func registerDaemon() async -> String? {
         await Task.detached(priority: .utility) {
-            let service = SMAppService.daemon(plistName: sapphireHelperPlistName)
+            let service = SMAppService.daemon(plistName: notchKitHelperPlistName)
             do {
                 try service.register()
                 return nil
@@ -343,7 +343,7 @@ class HelperManager: ObservableObject {
 
     nonisolated private static func unregisterDaemon() async -> String? {
         await Task.detached(priority: .utility) {
-            let service = SMAppService.daemon(plistName: sapphireHelperPlistName)
+            let service = SMAppService.daemon(plistName: notchKitHelperPlistName)
             do {
                 try service.unregister()
                 return nil
@@ -437,8 +437,8 @@ class HelperManager: ObservableObject {
             helperLogger.info("[HelperManager] Helper protocol version query failed")
             return false
         }
-        helperLogger.info("[HelperManager] Helper protocol version: running=\(running) expected=\(SapphireHelperProtocolVersion)")
-        return running == SapphireHelperProtocolVersion
+        helperLogger.info("[HelperManager] Helper protocol version: running=\(running) expected=\(NotchKitHelperProtocolVersion)")
+        return running == NotchKitHelperProtocolVersion
     }
 
     func uninstall() {

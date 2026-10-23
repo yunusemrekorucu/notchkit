@@ -1,6 +1,6 @@
 //
 //  MixerEngine.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-07
 //
@@ -161,7 +161,7 @@ final class MixerEngine: @unchecked Sendable {
     var onProcessListChanged: (@Sendable () -> Void)?
 
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MixerEngine")
-    private let queue = DispatchQueue(label: "com.sapphire.mixer.hal", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.notchkit.mixer.hal", qos: .userInitiated)
     private let queueKey = DispatchSpecificKey<Void>()
 
     private let mailboxLock = NSLock()
@@ -557,7 +557,7 @@ final class MixerEngine: @unchecked Sendable {
             guard let name = CoreAudioDevices.name(of: deviceID), let uid = CoreAudioDevices.uid(of: deviceID) else { continue }
             if deviceID == snapshot.defaultOutputID { snapshot.defaultOutputUID = uid; uidMap[uid] = deviceID }
             if deviceID == snapshot.defaultInputID { snapshot.defaultInputUID = uid }
-            guard !name.hasPrefix("Sapphire-"), !Self.isHiddenVirtualDevice(name: name, uid: uid) else { continue }
+            guard !name.hasPrefix("NotchKit-"), !Self.isHiddenVirtualDevice(name: name, uid: uid) else { continue }
 
             let isInput = CoreAudioDevices.hasStreams(deviceID, scope: kAudioObjectPropertyScopeInput)
             let isOutput = CoreAudioDevices.hasStreams(deviceID, scope: kAudioObjectPropertyScopeOutput)

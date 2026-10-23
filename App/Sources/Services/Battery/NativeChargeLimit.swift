@@ -1,6 +1,6 @@
 //
 //  NativeChargeLimit.swift
-//  Sapphire
+//  NotchKit
 //
 //  Thin wrapper around macOS's native Charge Limit (PowerUI's PowerUISmartChargeClient).
 //  Used on firmware where the SMC charge-inhibit keys are gated but the native limit works.
@@ -17,9 +17,9 @@ enum NativeChargeLimit {
     /// Firmware only accepts limits in this range.
     static let supportedRange = 80...100
 
-    private static let ownsKey = "sapphire.nativeChargeLimit.owned"
-    private static let priorEnabledKey = "sapphire.nativeChargeLimit.priorEnabled"
-    private static let priorLimitKey = "sapphire.nativeChargeLimit.priorLimit"
+    private static let ownsKey = "notchkit.nativeChargeLimit.owned"
+    private static let priorEnabledKey = "notchkit.nativeChargeLimit.priorEnabled"
+    private static let priorLimitKey = "notchkit.nativeChargeLimit.priorLimit"
 
     // Type encodings (verified at runtime via class_copyMethodList):
     //   initWithClientName:   @24@0:8@16
@@ -38,7 +38,7 @@ enum NativeChargeLimit {
     private typealias SetLimitFn = @convention(c) (AnyObject, Selector, UInt8, ErrorPointer) -> Bool
 
     // All mutable state below is only touched on `queue`.
-    private static let queue = DispatchQueue(label: "com.shariq.sapphire.nativeChargeLimit")
+    private static let queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.nativeChargeLimit")
     private static var client: AnyObject?
     private static var didAttemptLoad = false
     /// A limit the firmware silently refused; not retried until a different limit is requested.
@@ -60,8 +60,8 @@ enum NativeChargeLimit {
         get async { await run { limitOnQueue() } }
     }
 
-    /// True while Sapphire has taken over the native limit (persisted across launches).
-    static var sapphireOwnsLimit: Bool {
+    /// True while NotchKit has taken over the native limit (persisted across launches).
+    static var notchKitOwnsLimit: Bool {
         UserDefaults.standard.bool(forKey: ownsKey)
     }
 
@@ -71,7 +71,7 @@ enum NativeChargeLimit {
         await run { applyOnQueue(limit: limit) }
     }
 
-    /// Gives the native limit back to the user's own prior setting, if Sapphire took it over.
+    /// Gives the native limit back to the user's own prior setting, if NotchKit took it over.
     @discardableResult
     static func release() async -> Bool {
         await run { releaseOnQueue() }
@@ -104,7 +104,7 @@ enum NativeChargeLimit {
         }
 
         // Compare against the live state: macOS calibration or the user in System Settings can change
-        // the native limit behind Sapphire's back.
+        // the native limit behind NotchKit's back.
         if enabledOnQueue() == true, limitOnQueue() == limit { return true }
 
         guard setLimitOnQueue(limit), setEnabledOnQueue(true) else { return false }

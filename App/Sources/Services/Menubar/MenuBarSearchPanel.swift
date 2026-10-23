@@ -1,6 +1,6 @@
 //
 //  MenuBarSearchPanel.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-27
 //
@@ -34,7 +34,7 @@ final class MenuBarSearchPanelController: ObservableObject {
     private var isVisible = false
 
     private static let panelSize = NSSize(width: 460, height: 380)
-    private static let recentsKey = "SapphireMenuBarSearchRecents"
+    private static let recentsKey = "NotchKitMenuBarSearchRecents"
     private static let recentsLimit = 8
 
     private var recentKeys: [String] = UserDefaults.standard.stringArray(forKey: recentsKey) ?? []
@@ -176,7 +176,7 @@ final class MenuBarSearchPanelController: ObservableObject {
             backing: .buffered,
             defer: false
         )
-        panel.configureAsSapphireOverlay()
+        panel.configureAsNotchKitOverlay()
         panel.level = .popUpMenu
 
         let backdrop = NSVisualEffectView(frame: NSRect(origin: .zero, size: Self.panelSize))

@@ -1,6 +1,6 @@
 //
 //  FocusSessionManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-25
 //
@@ -941,7 +941,7 @@ final class FocusSessionManager: ObservableObject {
 // MARK: - Notifications
 
 extension Notification.Name {
-    static let focusSessionBlockCompleted = Notification.Name("com.sapphire.focusBlockCompleted")
-    static let focusSessionEnded = Notification.Name("com.sapphire.focusSessionEnded")
-    static let focusRestrictedAppOpened = Notification.Name("com.sapphire.focusRestrictedAppOpened")
+    static let focusSessionBlockCompleted = Notification.Name("com.notchkit.focusBlockCompleted")
+    static let focusSessionEnded = Notification.Name("com.notchkit.focusSessionEnded")
+    static let focusRestrictedAppOpened = Notification.Name("com.notchkit.focusRestrictedAppOpened")
 }

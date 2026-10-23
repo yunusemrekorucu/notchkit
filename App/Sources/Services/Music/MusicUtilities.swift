@@ -1,6 +1,6 @@
 //
 //  MusicUtilities.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-21
 
@@ -969,8 +969,8 @@ class SystemAudioMonitor: ObservableObject {
 // MARK: - Consolidated from MusicLongPressSupport.swift
 
 extension Notification.Name {
-    static let sapphireOpenMusicQueue = Notification.Name("sapphireOpenMusicQueue")
-    static let sapphireOpenMusicDevices = Notification.Name("sapphireOpenMusicDevices")
+    static let notchKitOpenMusicQueue = Notification.Name("notchKitOpenMusicQueue")
+    static let notchKitOpenMusicDevices = Notification.Name("notchKitOpenMusicDevices")
 }
 
 struct MusicLongPressNavigation {
@@ -978,8 +978,8 @@ struct MusicLongPressNavigation {
     var openDevices: (() -> Void)?
 
     static let notifications = MusicLongPressNavigation(
-        openQueue: { NotificationCenter.default.post(name: .sapphireOpenMusicQueue, object: nil) },
-        openDevices: { NotificationCenter.default.post(name: .sapphireOpenMusicDevices, object: nil) }
+        openQueue: { NotificationCenter.default.post(name: .notchKitOpenMusicQueue, object: nil) },
+        openDevices: { NotificationCenter.default.post(name: .notchKitOpenMusicDevices, object: nil) }
     )
 }
 
@@ -1064,13 +1064,13 @@ extension MusicManager {
             if let openQueue = navigation?.openQueue {
                 openQueue()
             } else {
-                NotificationCenter.default.post(name: .sapphireOpenMusicQueue, object: nil)
+                NotificationCenter.default.post(name: .notchKitOpenMusicQueue, object: nil)
             }
         case .openDevices:
             if let openDevices = navigation?.openDevices {
                 openDevices()
             } else {
-                NotificationCenter.default.post(name: .sapphireOpenMusicDevices, object: nil)
+                NotificationCenter.default.post(name: .notchKitOpenMusicDevices, object: nil)
             }
         }
     }
@@ -1307,7 +1307,7 @@ final class FileImageCache: @unchecked Sendable {
 
     private let fileManager = FileManager.default
     private let cacheDirectory: URL
-    private let ioQueue = DispatchQueue(label: "com.sapphire.imagecache.io", qos: .utility)
+    private let ioQueue = DispatchQueue(label: "com.notchkit.imagecache.io", qos: .utility)
     private let memoryCache: NSCache<NSString, NSImage> = {
         let cache = NSCache<NSString, NSImage>()
         cache.countLimit = 48

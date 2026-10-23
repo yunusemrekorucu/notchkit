@@ -1,6 +1,6 @@
 //
 //  InstalledAppUpdates.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-04
 //
@@ -1365,7 +1365,7 @@ private final class BrewProcessState: @unchecked Sendable {
 
     private let lock = NSLock()
     private let outputQueue = DispatchQueue(
-        label: "com.cshariq.sapphire.homebrew-output",
+        label: "com.yunusemrekorucu.notchkit.homebrew-output",
         qos: .utility
     )
     private var maximumOutputBytes = 5 * 1_024 * 1_024
@@ -1947,7 +1947,7 @@ private enum HomebrewClient {
               let script = HomebrewCommand.terminalScript(brewPath: brew, tokens: tokens) else { return false }
         let scriptURL: URL? = await Task.detached(priority: .userInitiated) {
             let url = FileManager.default.temporaryDirectory
-                .appendingPathComponent("Sapphire-brew-upgrade-\(UUID().uuidString).command")
+                .appendingPathComponent("NotchKit-brew-upgrade-\(UUID().uuidString).command")
             do {
                 try Data(script.utf8).write(to: url, options: [.atomic])
                 try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: url.path)
@@ -2557,11 +2557,11 @@ final class InstalledAppUpdatesChecker: ObservableObject {
         }
     }
 
-    private let ignoredAppsKey = "SapphireIgnoredInstalledAppUpdates"
-    private let lastCheckedKey = "SapphireInstalledAppsLastChecked"
-    private let skippedVersionsKey = "SapphireInstalledAppsSkippedVersions"
-    private let announcedUpdatesKey = "SapphireInstalledAppsAnnouncedUpdates"
-    private let resultCacheKey = "SapphireInstalledAppsUpdateResultCache"
+    private let ignoredAppsKey = "NotchKitIgnoredInstalledAppUpdates"
+    private let lastCheckedKey = "NotchKitInstalledAppsLastChecked"
+    private let skippedVersionsKey = "NotchKitInstalledAppsSkippedVersions"
+    private let announcedUpdatesKey = "NotchKitInstalledAppsAnnouncedUpdates"
+    private let resultCacheKey = "NotchKitInstalledAppsUpdateResultCache"
     private var backgroundTimer: Timer?
     private var backgroundLaunchWorkItem: DispatchWorkItem?
     private var failedCheckRetryWorkItem: DispatchWorkItem?
@@ -2570,7 +2570,7 @@ final class InstalledAppUpdatesChecker: ObservableObject {
     private var entryCheckTasks: [String: Task<Void, Never>] = [:]
     private var networkMonitor: NWPathMonitor?
     private let networkMonitorQueue = DispatchQueue(
-        label: "com.cshariq.sapphire.installed-app-update-network",
+        label: "com.yunusemrekorucu.notchkit.installed-app-update-network",
         qos: .utility
     )
     private var backgroundChecksEnabled = false
@@ -3689,7 +3689,7 @@ final class InstalledAppUpdatesChecker: ObservableObject {
             content.body = body
             content.sound = .default
             let request = UNNotificationRequest(
-                identifier: "sapphire-installed-app-updates-\(Date().timeIntervalSince1970)",
+                identifier: "notchkit-installed-app-updates-\(Date().timeIntervalSince1970)",
                 content: content,
                 trigger: nil
             )

@@ -1,6 +1,6 @@
 //
 //  MenuBarWallpaperTint.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-27
 //
@@ -9,7 +9,7 @@ import AppKit
 import ImageIO
 
 extension Notification.Name {
-    static let menuBarWallpaperTintDidChange = Notification.Name("com.sapphire.menuBarWallpaperTintDidChange")
+    static let menuBarWallpaperTintDidChange = Notification.Name("com.notchkit.menuBarWallpaperTintDidChange")
 }
 
 @MainActor
@@ -33,7 +33,7 @@ final class MenuBarWallpaperTint {
     private var pendingSample: DispatchWorkItem?
     private var cache: [URL: Tint] = [:]
 
-    private let sampleQueue = DispatchQueue(label: "com.sapphire.menubar-wallpaper-tint", qos: .utility)
+    private let sampleQueue = DispatchQueue(label: "com.notchkit.menubar-wallpaper-tint", qos: .utility)
 
     private init() {}
 

@@ -1,6 +1,6 @@
 //
 //  SettingsPanes.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //
@@ -118,7 +118,7 @@ struct LockedSettingsSectionView: View {
                 .frame(maxWidth: 380)
 
             Button("Open Account Settings") {
-                NotificationCenter.default.post(name: .sapphireOpenAccountPane, object: nil)
+                NotificationCenter.default.post(name: .notchKitOpenAccountPane, object: nil)
             }
             .buttonStyle(.borderedProminent)
             .tint(.purple)
@@ -6610,7 +6610,7 @@ struct BatterySettingsView: View {
         }
         .animation(.easeInOut(duration: 0.2), value: selectedTab)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .onReceive(NotificationCenter.default.publisher(for: .sapphireSettingsWillClose)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .notchKitSettingsWillClose)) { _ in
             selectedTab = "Configuration"
         }
     }
@@ -7088,7 +7088,7 @@ struct ModernBatteryStatsView: View {
         .onDisappear {
             tearDownBatteryStats()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .sapphireSettingsWillClose)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .notchKitSettingsWillClose)) { _ in
             tearDownBatteryStats()
         }
         .onReceive(BatteryDataLogger.shared.entriesDidChange) { _ in
@@ -9127,7 +9127,7 @@ struct MusicSettingsView: View {
                         }
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Spotify API Credentials").font(.system(size: 14, weight: .medium))
-                            Text("Register your app at developer.spotify.com and copy these values here. The redirect URI is: sapphire://callback").font(.caption).foregroundColor(.secondary).padding(.bottom, 4)
+                            Text("Register your app at developer.spotify.com and copy these values here. The redirect URI is: notchkit://callback").font(.caption).foregroundColor(.secondary).padding(.bottom, 4)
                             Text("Client ID").font(.system(size: 13, weight: .medium)).foregroundStyle(.white.opacity(0.8))
                             SecureField("Enter your Client ID", text: Binding(
                                 get: { APIKeyManager.shared.spotifyClientId },
@@ -9163,7 +9163,7 @@ struct MusicSettingsView: View {
                     Text("TIDAL").font(.headline).padding([.horizontal, .top])
                     VStack(alignment: .leading, spacing: 8) {
                         Text("TIDAL API Credentials").font(.system(size: 14, weight: .medium))
-                        Text("Create an app at developer.tidal.com, enable the user.read, search.read, collection.read/write, and playlists.read/write scopes, and set the redirect URI exactly to sapphire://callback.").font(.caption).foregroundColor(.secondary).padding(.bottom, 4)
+                        Text("Create an app at developer.tidal.com, enable the user.read, search.read, collection.read/write, and playlists.read/write scopes, and set the redirect URI exactly to notchkit://callback.").font(.caption).foregroundColor(.secondary).padding(.bottom, 4)
                         Text("Client ID").font(.system(size: 13, weight: .medium)).foregroundStyle(.white.opacity(0.8))
                         SecureField("Enter your Client ID", text: Binding(
                             get: { APIKeyManager.shared.tidalClientId },
@@ -10453,9 +10453,6 @@ struct AboutSettingsView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("NotchKit").font(.largeTitle.weight(.bold))
                         Text(versionLabel).foregroundStyle(.secondary).textSelection(.enabled)
-                        Text("Based on Sapphire by Shariq Charolia · AGPL-3.0")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
 
                         if debugMode.isEnabled {
                             Label("Debug Mode Enabled", systemImage: "hammer.fill")
@@ -10464,17 +10461,6 @@ struct AboutSettingsView: View {
                         }
 
                         HStack(spacing: 10) {
-                            Link(destination: URL(string: "https://github.com/cshariq/Sapphire")!) {
-                                Image(systemName: "link")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 18, height: 18)
-                                    .foregroundColor(.white)
-                                    .padding(6)
-                                    .background(Color.blue)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            }
-                            .buttonStyle(PlainButtonStyle())
 
                             Link(destination: URL(string: "https://github.com/yunusemrekorucu/notchkit")!) {
                                 Image("github_logo")
@@ -10516,7 +10502,7 @@ struct AboutSettingsView: View {
                     }
                 }.modifier(SettingsContainerModifier()).onAppear(perform: permissionsManager.checkAllPermissions)
 
-                Text("© 2025 Shariq Charolia. All rights reserved.").font(.caption).foregroundStyle(.tertiary).frame(maxWidth: .infinity, alignment: .center).padding(.top, 20)
+                Text("© 2026 Yunus Emre Korucu · Portions © 2025 Shariq Charolia · AGPL-3.0").font(.caption).foregroundStyle(.tertiary).frame(maxWidth: .infinity, alignment: .center).padding(.top, 20)
             }.padding(25).frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .onAppear {
                 ReleaseChannelPolicy.reconcileStoredPreference(&settingsModel.settings.value)
@@ -10535,7 +10521,7 @@ struct AboutSettingsView: View {
         .onChange(of: settingsModel.settings.updateAvailableNotificationsEnabled) { _, enabled in
             if enabled { updateChecker.requestNotificationAuthorization() }
         }
-        .onChange(of: settingsModel.settings.automaticallyDownloadSapphireUpdates) { _, enabled in
+        .onChange(of: settingsModel.settings.automaticallyDownloadNotchKitUpdates) { _, enabled in
             guard enabled,
                   settingsModel.settings.automaticUpdateChecksEnabled,
                   case .available(_, let asset) = updateChecker.status else { return }
@@ -10544,7 +10530,7 @@ struct AboutSettingsView: View {
         .fileExporter(
             isPresented: $isExportingSettings,
             document: backupDocument,
-            contentType: .sapphireSettingsBackup,
+            contentType: .notchKitSettingsBackup,
             defaultFilename: backupFilename
         ) { result in
             switch result {
@@ -10564,7 +10550,7 @@ struct AboutSettingsView: View {
         }
         .fileImporter(
             isPresented: $isImportingSettings,
-            allowedContentTypes: [.sapphireSettingsBackup, .json]
+            allowedContentTypes: [.notchKitSettingsBackup, .json]
         ) { result in
             switch result {
             case .success(let url):
@@ -10693,7 +10679,7 @@ struct AboutSettingsView: View {
         .modifier(SettingsContainerModifier())
     }
 
-    private var sapphireUpdatesPane: some View {
+    private var notchKitUpdatesPane: some View {
         VStack(alignment: .leading, spacing: 18) {
             ModernUpdateStatusView(updateChecker: updateChecker)
 
@@ -10753,7 +10739,7 @@ struct AboutSettingsView: View {
                 ToggleRow(
                     title: "Download verified updates automatically",
                     description: "Download in the background. Installation always waits for you.",
-                    isOn: $settingsModel.settings.automaticallyDownloadSapphireUpdates
+                    isOn: $settingsModel.settings.automaticallyDownloadNotchKitUpdates
                 )
                 .disabled(!settingsModel.settings.automaticUpdateChecksEnabled)
                 .opacity(settingsModel.settings.automaticUpdateChecksEnabled ? 1 : 0.5)

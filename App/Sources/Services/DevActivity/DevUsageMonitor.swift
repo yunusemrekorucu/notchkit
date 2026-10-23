@@ -1,6 +1,6 @@
 //
 //  DevUsageMonitor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-15
 //
@@ -48,7 +48,7 @@ final class DevUsageMonitor: ObservableObject {
     @Published private(set) var lastRefresh: Date?
 
     private let collector = DevUsageCollector()
-    private let queue = DispatchQueue(label: "com.shariq.sapphire.devusage", qos: .utility)
+    private let queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.devusage", qos: .utility)
     private var observers = 0
     private var timer: Timer?
 

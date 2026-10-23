@@ -1,6 +1,6 @@
 //
 //  CaffeinateManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-17.
 //
@@ -300,14 +300,14 @@ class CaffeineManager: ObservableObject {
             }
             .store(in: &activeCancellables)
 
-        NotificationCenter.default.publisher(for: .sapphireHelperConnectionRestored)
+        NotificationCenter.default.publisher(for: .notchKitHelperConnectionRestored)
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.schedulePowerGuardRefresh()
             }
             .store(in: &activeCancellables)
 
-        NotificationCenter.default.publisher(for: .sapphireHelperConnectionLost)
+        NotificationCenter.default.publisher(for: .notchKitHelperConnectionLost)
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 guard let self else { return }

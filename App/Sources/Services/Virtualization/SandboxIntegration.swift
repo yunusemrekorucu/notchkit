@@ -1,15 +1,15 @@
 //
 //  SandboxIntegration.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-21
 
 import AppKit
 import Foundation
 
-private enum SapphireVMLifecycleContract {
+private enum NotchKitVMLifecycleContract {
     static let schemaVersion = 1
-    static let appGroupIdentifier = "group.com.cshariq.sapphire"
+    static let appGroupIdentifier = "group.com.yunusemrekorucu.notchkit"
     static let writerBundleIdentifier = "com.cshariq.sandbox"
     static let wakeNotification = Notification.Name(
         "com.cshariq.sandbox.lifecycleSnapshotDidChange"
@@ -24,7 +24,7 @@ private enum SapphireVMLifecycleContract {
     static let maximumFutureSkew: TimeInterval = 5 * 60
 }
 
-struct SapphireVMLifecycleSnapshot: Codable {
+struct NotchKitVMLifecycleSnapshot: Codable {
     enum State: String, Codable {
         case created
         case preparing
@@ -70,13 +70,13 @@ struct SapphireVMLifecycleSnapshot: Codable {
 
     func isValid(at now: Date) -> Bool {
         let age = now.timeIntervalSince(occurredAt)
-        return schemaVersion == SapphireVMLifecycleContract.schemaVersion
-            && writerBundleIdentifier == SapphireVMLifecycleContract.writerBundleIdentifier
+        return schemaVersion == NotchKitVMLifecycleContract.schemaVersion
+            && writerBundleIdentifier == NotchKitVMLifecycleContract.writerBundleIdentifier
             && !virtualMachineName.isEmpty
-            && virtualMachineName.count <= SapphireVMLifecycleContract.maximumVMNameLength
-            && (detail?.count ?? 0) <= SapphireVMLifecycleContract.maximumDetailLength
-            && age <= SapphireVMLifecycleContract.maximumEventAge
-            && age >= -SapphireVMLifecycleContract.maximumFutureSkew
+            && virtualMachineName.count <= NotchKitVMLifecycleContract.maximumVMNameLength
+            && (detail?.count ?? 0) <= NotchKitVMLifecycleContract.maximumDetailLength
+            && age <= NotchKitVMLifecycleContract.maximumEventAge
+            && age >= -NotchKitVMLifecycleContract.maximumFutureSkew
     }
 }
 
@@ -92,13 +92,13 @@ final class SandboxIntegration {
         case gracefulStop = "graceful-stop"
     }
 
-    private static let lastPresentedEventIDKey = "sapphire.vm.lastPresentedLifecycleEventID"
+    private static let lastPresentedEventIDKey = "notchkit.vm.lastPresentedLifecycleEventID"
 
     private var wakeObserver: NSObjectProtocol?
     private var lastPresentedEventID: UUID?
     private var appIcon: NSImage? {
         guard let applicationURL = NSWorkspace.shared.urlForApplication(
-            withBundleIdentifier: SapphireVMLifecycleContract.writerBundleIdentifier
+            withBundleIdentifier: NotchKitVMLifecycleContract.writerBundleIdentifier
         ) else { return nil }
         return NSWorkspace.shared.icon(forFile: applicationURL.path)
     }
@@ -113,7 +113,7 @@ final class SandboxIntegration {
         guard wakeObserver == nil else { return }
 
         wakeObserver = DistributedNotificationCenter.default().addObserver(
-            forName: SapphireVMLifecycleContract.wakeNotification,
+            forName: NotchKitVMLifecycleContract.wakeNotification,
             object: nil,
             queue: .main
         ) { [weak self] _ in
@@ -135,7 +135,7 @@ final class SandboxIntegration {
     func forwardValidatedDeepLink(_ sourceURL: URL) -> Bool {
         guard let destinationURL = Self.validatedDestinationURL(for: sourceURL),
               let applicationURL = NSWorkspace.shared.urlForApplication(
-                withBundleIdentifier: SapphireVMLifecycleContract.writerBundleIdentifier
+                withBundleIdentifier: NotchKitVMLifecycleContract.writerBundleIdentifier
               ) else {
             return false
         }
@@ -161,21 +161,21 @@ final class SandboxIntegration {
 
         let name = Self.sanitizedText(
             snapshot.virtualMachineName,
-            maximumLength: SapphireVMLifecycleContract.maximumVMNameLength
+            maximumLength: NotchKitVMLifecycleContract.maximumVMNameLength
         )
         guard !name.isEmpty else { return }
 
         let detail = snapshot.detail.map {
             Self.sanitizedText(
                 $0,
-                maximumLength: SapphireVMLifecycleContract.maximumDetailLength
+                maximumLength: NotchKitVMLifecycleContract.maximumDetailLength
             )
         }.flatMap { $0.isEmpty ? nil : $0 }
         let body = detail ?? "\(name) is \(snapshot.state.displayName.lowercased())."
 
         NotificationManager.shared.latestNotification = NotificationPayload(
             id: "sandbox-\(snapshot.eventID.uuidString)",
-            appIdentifier: SapphireVMLifecycleContract.writerBundleIdentifier,
+            appIdentifier: NotchKitVMLifecycleContract.writerBundleIdentifier,
             title: "NotchKit VM · \(snapshot.state.displayName)",
             body: body,
             date: snapshot.occurredAt,
@@ -191,7 +191,7 @@ final class SandboxIntegration {
 
     private func clearPresentedSnapshotIfNeeded() {
         guard let notification = NotificationManager.shared.latestNotification,
-              notification.appIdentifier == SapphireVMLifecycleContract.writerBundleIdentifier,
+              notification.appIdentifier == NotchKitVMLifecycleContract.writerBundleIdentifier,
               notification.id.hasPrefix("sandbox-") else {
             return
         }
@@ -201,7 +201,7 @@ final class SandboxIntegration {
     private static func loadLatestSnapshot(
         at now: Date,
         fileManager: FileManager = .default
-    ) -> SapphireVMLifecycleSnapshot? {
+    ) -> NotchKitVMLifecycleSnapshot? {
         loadLatestSnapshot(
             from: candidateSnapshotURLs(fileManager: fileManager),
             at: now,
@@ -213,8 +213,8 @@ final class SandboxIntegration {
         from sourceURLs: [URL],
         at now: Date,
         fileManager: FileManager = .default
-    ) -> SapphireVMLifecycleSnapshot? {
-        var newestSnapshot: SapphireVMLifecycleSnapshot?
+    ) -> NotchKitVMLifecycleSnapshot? {
+        var newestSnapshot: NotchKitVMLifecycleSnapshot?
 
         for sourceURL in sourceURLs {
             guard fileManager.fileExists(atPath: sourceURL.path),
@@ -227,16 +227,16 @@ final class SandboxIntegration {
                   values.isSymbolicLink != true,
                   let fileSize = values.fileSize,
                   fileSize >= 0,
-                  fileSize <= SapphireVMLifecycleContract.maximumSnapshotSize,
+                  fileSize <= NotchKitVMLifecycleContract.maximumSnapshotSize,
                   let data = try? Data(contentsOf: sourceURL, options: .mappedIfSafe),
-                  data.count <= SapphireVMLifecycleContract.maximumSnapshotSize else {
+                  data.count <= NotchKitVMLifecycleContract.maximumSnapshotSize else {
                 continue
             }
 
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .millisecondsSince1970
             if let snapshot = try? decoder.decode(
-                SapphireVMLifecycleSnapshot.self,
+                NotchKitVMLifecycleSnapshot.self,
                 from: data
             ), snapshot.isValid(at: now),
                newestSnapshot == nil || snapshot.occurredAt > newestSnapshot!.occurredAt {
@@ -250,7 +250,7 @@ final class SandboxIntegration {
         fileManager: FileManager
     ) -> [URL] {
         let groupContainer = fileManager.containerURL(
-            forSecurityApplicationGroupIdentifier: SapphireVMLifecycleContract.appGroupIdentifier
+            forSecurityApplicationGroupIdentifier: NotchKitVMLifecycleContract.appGroupIdentifier
         )
         let applicationSupport = fileManager.urls(
             for: .applicationSupportDirectory,
@@ -270,33 +270,33 @@ final class SandboxIntegration {
         let integrationDirectory: URL?
         if let groupContainer {
             integrationDirectory = groupContainer.appendingPathComponent(
-                SapphireVMLifecycleContract.integrationDirectoryName,
+                NotchKitVMLifecycleContract.integrationDirectoryName,
                 isDirectory: true
             )
         } else {
             integrationDirectory = applicationSupport?
                 .appendingPathComponent("NotchKit", isDirectory: true)
                 .appendingPathComponent(
-                    SapphireVMLifecycleContract.integrationDirectoryName,
+                    NotchKitVMLifecycleContract.integrationDirectoryName,
                     isDirectory: true
                 )
         }
 
         guard let integrationDirectory else { return [] }
         return [integrationDirectory.appendingPathComponent(
-            SapphireVMLifecycleContract.snapshotFilename,
+            NotchKitVMLifecycleContract.snapshotFilename,
             isDirectory: false
         )]
     }
 
     static func validatedDestinationURL(for sourceURL: URL) -> URL? {
         guard sourceURL.absoluteString.utf8.count
-                <= SapphireVMLifecycleContract.maximumDeepLinkLength,
+                <= NotchKitVMLifecycleContract.maximumDeepLinkLength,
               let source = URLComponents(
                 url: sourceURL,
                 resolvingAgainstBaseURL: false
               ),
-              source.scheme?.lowercased() == "sapphire",
+              source.scheme?.lowercased() == "notchkit",
               source.host?.lowercased() == "vm",
               source.user == nil,
               source.password == nil,

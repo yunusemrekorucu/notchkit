@@ -2,15 +2,14 @@
 //  NearbyShareShim.swift
 //  NotchKit
 //
-//  Sapphire links a NearbyShare framework for Android Quick Share. NotchKit does not
-//  ship Nearby Share, so this keeps the same API surface with an inert manager that
-//  never becomes visible and never reports transfers.
-//  Shapes follow Sapphire/Nearby (AGPL-3.0, Shariq Charolia).
+//  NotchKit does not ship Nearby Share (Android Quick Share). The app still refers to
+//  its types, so this keeps the API surface with an inert manager that never becomes
+//  visible and never reports transfers.
 
 import Foundation
 
 extension Notification.Name {
-    static let sapphireNearbyFileDownloaded = Notification.Name("SapphireNearbyFileDownloaded")
+    static let notchKitNearbyFileDownloaded = Notification.Name("NotchKitNearbyFileDownloaded")
 }
 
 enum TransferDirection { case incoming, outgoing }

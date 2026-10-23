@@ -1,6 +1,6 @@
 //
 //  FileOperationProgressRouter.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-06
 

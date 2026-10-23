@@ -1,6 +1,6 @@
 //
 //  FanManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-23
 //
@@ -175,7 +175,7 @@ class FanManager: ObservableObject {
     private func registerHelperObservers() {
         let center = NotificationCenter.default
         notificationObservers = [
-            center.addObserver(forName: .sapphireHelperConnectionRestored, object: nil, queue: .main) { [weak self] _ in
+            center.addObserver(forName: .notchKitHelperConnectionRestored, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor in
                     guard let self else { return }
                     self.leaseSupport = .unknown
@@ -183,7 +183,7 @@ class FanManager: ObservableObject {
                     await self.refreshHardwareState(forceRediscovery: true)
                 }
             },
-            center.addObserver(forName: .sapphireHelperConnectionLost, object: nil, queue: .main) { [weak self] _ in
+            center.addObserver(forName: .notchKitHelperConnectionLost, object: nil, queue: .main) { [weak self] _ in
                 Task { @MainActor in
                     guard let self else { return }
                     self.acceptedFanless = false
@@ -594,7 +594,7 @@ class FanManager: ObservableObject {
                 self.leaseSupport = .unknown
                 return
             }
-            self.leaseSupport = version >= SapphireHelperFanLeaseProtocolVersion ? .supported : .unsupported
+            self.leaseSupport = version >= NotchKitHelperFanLeaseProtocolVersion ? .supported : .unsupported
             if self.leaseSupport == .supported { self.sendHeartbeat() }
         }
     }

@@ -1,6 +1,6 @@
 //
 //  BatteryDebugMenu.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-20.
 //
@@ -346,7 +346,7 @@ struct BatteryDebugMenu: View {
         if await NativeChargeLimit.isSupported {
             let enabled = await NativeChargeLimit.isEnabled
             let limit = await NativeChargeLimit.currentLimit
-            nativeLimitSummary = "\(enabled.map { $0 ? "on" : "off" } ?? "?") @ \(limit.map { "\($0)%" } ?? "?")\(NativeChargeLimit.sapphireOwnsLimit ? " (Sapphire)" : "")"
+            nativeLimitSummary = "\(enabled.map { $0 ? "on" : "off" } ?? "?") @ \(limit.map { "\($0)%" } ?? "?")\(NativeChargeLimit.notchKitOwnsLimit ? " (NotchKit)" : "")"
         } else {
             nativeLimitSummary = "unsupported"
         }

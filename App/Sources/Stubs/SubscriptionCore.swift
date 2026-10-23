@@ -1,10 +1,10 @@
 //
 //  SubscriptionCore.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30
 
-#if !SAPPHIRE_FULL_BUILD
+#if !NOTCHKIT_FULL_BUILD
 import Foundation
 import Combine
 import SwiftUI
@@ -128,7 +128,7 @@ public final class FeatureGate {
 
 extension Notification.Name {
     public static let subscriptionPaywallRequested = Notification.Name("subscriptionPaywallRequested")
-    public static let sapphireOpenAccountPane = Notification.Name("sapphireOpenAccountPane")
+    public static let notchKitOpenAccountPane = Notification.Name("notchKitOpenAccountPane")
     public static let subscriptionSessionRevoked = Notification.Name("subscriptionSessionRevoked")
     public static let subscriptionEntitlementsDidChange = Notification.Name("subscriptionEntitlementsDidChange")
 }

@@ -1,6 +1,6 @@
 //
 //  UserWindowSupport.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
@@ -9,13 +9,13 @@ import SwiftUI
 import ServiceManagement
 
 extension Notification.Name {
-    static let sapphireHelperConnectionLost = Notification.Name("sapphireHelperConnectionLost")
-    static let sapphireHelperConnectionRestored = Notification.Name("sapphireHelperConnectionRestored")
-    static let sapphireSettingsWillClose = Notification.Name("sapphireSettingsWillClose")
-    static let sapphireUpdateAvailable = Notification.Name("sapphireUpdateAvailable")
+    static let notchKitHelperConnectionLost = Notification.Name("notchKitHelperConnectionLost")
+    static let notchKitHelperConnectionRestored = Notification.Name("notchKitHelperConnectionRestored")
+    static let notchKitSettingsWillClose = Notification.Name("notchKitSettingsWillClose")
+    static let notchKitUpdateAvailable = Notification.Name("notchKitUpdateAvailable")
 }
 
-enum SapphireStandardMenu {
+enum NotchKitStandardMenu {
     static func installIfNeeded() {
         guard NSApp.mainMenu == nil || !hasEditMenu else { return }
 
@@ -175,9 +175,9 @@ enum HelperAlertPresenter {
         presentModal(
             messageText: "NotchKit Helper Needs Attention",
             informativeText: """
-            Sapphire lost connection to its system helper.
+            NotchKit lost connection to its system helper.
 
-            Click “Reset Helper” to unregister Sapphire’s own background items, reinstall the helper, and relaunch. Other apps are not affected.
+            Click “Reset Helper” to unregister NotchKit’s own background items, reinstall the helper, and relaunch. Other apps are not affected.
             """,
             alertStyle: .warning,
             buttonTitles: ["Reset Helper", "OK"]

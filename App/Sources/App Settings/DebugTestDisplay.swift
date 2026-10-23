@@ -1,6 +1,6 @@
 //
 //  DebugTestDisplay.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-27
 
@@ -23,7 +23,7 @@ final class DebugTestDisplay: NSObject, ObservableObject {
     private var window: NSWindow?
     private var previewLayer: CALayer?
     private var stream: SCStream?
-    private let frameQueue = DispatchQueue(label: "Sapphire.DebugTestDisplay.frames")
+    private let frameQueue = DispatchQueue(label: "NotchKit.DebugTestDisplay.frames")
 
     func toggle() {
         isActive ? stop() : start()

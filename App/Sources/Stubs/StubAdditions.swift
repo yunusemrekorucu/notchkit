@@ -2,9 +2,9 @@
 //  StubAdditions.swift
 //  NotchKit
 //
-//  Members that Sapphire's public code calls but its public stubs do not declare yet.
-//  The features behind them (phone continuity, DMG installer, clean links) are not
-//  part of NotchKit, so every member does nothing.
+//  Members called by the app that the stubs above do not declare. The features behind
+//  them (phone continuity, DMG installer, clean links) are not part of NotchKit, so
+//  every member does nothing.
 
 import Foundation
 import UserNotifications
@@ -44,7 +44,7 @@ extension ContinuityConnectivitySnapshot.Severity {
     }
 }
 
-/// Sapphire's quit-protection rule editor is part of its private System Enhance build.
+/// Quit protection is not part of NotchKit, so its rule editor is empty.
 struct SEQuitProtectionRulesView: View {
     var body: some View { EmptyView() }
 }

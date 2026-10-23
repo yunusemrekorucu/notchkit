@@ -1,6 +1,6 @@
 //
 //  FileProgressTracker.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-28
 //
@@ -387,7 +387,7 @@ final class FileProgressTracker: ObservableObject {
 
     // MARK: - Partial files (apps that don't publish progress)
 
-    private let ioQueue = DispatchQueue(label: "com.sapphire.file-progress.io", qos: .utility)
+    private let ioQueue = DispatchQueue(label: "com.notchkit.file-progress.io", qos: .utility)
     private var scanScheduled: Set<URL> = []
     private var rescanRequested: Set<URL> = []
     private var samplesInFlight: Set<String> = []

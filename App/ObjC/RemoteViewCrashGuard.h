@@ -1,6 +1,6 @@
 //
 //  RemoteViewCrashGuard.h
-//  Sapphire
+//  NotchKit
 //
 //  See RemoteViewCrashGuard.m for the full rationale: Apple ViewBridge can
 //  throw an uncaught NSInternalInconsistencyException when a window containing

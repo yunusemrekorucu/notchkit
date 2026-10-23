@@ -1,6 +1,6 @@
 //
 //  KeychainHelper.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-15.
 //
@@ -107,7 +107,7 @@ class KeychainHelper {
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
             self.service = bundleIdentifier
         } else {
-            self.service = "com.cshariq.sapphire"
+            self.service = "com.yunusemrekorucu.notchkit"
         }
     }
 

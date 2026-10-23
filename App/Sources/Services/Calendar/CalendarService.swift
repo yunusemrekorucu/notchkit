@@ -1,6 +1,6 @@
 //
 //  CalendarService.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-06-28.
 //
@@ -20,7 +20,7 @@ class CalendarService: ObservableObject {
 
     private var currentlyTrackedDate: Date = Date()
 
-    private let workQueue = DispatchQueue(label: "com.sapphire.calendarQueue", qos: .userInitiated)
+    private let workQueue = DispatchQueue(label: "com.notchkit.calendarQueue", qos: .userInitiated)
     private var selectedEventsGeneration = 0
     private var upcomingEventsGeneration = 0
     private var selectedRemindersGeneration = 0

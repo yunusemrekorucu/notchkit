@@ -1,6 +1,6 @@
 //
 //  MultiAudioManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-13.
 //
@@ -136,13 +136,13 @@ struct SurroundAudioSettings: Equatable, Codable {
 class MultiAudioManager: ObservableObject {
     static let shared = MultiAudioManager()
 
-    private let deviceSettingsDefaultsKey = "SapphireDeviceAudioSettingsByUID"
-    private let selectedOutputUIDsDefaultsKey = "SapphireSelectedOutputDeviceUIDs"
-    private let eightDAudioDefaultsKey = "SapphireEightDAudioSettingsByBundleID"
-    private let surroundAudioDefaultsKey = "SapphireSurroundAudioSettingsByBundleID"
-    private let appRoutesDefaultsKey = "SapphirePerAppOutputRouteUIDs"
-    private let appOrderingDefaultsKey = "SapphireMixerAppOrdering"
-    private let preferredInputDefaultsKey = "SapphirePreferredInputDeviceUID"
+    private let deviceSettingsDefaultsKey = "NotchKitDeviceAudioSettingsByUID"
+    private let selectedOutputUIDsDefaultsKey = "NotchKitSelectedOutputDeviceUIDs"
+    private let eightDAudioDefaultsKey = "NotchKitEightDAudioSettingsByBundleID"
+    private let surroundAudioDefaultsKey = "NotchKitSurroundAudioSettingsByBundleID"
+    private let appRoutesDefaultsKey = "NotchKitPerAppOutputRouteUIDs"
+    private let appOrderingDefaultsKey = "NotchKitMixerAppOrdering"
+    private let preferredInputDefaultsKey = "NotchKitPreferredInputDeviceUID"
 
     @Published var availableOutputDevices: [AudioDevice] = []
     @Published var availableInputDevices: [AudioDevice] = []
@@ -738,7 +738,7 @@ enum CallAudioAttribution {
     }
 }
 
-// MARK: - Sapphire Process Tap Controller
+// MARK: - NotchKit Process Tap Controller
 final class AppTapController {
     let bundleID: String
     let targetDeviceUID: String
@@ -784,7 +784,7 @@ final class AppTapController {
 
     private let primaryEQ = GraphicEQProcessor()
     private let secondaryEQ = GraphicEQProcessor()
-    private let designQueue = DispatchQueue(label: "com.sapphire.audiotap.eq-design", qos: .userInitiated)
+    private let designQueue = DispatchQueue(label: "com.notchkit.audiotap.eq-design", qos: .userInitiated)
     private var sampleRateListener: AudioObjectPropertyListenerBlock?
     private let maxDelaySamples = 96000
     private static let eightDDelaySamples = 4096
@@ -853,7 +853,7 @@ final class AppTapController {
         surroundDelayL = .allocate(capacity: Self.surroundDelaySamples); surroundDelayR = .allocate(capacity: Self.surroundDelaySamples)
         surroundDelayL.initialize(repeating: 0, count: Self.surroundDelaySamples); surroundDelayR.initialize(repeating: 0, count: Self.surroundDelaySamples)
 
-        ioQueue = DispatchQueue(label: "com.sapphire.audiotap.\(bundleID)", qos: .userInteractive)
+        ioQueue = DispatchQueue(label: "com.notchkit.audiotap.\(bundleID)", qos: .userInteractive)
         ioQueue.setSpecific(key: Self.ioQueueKey, value: ioQueueToken)
 
         tapDescription = CATapDescription(stereoMixdownOfProcesses: processObjectIDs)

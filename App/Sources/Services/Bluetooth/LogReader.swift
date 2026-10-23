@@ -1,6 +1,6 @@
 //
 //  LogReader.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2024/2/9.
 //

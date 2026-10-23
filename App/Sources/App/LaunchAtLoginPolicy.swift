@@ -1,6 +1,6 @@
 //
 //  LaunchAtLoginPolicy.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-08
 
@@ -55,7 +55,7 @@ enum LaunchAtLoginPolicy {
 
 enum LaunchAtLoginReconciler {
     private static let lastAppliedKey = "launchAtLoginLastApplied"
-    private static let queue = DispatchQueue(label: "com.sapphire.launch-at-login", qos: .utility)
+    private static let queue = DispatchQueue(label: "com.notchkit.launch-at-login", qos: .utility)
 
     static func reconcile(wanted: Bool, isUserChange: Bool, adopt: @escaping @MainActor (Bool) -> Void) {
         let onboardingComplete = !OnboardingLaunchPolicy.shouldShowOnboarding

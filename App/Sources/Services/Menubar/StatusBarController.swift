@@ -1,6 +1,6 @@
 //
 //  StatusBarController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-11-08
 //
@@ -10,7 +10,7 @@ import Combine
 import os
 
 extension Notification.Name {
-    static let menuBarHidingStateDidChange = Notification.Name("com.sapphire.menuBarHidingStateDidChange")
+    static let menuBarHidingStateDidChange = Notification.Name("com.notchkit.menuBarHidingStateDidChange")
 }
 
 private struct StatusBarSettings: Equatable {
@@ -55,7 +55,7 @@ final class StatusBarController {
     // MARK: - State
     private var isCollapsed: Bool {
         didSet {
-            UserDefaults.standard.set(isCollapsed, forKey: "SapphireIsCollapsed")
+            UserDefaults.standard.set(isCollapsed, forKey: "NotchKitIsCollapsed")
         }
     }
 
@@ -95,10 +95,10 @@ final class StatusBarController {
 
     // MARK: - Constants
     private enum Lengths { static let standard: CGFloat = 24; static let separator: CGFloat = 8; static let collapsed: CGFloat = 10_000 }
-    private enum AutosaveKeys { static let expandCollapse = "SapphireExpandCollapseItem"; static let separator = "SapphireSeparatorItem"; static let alwaysHidden = "SapphireAlwaysHiddenItem" }
+    private enum AutosaveKeys { static let expandCollapse = "NotchKitExpandCollapseItem"; static let separator = "NotchKitSeparatorItem"; static let alwaysHidden = "NotchKitAlwaysHiddenItem" }
 
     init() {
-        self.isCollapsed = UserDefaults.standard.object(forKey: "SapphireIsCollapsed") as? Bool ?? false
+        self.isCollapsed = UserDefaults.standard.object(forKey: "NotchKitIsCollapsed") as? Bool ?? false
         self.statusSettings = StatusBarSettings(SettingsModel.shared.current)
 
         self.isAlwaysHiddenExpanded = false

@@ -15,7 +15,7 @@ Most of NotchKit 2's source code comes from Sapphire:
 
 NotchKit changes Sapphire as follows:
 
-- Renames the app and its user-facing text to NotchKit.
+- Renames the app, its identifiers, settings keys and user-facing text to NotchKit.
 - Removes Firebase analytics, performance traces and the shared Firestore lyrics cache (`App/Sources/App/Telemetry.swift`).
 - Replaces Nearby Share and phone continuity with inert stand-ins (`App/Sources/Services/NearbyShareShim.swift`, `App/Sources/Stubs/StubAdditions.swift`).
 - Unlocks every feature whose code ships in Sapphire's public source and hides the paid, AI and private-only ones.
@@ -26,6 +26,6 @@ NotchKit 1.x (before the move to Sapphire's code) was released under the MIT Lic
 
 ## Third-party components
 
-Sapphire bundles prebuilt `MediaRemoteAdapter.framework` and `SapphireMediaQueue.framework`, based on [mediaremote-adapter](https://github.com/ungive/mediaremote-adapter) (BSD-3-Clause). [CREDITS.md](CREDITS.md) lists the other open-source projects Sapphire credits.
+NotchKit bundles prebuilt `MediaRemoteAdapter.framework` and `NotchKitMediaQueue.framework` (renamed from Sapphire's `SapphireMediaQueue.framework`), based on [mediaremote-adapter](https://github.com/ungive/mediaremote-adapter) (BSD-3-Clause). [CREDITS.md](CREDITS.md) lists the other open-source projects the code builds on.
 
 Weather data comes from [Open-Meteo](https://open-meteo.com) (CC BY 4.0) and lyrics from [LRCLIB](https://lrclib.net).

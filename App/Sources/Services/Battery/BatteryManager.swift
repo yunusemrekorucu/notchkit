@@ -1,6 +1,6 @@
 //
 //  BatteryManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-19.
 //
@@ -181,7 +181,7 @@ class PowerStateController: ObservableObject {
                     }
                 case .adapter:
                     // The native limit is enforced by firmware during sleep; only cut AC if the user asked to.
-                    let nativeLimitActive = NativeChargeLimit.sapphireOwnsLimit
+                    let nativeLimitActive = NativeChargeLimit.notchKitOwnsLimit
                         && !currentSettings.manualChargePaused
                         && NativeChargeLimit.supportedRange.contains(currentSettings.batteryChargeLimit)
                         && currentSettings.batteryChargeLimit < 100
@@ -252,7 +252,7 @@ class PowerStateController: ObservableObject {
 
             // On gated firmware the adapter is the only SMC lever, so the limit itself is handed to
             // macOS's native Charge Limit (it keeps the Mac on AC, applies its own hysteresis and
-            // enforces the limit during sleep). Sapphire's sailing hysteresis is ignored in this path.
+            // enforces the limit during sleep). NotchKit's sailing hysteresis is ignored in this path.
             var useNativeLimit = mode == .adapter
                 && !currentSettings.manualChargePaused
                 && NativeChargeLimit.supportedRange.contains(currentSettings.batteryChargeLimit)
@@ -262,7 +262,7 @@ class PowerStateController: ObservableObject {
             }
             if useNativeLimit {
                 useNativeLimit = await NativeChargeLimit.apply(limit: currentSettings.batteryChargeLimit)
-            } else if NativeChargeLimit.sapphireOwnsLimit {
+            } else if NativeChargeLimit.notchKitOwnsLimit {
                 await NativeChargeLimit.release()
             }
 
@@ -429,7 +429,7 @@ class BatteryManager {
     private init() {
         self.batteryService = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("AppleSmartBattery"))
         helperConnectionObserver = NotificationCenter.default.addObserver(
-            forName: .sapphireHelperConnectionLost,
+            forName: .notchKitHelperConnectionLost,
             object: nil,
             queue: .main
         ) { [weak self] _ in
@@ -484,7 +484,7 @@ class BatteryManager {
         if restored {
             helperLogger.info("[BatteryManager] Circuit breaker CLOSED - helper connection restored")
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .sapphireHelperConnectionRestored, object: nil)
+                NotificationCenter.default.post(name: .notchKitHelperConnectionRestored, object: nil)
             }
         }
     }
@@ -540,7 +540,7 @@ class BatteryManager {
         if restored {
             helperLogger.info("[BatteryManager] Helper connection restored")
         }
-        NotificationCenter.default.post(name: .sapphireHelperConnectionRestored, object: nil)
+        NotificationCenter.default.post(name: .notchKitHelperConnectionRestored, object: nil)
     }
 
     func reconnectHelper() {
@@ -795,7 +795,7 @@ class BatteryManager {
         let recordSuccess = self.recordSuccess
         guard let helper = getHelper() else {
             let error = NSError(
-                domain: "SapphireBattery",
+                domain: "NotchKitBattery",
                 code: -1,
                 userInfo: [NSLocalizedDescriptionKey: "The privileged helper is not reachable. Install or reset it (Settings → Battery → Helper) before calibrating."]
             )
@@ -904,7 +904,7 @@ class BatteryManager {
         }
     }
 
-    private let helperPingTimeoutSentinel = "__sapphire_helper_timeout__"
+    private let helperPingTimeoutSentinel = "__notchKit_helper_timeout__"
 
     func verifyHelperResponds() async -> Bool {
         let version = await withHelperCallback(fallback: helperPingTimeoutSentinel) { helper, reply in
@@ -919,7 +919,7 @@ class BatteryManager {
     func currentChargeControlMode() async -> ChargeControlMode {
         if chargeControlModeObserver == nil {
             chargeControlModeObserver = NotificationCenter.default.addObserver(
-                forName: .sapphireHelperConnectionRestored,
+                forName: .notchKitHelperConnectionRestored,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in

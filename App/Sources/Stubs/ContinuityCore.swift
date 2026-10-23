@@ -1,10 +1,10 @@
 //
 //  ContinuityCore.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-15
 
-#if !SAPPHIRE_FULL_BUILD
+#if !NOTCHKIT_FULL_BUILD
 import AppKit
 import Combine
 import SwiftUI
@@ -269,6 +269,6 @@ struct ContinuityNotificationActivityView: View {
 }
 
 extension Notification.Name {
-    static let continuityClipboardReceived = Notification.Name("com.shariq.sapphire.continuity.clipboardReceived")
+    static let continuityClipboardReceived = Notification.Name("com.yunusemrekorucu.notchkit.continuity.clipboardReceived")
 }
 #endif

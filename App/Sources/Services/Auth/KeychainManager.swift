@@ -1,6 +1,6 @@
 //
 //  KeychainManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-07
 //
@@ -12,7 +12,7 @@ class KeychainManager {
     static let shared = KeychainManager()
     private init() {}
 
-    private let service = "com.shariq.Sapphire.faceid.keychain"
+    private let service = "com.yunusemrekorucu.notchkit.faceid.keychain"
 
     func save(key: Data, for account: String) -> Bool {
         let status = KeychainStore.setItem(

@@ -1,6 +1,6 @@
 //
 //  MenuBarSpacingManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-11-08
 //
@@ -174,7 +174,7 @@ class MenuBarSpacingManager {
             return
         }
 
-        if !(await app.sapphireTerminateAndWait(timeout: forceTerminateDelay)) {
+        if !(await app.notchKitTerminateAndWait(timeout: forceTerminateDelay)) {
             logger.warning("'\(app.localizedName ?? "")' did not quit gracefully. Force terminating.")
             app.forceTerminate()
         }

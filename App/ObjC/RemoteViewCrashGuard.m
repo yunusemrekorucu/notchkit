@@ -1,6 +1,6 @@
 //
 //  RemoteViewCrashGuard.m
-//  Sapphire
+//  NotchKit
 //
 //  Crash guard for an Apple ViewBridge bug that kills apps on macOS 26/27 when
 //  a window containing an NSRemoteView is ordered on screen. NSRemoteView is
@@ -19,7 +19,7 @@
 //      NSInternalInconsistencyException
 //      '<NSRemoteView: 0x…> notified of <NSWindow: 0x…> but expected (null)'
 //
-//  The exception is uncaught, so the app aborts. Sapphire has hit this from
+//  The exception is uncaught, so the app aborts. NotchKit has hit this from
 //  several triggers: ordering the lock screen widgets (SwiftUI-backed borderless
 //  windows) on screen, and creating the menu bar status items, whose windows are
 //  ordered on screen as soon as NSStatusBar.system.statusItem(withLength:) is
@@ -44,7 +44,7 @@
 //  supported macOS versions.
 //
 //  This swizzles a private class and private methods via NSClassFromString /
-//  NSSelectorFromString (no static symbol references). Sapphire already loads
+//  NSSelectorFromString (no static symbol references). NotchKit already loads
 //  and calls private SkyLight symbols directly, so this matches the app's
 //  posture; it would not be appropriate for a Mac App Store submission.
 //
@@ -59,12 +59,12 @@ static os_log_t RemoteViewGuardLog(void) {
     static os_log_t log;
     static dispatch_once_t once;
     dispatch_once(&once, ^{
-        log = os_log_create("Sapphire", "RemoteViewCrashGuard");
+        log = os_log_create("NotchKit", "RemoteViewCrashGuard");
     });
     return log;
 }
 
-/// Only macOS 26+ is known to carry this bug (Sapphire has reproduced the
+/// Only macOS 26+ is known to carry this bug (NotchKit has reproduced the
 /// assertion on both 26 and 27; Apple's fix landed in macOS 27 beta5).
 static BOOL RemoteViewGuardShouldInstall(void) {
     return NSProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 26;

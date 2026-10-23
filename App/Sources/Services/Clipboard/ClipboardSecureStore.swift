@@ -1,6 +1,6 @@
 //
 //  ClipboardSecureStore.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-27
 
@@ -47,7 +47,7 @@ nonisolated final class ClipboardSecureStore: @unchecked Sendable {
                 }
             }
             lock.lock(); persistedIDs = Set(items.map(\.id)); lock.unlock()
-            Logger(subsystem: "com.cshariq.sapphire", category: "Clipboard")
+            Logger(subsystem: "com.yunusemrekorucu.notchkit", category: "Clipboard")
                 .notice("Loaded \(items.count, privacy: .public) of \(ids.count, privacy: .public) clipboard items")
             if !jsonEncoded.isEmpty { scheduleReencode(jsonEncoded) }
             return (items, false)

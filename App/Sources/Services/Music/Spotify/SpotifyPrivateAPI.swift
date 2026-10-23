@@ -1,6 +1,6 @@
 //
 //  SpotifyPrivateAPI.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-05
 //
@@ -324,7 +324,7 @@ class SpotifyPrivateAPIManager {
         guard let device = devices.first(where: { $0.deviceId == active }) else { return true }
         let name = device.name.lowercased()
         let type = device.deviceType.lowercased()
-        if name.contains("sapphire") { return false }
+        if name.contains("notchkit") { return false }
         return type == "computer" || name.contains("mac") || name == "spotify" || type.contains("computer")
     }
 
@@ -880,7 +880,7 @@ class SpotifyPrivateAPIManager {
         devices.first { device in
             let name = device.name.lowercased()
             let type = device.deviceType.lowercased()
-            guard !name.contains("sapphire") else { return false }
+            guard !name.contains("notchkit") else { return false }
             return type == "computer" || type.contains("computer") || name.contains("mac") || name == "spotify"
         }?.deviceId
     }
@@ -2984,7 +2984,7 @@ extension SpotifyPrivateAPIManager {
         if let desktop = ranked.first(where: { device in
             let name = device.name.lowercased()
             let type = device.deviceType.lowercased()
-            guard !name.contains("sapphire") else { return false }
+            guard !name.contains("notchkit") else { return false }
             return type == "computer" || name.contains("mac") || name == "spotify"
         }) {
             return desktop.deviceId
@@ -2992,11 +2992,11 @@ extension SpotifyPrivateAPIManager {
         if let phone = ranked.first(where: { device in
             let name = device.name.lowercased()
             let type = device.deviceType.lowercased()
-            return !name.contains("sapphire") && (type.contains("smartphone") || type.contains("tablet") || name.contains("iphone"))
+            return !name.contains("notchkit") && (type.contains("smartphone") || type.contains("tablet") || name.contains("iphone"))
         }) {
             return phone.deviceId
         }
-        return ranked.first(where: { !$0.name.lowercased().contains("sapphire") })?.deviceId
+        return ranked.first(where: { !$0.name.lowercased().contains("notchkit") })?.deviceId
             ?? ranked.first?.deviceId
     }
 

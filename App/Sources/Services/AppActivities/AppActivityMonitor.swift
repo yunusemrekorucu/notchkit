@@ -1,6 +1,6 @@
 //
 //  AppActivityMonitor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-28
 //
@@ -27,7 +27,7 @@ final class AppActivityMonitor: ObservableObject {
     @Published private(set) var activities: [AppActivity] = []
     var primary: AppActivity? { activities.first }
 
-    private let queue = DispatchQueue(label: "com.sapphire.app-activities", qos: .utility)
+    private let queue = DispatchQueue(label: "com.notchkit.app-activities", qos: .utility)
     private var cancellables = Set<AnyCancellable>()
     private var refreshTimer: Timer?
     private var isRunning = false

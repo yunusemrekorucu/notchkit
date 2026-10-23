@@ -1,6 +1,6 @@
 //
 //  DisplayManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-14.
 //
@@ -13,7 +13,7 @@ import Combine
 @MainActor
 final class DisplayManager {
   public static let shared = DisplayManager()
-  static let brightnessStateDidChange = Notification.Name("SapphireDisplayBrightnessStateDidChange")
+  static let brightnessStateDidChange = Notification.Name("NotchKitDisplayBrightnessStateDidChange")
 
   private var displays: [Display] = []
   private var isBuilt = false

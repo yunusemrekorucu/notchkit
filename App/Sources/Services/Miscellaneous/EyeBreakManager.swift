@@ -1,6 +1,6 @@
 //
 //  EyeBreakManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //

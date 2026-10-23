@@ -1,6 +1,6 @@
 //
 //  CodesignCheckError.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-11-08.
 //
@@ -14,8 +14,8 @@ enum CodesignCheckError: Error {
 }
 
 struct CodesignCheck {
-    private static let sapphireSigningIdentifier = "com.cshariq.sapphire"
-    private static let helperSigningIdentifier = "com.shariq.sapphireHelper"
+    private static let notchKitSigningIdentifier = "com.yunusemrekorucu.notchkit"
+    private static let helperSigningIdentifier = "com.yunusemrekorucu.notchkitHelper"
 
     private static let adHocSignatureFlag: UInt32 = 0x0002
 
@@ -27,7 +27,7 @@ struct CodesignCheck {
         let isAdHoc: Bool
     }
 
-    static func isSapphireClient(auditToken: audit_token_t) throws -> Bool {
+    static func isNotchKitClient(auditToken: audit_token_t) throws -> Bool {
         let helperStaticCode = try requireSelfStaticCode()
         let clientCode = try requireCode(forAuditToken: auditToken)
         let clientStaticCode = try requireStaticCode(forCode: clientCode)
@@ -41,8 +41,8 @@ struct CodesignCheck {
 
         guard helperIdentity.signingIdentifier == helperSigningIdentifier,
               helperBundleMatches,
-              clientIdentity.signingIdentifier == sapphireSigningIdentifier,
-              clientIdentity.bundleIdentifier == sapphireSigningIdentifier,
+              clientIdentity.signingIdentifier == notchKitSigningIdentifier,
+              clientIdentity.bundleIdentifier == notchKitSigningIdentifier,
               trustedSignerMatches(helperIdentity, clientIdentity) else {
             return false
         }

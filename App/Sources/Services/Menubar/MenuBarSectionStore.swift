@@ -1,6 +1,6 @@
 //
 //  MenuBarSectionStore.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-12
 //
@@ -8,7 +8,7 @@
 import AppKit
 
 extension Notification.Name {
-    static let menuBarSectionsDidChange = Notification.Name("com.sapphire.menuBarSectionsDidChange")
+    static let menuBarSectionsDidChange = Notification.Name("com.notchkit.menuBarSectionsDidChange")
 }
 
 enum MenuBarSectionKind: String, CaseIterable, Codable, Identifiable {
@@ -99,8 +99,8 @@ enum MenuBarSystemItem: Int, CaseIterable, Identifiable {
 final class MenuBarSectionStore {
     static let shared = MenuBarSectionStore()
 
-    private static let assignmentsKey = "SapphireMenuBarSections"
-    private static let namesKey = "SapphireMenuBarSectionNames"
+    private static let assignmentsKey = "NotchKitMenuBarSections"
+    private static let namesKey = "NotchKitMenuBarSectionNames"
 
     private(set) var assignments: [String: MenuBarSectionKind]
     private(set) var names: [String: String]

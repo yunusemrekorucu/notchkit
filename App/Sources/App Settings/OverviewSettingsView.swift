@@ -1,6 +1,6 @@
 //
 //  OverviewSettingsView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-26
 
@@ -32,7 +32,7 @@ struct OverviewSettingsView: View {
 
 enum SettingsNavigation {
     static func open(_ section: SettingsSection) {
-        NotificationCenter.default.post(name: NSNotification.Name("SapphireSelectSection"), object: section.rawValue)
+        NotificationCenter.default.post(name: NSNotification.Name("NotchKitSelectSection"), object: section.rawValue)
     }
 }
 

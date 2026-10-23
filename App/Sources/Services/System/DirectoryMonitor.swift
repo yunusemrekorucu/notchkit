@@ -1,6 +1,6 @@
 //
 //  DirectoryMonitor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-17.
 //
@@ -14,7 +14,7 @@ class DirectoryMonitor {
 
     private var fileDescriptor: CInt = -1
     private var dispatchSource: DispatchSourceFileSystemObject?
-    private let dispatchQueue = DispatchQueue(label: "com.sapphire.directorymonitor.queue", qos: .userInitiated)
+    private let dispatchQueue = DispatchQueue(label: "com.notchkit.directorymonitor.queue", qos: .userInitiated)
 
     init(url: URL) {
         self.url = url

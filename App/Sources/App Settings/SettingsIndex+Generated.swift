@@ -1,6 +1,6 @@
 //
 //  SettingsIndex+Generated.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-15
 
@@ -33,7 +33,7 @@ extension SettingsIndex {
         .init(key: "autoRehide", title: "Automatically Rehide Items", detail: "Automatically hide items after they're shown", section: .appearance, range: nil, options: nil),
         .init(key: "automaticDischargeEnabled", title: nil, detail: nil, section: nil, range: nil, options: nil),
         .init(key: "automaticUpdateChecksEnabled", title: nil, detail: nil, section: nil, range: nil, options: nil),
-        .init(key: "automaticallyDownloadSapphireUpdates", title: nil, detail: nil, section: nil, range: nil, options: nil),
+        .init(key: "automaticallyDownloadNotchKitUpdates", title: nil, detail: nil, section: nil, range: nil, options: nil),
         .init(key: "batteryChargeLimit", title: "Charge Limit", detail: nil, section: .battery, range: (50.0)...(100.0), options: nil),
         .init(key: "batteryEstimatorEnabled", title: nil, detail: nil, section: .general, range: nil, options: nil),
         .init(key: "batteryLiveActivityEnabled", title: nil, detail: nil, section: .liveActivities, range: nil, options: nil),

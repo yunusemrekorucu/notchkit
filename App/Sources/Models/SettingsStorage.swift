@@ -1,6 +1,6 @@
 //
 //  SettingsStorage.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-08
 
@@ -270,12 +270,12 @@ enum SettingsWriterElection {
     static func isWriter(
         bundleURL: URL,
         processIdentifier: pid_t,
-        peers: [SapphireInstanceCoordination.Peer]
+        peers: [NotchKitInstanceCoordination.Peer]
     ) -> Bool {
         guard !peers.isEmpty else { return true }
-        let me = SapphireInstanceCoordination.Peer(bundleURL: bundleURL, processIdentifier: processIdentifier)
+        let me = NotchKitInstanceCoordination.Peer(bundleURL: bundleURL, processIdentifier: processIdentifier)
         let everyone = peers + [me]
-        let installed = everyone.filter { SapphireInstanceCoordination.isApplicationsURL($0.bundleURL) }
+        let installed = everyone.filter { NotchKitInstanceCoordination.isApplicationsURL($0.bundleURL) }
         let pool = installed.isEmpty ? everyone : installed
         let winner = pool.min { lhs, rhs in
             lhs.processIdentifier != rhs.processIdentifier
@@ -287,9 +287,9 @@ enum SettingsWriterElection {
 }
 
 final class SettingsInstanceGuard {
-    static let didPersistNotification = Notification.Name("com.cshariq.sapphire.settings.didPersist")
-    static let instanceLaunchedNotification = Notification.Name("com.cshariq.sapphire.settings.instanceLaunched")
-    static let instanceTerminatingNotification = Notification.Name("com.cshariq.sapphire.settings.instanceTerminating")
+    static let didPersistNotification = Notification.Name("com.yunusemrekorucu.notchkit.settings.didPersist")
+    static let instanceLaunchedNotification = Notification.Name("com.yunusemrekorucu.notchkit.settings.instanceLaunched")
+    static let instanceTerminatingNotification = Notification.Name("com.yunusemrekorucu.notchkit.settings.instanceTerminating")
 
     struct Role: Equatable {
         var isWriter: Bool
@@ -381,12 +381,12 @@ final class SettingsInstanceGuard {
     }
 
     private static func evaluate(excluding departingPID: pid_t?) -> Role {
-        let peers = SapphireInstanceCoordination.otherRunningPeers()
+        let peers = NotchKitInstanceCoordination.otherRunningPeers()
             .filter { $0.processIdentifier != departingPID }
         return Role(
             isWriter: SettingsWriterElection.isWriter(
-                bundleURL: SapphireInstanceCoordination.currentBundleURL,
-                processIdentifier: SapphireInstanceCoordination.currentProcessIdentifier,
+                bundleURL: NotchKitInstanceCoordination.currentBundleURL,
+                processIdentifier: NotchKitInstanceCoordination.currentProcessIdentifier,
                 peers: peers
             ),
             hasPeers: !peers.isEmpty

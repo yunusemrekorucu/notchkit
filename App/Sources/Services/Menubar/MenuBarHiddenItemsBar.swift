@@ -1,6 +1,6 @@
 //
 //  MenuBarHiddenItemsBar.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-12
 //
@@ -157,7 +157,7 @@ final class MenuBarHiddenItemsBar: ObservableObject {
             backing: .buffered,
             defer: false
         )
-        panel.configureAsSapphireOverlay()
+        panel.configureAsNotchKitOverlay()
         panel.level = .popUpMenu
 
         let backdrop = NSVisualEffectView()

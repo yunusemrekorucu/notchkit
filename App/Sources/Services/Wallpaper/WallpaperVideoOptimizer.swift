@@ -1,6 +1,6 @@
 //
 //  WallpaperVideoOptimizer.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-09.
 //

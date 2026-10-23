@@ -1,6 +1,6 @@
 //
 //  NotificationManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-07
 //
@@ -241,7 +241,7 @@ class NotificationManager: ObservableObject {
     private var advanceWorkItem: DispatchWorkItem?
     static let displayDwell: TimeInterval = 15.5
 
-    private let workQueue = DispatchQueue(label: "com.sapphire.notifications.db", qos: .utility)
+    private let workQueue = DispatchQueue(label: "com.notchkit.notifications.db", qos: .utility)
     private var dbPath: String?
     private var dbConnection: Connection?
     private var lastNotificationId: Int64 = 0

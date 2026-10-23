@@ -1,6 +1,6 @@
 //
 //  AppStorageModels.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-02
 
@@ -2523,7 +2523,7 @@ final class InstalledAppIconRepository: @unchecked Sendable {
 
     private let lock = NSLock()
     private let expirationQueue = DispatchQueue(
-        label: "com.cshariq.sapphire.installed-app-icons.expiration",
+        label: "com.yunusemrekorucu.notchkit.installed-app-icons.expiration",
         qos: .utility
     )
     private var entries: [String: Entry] = [:]

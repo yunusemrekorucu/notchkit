@@ -1,6 +1,6 @@
 //
 //  NotesManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
@@ -68,8 +68,8 @@ final class NotesManager: ObservableObject {
 
     @Published private(set) var notes: [QuickNote] = []
 
-    private let storageKey = "sapphire.quickNotes"
-    private let saveQueue = DispatchQueue(label: "com.sapphire.notes.save", qos: .utility)
+    private let storageKey = "notchkit.quickNotes"
+    private let saveQueue = DispatchQueue(label: "com.notchkit.notes.save", qos: .utility)
     private var unreadableStoredData: Data?
 
     private init() {

@@ -1,6 +1,6 @@
 //
 //  PrivateAPI.h
-//  Sapphire
+//  NotchKit
 //
 
 #ifndef PrivateAPI_h

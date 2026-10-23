@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # make_musickit_token.sh — mint an Apple Music developer token (JWT) and embed
-# it, masked, into Sapphire's WeatherAPIKey.swift.
+# it, masked, into NotchKit's WeatherAPIKey.swift.
 #
 # The .p8 private key is used only HERE, at build/install time. It is never
 # embedded in the app. What ships is the finished JWT, which Apple accepts for
@@ -11,22 +11,22 @@
 #   ./make_musickit_token.sh <MediaID> <KeyID> <AuthKey_<KeyID>.p8> [days] [WeatherAPIKey.swift]
 #
 #   <MediaID>  Apple keys the MusicKit Media ID (not the plain app/team ID) as the
-#              JWT issuer, e.g. KVQFWJ7C7S.media.com.cshariq.sapphire
+#              JWT issuer, e.g. KVQFWJ7C7S.media.com.yunusemrekorucu.notchkit
 #   <KeyID>    the Apple Music API key ID, e.g. 85UU4CB24H
 #   <p8>       the private key downloaded from the developer portal
 #   [days]     token lifetime in days (default 180)
-#   [file]     WeatherAPIKey.swift to patch (default: Sapphire/Stubs/WeatherAPIKey.swift)
+#   [file]     WeatherAPIKey.swift to patch (default: NotchKit/Stubs/WeatherAPIKey.swift)
 #
 # Requires: openssl + swift (both ship with the Xcode command line tools).
 #
 # To avoid rebuilding when the token expires, you can also supply it at launch:
-#   export MUSICKIT_DEVELOPER_TOKEN="<token>"; open -a Sapphire
-# or write ~/.sapphire/MusicKitConfig.plist with key "DeveloperToken".
+#   export MUSICKIT_DEVELOPER_TOKEN="<token>"; open -a NotchKit
+# or write ~/.notchkit/MusicKitConfig.plist with key "DeveloperToken".
 #
 # Personalized Apple Music features (love, play counts, recently played, For You,
-# library) also need a *user* token. Sapphire reads it from (priority):
+# library) also need a *user* token. NotchKit reads it from (priority):
 #   export MUSICKIT_USER_TOKEN="<token>"
-#   ~/.sapphire/MusicKitConfig.plist  -> key "UserToken"
+#   ~/.notchkit/MusicKitConfig.plist  -> key "UserToken"
 #   Keychain (saved automatically once obtained via the MusicKit entitlement)
 
 set -euo pipefail
@@ -35,7 +35,7 @@ MEDIA_ID="${1:?usage: make_musickit_token.sh <MediaID> <KeyID> <AuthKey_<KeyID>.
 KEY_ID="${2:?missing KeyID}"
 P8_PATH="${3:?missing path to AuthKey_<KeyID>.p8}"
 DAYS="${4:-180}"
-TARGET="${5:-Sapphire/Stubs/WeatherAPIKey.swift}"
+TARGET="${5:-NotchKit/Stubs/WeatherAPIKey.swift}"
 
 if [ ! -f "$P8_PATH" ]; then
     echo "error: private key not found: $P8_PATH" >&2
@@ -59,7 +59,7 @@ signing_input="$hdr.$payload"
 der_b64=$(printf '%s' "$signing_input" | openssl dgst -sha256 -sign "$P8_PATH" -binary | openssl base64 -A)
 
 # Parse the DER, build the raw 64-byte (r||s) signature, assemble the final JWT,
-# XOR-mask it with the same LCG Sapphire's WeatherAPIKey.decode uses, and write
+# XOR-mask it with the same LCG NotchKit's WeatherAPIKey.decode uses, and write
 # it into WeatherAPIKey.swift. The masking math lives in Swift so it can never
 # drift from the app's decode.
 export DER_B64 SIGNING_INPUT TARGET

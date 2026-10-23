@@ -1,6 +1,6 @@
 //
 //  ActiveAppMonitor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-09.
 //
@@ -14,7 +14,7 @@ private let activeAppLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "No
 private let fullScreenLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "FullScreenDetection")
 
 extension Notification.Name {
-    static let activeAppDidChange = Notification.Name("com.sapphire.activeAppDidChange")
+    static let activeAppDidChange = Notification.Name("com.notchkit.activeAppDidChange")
 }
 
 @MainActor
@@ -126,7 +126,7 @@ class ActiveAppMonitor: ObservableObject {
     private var mouseUpToken: UUID?
     private var lastMoveTime: TimeInterval = 0
 
-    private let fullScreenQueue = DispatchQueue(label: "com.sapphire.fullscreen-detection", qos: .userInitiated)
+    private let fullScreenQueue = DispatchQueue(label: "com.notchkit.fullscreen-detection", qos: .userInitiated)
     private var fullScreenGeneration = 0
     private var hasLoggedUntrustedAccessibility = false
 

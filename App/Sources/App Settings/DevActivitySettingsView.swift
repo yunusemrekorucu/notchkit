@@ -1,6 +1,6 @@
 //
 //  DevActivitySettingsView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-12
 //
@@ -171,7 +171,7 @@ struct DevActivitySettingsView: View {
                 .font(.system(size: 14, weight: .medium))
 
             Text("""
-            Sapphire watches your own processes — nothing is read from inside an app, no accessibility \
+            NotchKit watches your own processes — nothing is read from inside an app, no accessibility \
             permission is used, and nothing leaves the Mac.
 
             Tools that only exist while they run (xcodebuild, cargo, gradle, npm run build, a command you \

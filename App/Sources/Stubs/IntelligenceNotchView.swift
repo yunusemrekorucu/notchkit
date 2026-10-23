@@ -1,10 +1,10 @@
 //
 //  IntelligenceNotchView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30
 
-#if !SAPPHIRE_FULL_BUILD
+#if !NOTCHKIT_FULL_BUILD
 import SwiftUI
 
 struct IntelligenceNotchView: View {

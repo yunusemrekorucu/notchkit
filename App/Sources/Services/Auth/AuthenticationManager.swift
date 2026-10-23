@@ -1,6 +1,6 @@
 //
 //  AuthenticationManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-21
 
@@ -79,7 +79,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
     private var isFaceIDSessionForAppLock = false
 
     private var unlockAttemptID = UUID()
-    private let passwordAccount = "SapphireUserPassword"
+    private let passwordAccount = "NotchKitUserPassword"
 
     private var rssiUpdateWorkItem: DispatchWorkItem?
     private var wasPreviouslyPresent = false
@@ -654,7 +654,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
     }
 
     private func showPasswordPrompt() {
-        NotificationCenter.default.post(name: .init("SapphireShowPasswordPrompt"), object: nil)
+        NotificationCenter.default.post(name: .init("NotchKitShowPasswordPrompt"), object: nil)
     }
 
     private func setStatusThrottled(_ newStatus: String, throttle: TimeInterval = 0.2) {

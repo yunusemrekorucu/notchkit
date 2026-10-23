@@ -1,6 +1,6 @@
 //
 //  GlobalEventTap.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-13
 
@@ -124,12 +124,12 @@ final class GlobalEventTap: @unchecked Sendable {
     private var maskShrinkDeadline: UInt64?
 
     private let recoveryQueue = DispatchQueue(
-        label: "com.sapphire.event-tap-recovery",
+        label: "com.notchkit.event-tap-recovery",
         qos: .userInitiated
     )
 
     private let log = Logger(
-        subsystem: Bundle.main.bundleIdentifier ?? "com.cshariq.sapphire",
+        subsystem: Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit",
         category: "GlobalEventTap"
     )
 

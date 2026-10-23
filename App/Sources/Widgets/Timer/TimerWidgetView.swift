@@ -1,6 +1,6 @@
 //
 //  TimerWidgetView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-04
 //
@@ -51,7 +51,7 @@ struct TimerWidgetView: View {
                 .frame(width: 250, height: 49)
             HStack(spacing: 12) {
                 Button {
-                    _ = timerManager.startSapphireTimer(duration: TimeInterval(selectedMinutes * 60))
+                    _ = timerManager.startNotchKitTimer(duration: TimeInterval(selectedMinutes * 60))
                 } label: {
                     Text("Start Timer")
                         .font(.system(size: 12, weight: .semibold, design: .rounded))

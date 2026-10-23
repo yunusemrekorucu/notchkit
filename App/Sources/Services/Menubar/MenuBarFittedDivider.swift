@@ -1,6 +1,6 @@
 //
 //  MenuBarFittedDivider.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-12
 //
@@ -20,7 +20,7 @@ final class MenuBarFittedDivider {
     private let minimumLength: CGFloat
     private let target: () -> NSStatusItem?
 
-    private static let storedLengthsKey = "SapphireFittedDividerLengths"
+    private static let storedLengthsKey = "NotchKitFittedDividerLengths"
 
     private var fittedLengths: [String: CGFloat] = (UserDefaults.standard.dictionary(forKey: storedLengthsKey) as? [String: Double] ?? [:])
         .mapValues { CGFloat($0) }

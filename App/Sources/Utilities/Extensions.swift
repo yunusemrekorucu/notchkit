@@ -1,6 +1,6 @@
 //
 //  Extensions.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-04.
 //
@@ -12,7 +12,7 @@ import ScreenCaptureKit
 import UniformTypeIdentifiers
 
 extension UTType {
-    var sapphireFileSymbolName: String {
+    var notchKitFileSymbolName: String {
         if conforms(to: .image) { return "photo.fill" }
         if conforms(to: .movie) { return "video.fill" }
         if conforms(to: .audio) { return "music.note" }
@@ -25,13 +25,13 @@ extension UTType {
 }
 
 extension URL {
-    var sapphireFileSymbolName: String {
-        (try? resourceValues(forKeys: [.contentTypeKey]).contentType)?.sapphireFileSymbolName ?? "doc.fill"
+    var notchKitFileSymbolName: String {
+        (try? resourceValues(forKeys: [.contentTypeKey]).contentType)?.notchKitFileSymbolName ?? "doc.fill"
     }
 }
 
 extension NSPanel {
-    func configureAsSapphireOverlay(acceptsMouseMovedEvents: Bool = false) {
+    func configureAsNotchKitOverlay(acceptsMouseMovedEvents: Bool = false) {
         isOpaque = false
         backgroundColor = .clear
         hasShadow = true

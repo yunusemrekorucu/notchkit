@@ -1,6 +1,6 @@
 //
 //  ClipboardManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
@@ -387,9 +387,9 @@ final class ClipboardManager: ObservableObject {
     private var clearedBeforeHistoryLoaded = false
     private var clearedPinnedBeforeHistoryLoaded = false
     private var cancellables = Set<AnyCancellable>()
-    private nonisolated let persistQueue = DispatchQueue(label: "com.sapphire.clipboard.persist", qos: .utility)
-    private nonisolated let processingQueue = DispatchQueue(label: "com.sapphire.clipboard.process", qos: .utility)
-    private nonisolated static let continuityRemoteMarker = NSPasteboard.PasteboardType("com.sapphire.continuity.remote")
+    private nonisolated let persistQueue = DispatchQueue(label: "com.notchkit.clipboard.persist", qos: .utility)
+    private nonisolated let processingQueue = DispatchQueue(label: "com.notchkit.clipboard.process", qos: .utility)
+    private nonisolated static let continuityRemoteMarker = NSPasteboard.PasteboardType("com.notchkit.continuity.remote")
 
     private var retentionLimits: (maxItems: Int?, maxBytes: Int?) {
         let settings = SettingsModel.shared.settings
@@ -409,7 +409,7 @@ final class ClipboardManager: ObservableObject {
     private init() {
         let fileManager = FileManager.default
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let appDirectory = appSupport.appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.sapphire.app")
+        let appDirectory = appSupport.appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.notchkit.app")
         if !fileManager.fileExists(atPath: appDirectory.path) {
             try? fileManager.createDirectory(at: appDirectory, withIntermediateDirectories: true)
         }
@@ -816,7 +816,7 @@ final class ClipboardManager: ObservableObject {
             return ClipboardRawCapture(changeCount: changeCount, payload: .ignored)
         }
         let source = typeNames.contains(ClipboardCaptureFilter.sourceType)
-            ? pasteboard.string(forType: .sapphireSource) : nil
+            ? pasteboard.string(forType: .notchKitSource) : nil
         if ClipboardCaptureFilter.shouldIgnore(
             types: typeNames,
             sourceBundleID: source,

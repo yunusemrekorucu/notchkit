@@ -1,6 +1,6 @@
 //
 //  LyricsDatabase.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-14
 
@@ -104,7 +104,7 @@ enum LyricsDatabaseDiskCache {
 
     private static let directory: URL = {
         let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.sapphire.app", isDirectory: true)
+            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.notchkit.app", isDirectory: true)
             .appendingPathComponent("LyricsDatabase", isDirectory: true)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url

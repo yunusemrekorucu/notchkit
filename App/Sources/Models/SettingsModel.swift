@@ -1,6 +1,6 @@
 //
 //  SettingsModel.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-11-22
 
@@ -10,7 +10,7 @@ import Combine
 import UniformTypeIdentifiers
 
 extension UTType {
-    static let sapphireSettingsBackup = UTType(exportedAs: "com.cshariq.sapphire.settings-backup")
+    static let notchKitSettingsBackup = UTType(exportedAs: "com.yunusemrekorucu.notchkit.settings-backup")
 }
 
 public struct StatThreshold: Codable, Equatable {
@@ -1177,7 +1177,7 @@ struct Settings: Codable, Equatable {
     var preventNotchExpandWhenLocked: Bool = false
     var releaseChannel: ReleaseChannel = .stable
     var automaticUpdateChecksEnabled: Bool = true
-    var automaticallyDownloadSapphireUpdates: Bool = true
+    var automaticallyDownloadNotchKitUpdates: Bool = true
     var updateAvailableNotificationsEnabled: Bool = true
     var showUpdateAvailableLiveActivity: Bool = true
 
@@ -1897,7 +1897,7 @@ struct Settings: Codable, Equatable {
     var nearbyShareDownloadLocationPath: String = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!.path
     var nearbyShareOpenOnClick: Bool = true
 
-    // MARK: Android ⇄ Mac Continuity (see Sapphire/Services/Continuity)
+    // MARK: Android ⇄ Mac Continuity (see NotchKit/Services/Continuity)
     var continuityEnabled: Bool = false
     var continuityClipboardSync: Bool = true
     var continuityClipboardImages: Bool = true
@@ -2071,7 +2071,7 @@ struct SettingsBackupPayload: Codable {
 }
 
 struct SettingsBackupDocument: FileDocument {
-    static var readableContentTypes: [UTType] { [.sapphireSettingsBackup, .json] }
+    static var readableContentTypes: [UTType] { [.notchKitSettingsBackup, .json] }
 
     var payload: SettingsBackupPayload
 
@@ -2185,7 +2185,7 @@ enum ControlItemIconStyle: String, Codable, CaseIterable, Identifiable {
 // MARK: - Settings Persistence Helpers
 
 enum SettingsPersistence {
-    static let payloadKey = "sapphire.settings.payload"
+    static let payloadKey = "notchkit.settings.payload"
     static var encoder: JSONEncoder {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys]
@@ -2711,7 +2711,7 @@ final class SettingsModel: ObservableObject {
 
     // MARK: High-frequency runtime state
     private static let brightnessKey = "runtime.brightness"
-    static let animationProfileKey = "sapphire.settings.animationProfile"
+    static let animationProfileKey = "notchkit.settings.animationProfile"
     private static let notchNavigationStackKey = "runtime.lastNotchNavigationStack"
 
     private let brightnessChanges = PassthroughSubject<Float, Never>()
@@ -2739,7 +2739,7 @@ final class SettingsModel: ObservableObject {
     }
 
     private let defaults = UserDefaults.standard
-    private let settingsAccessQueue = DispatchQueue(label: "com.cshariq.sapphire.settings.sync.queue")
+    private let settingsAccessQueue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.settings.sync.queue")
     private let settingsAccessQueueKey = DispatchSpecificKey<UInt8>()
     private let persistenceStateLock = NSLock()
     private var isApplyingLoadedSettings = false
@@ -3322,7 +3322,7 @@ enum WidgetType: String, Codable, CaseIterable, Identifiable, Equatable {
 }
 
 extension WidgetType {
-    /// Widgets that need paid services or private Sapphire code. NotchKit never offers them.
+    /// Widgets that need paid services or code that is not part of NotchKit.
     static let hiddenInNotchKit: Set<WidgetType> = [.sports, .finance, .shopify, .storage, .agent]
 }
 
@@ -3840,7 +3840,7 @@ extension LaunchpadPageItem: Transferable {
 }
 
 extension UTType {
-    static let launchpadItem = UTType(exportedAs: "com.cshariq.sapphire.launchpaditem")
+    static let launchpadItem = UTType(exportedAs: "com.yunusemrekorucu.notchkit.launchpaditem")
 }
 
 enum SettingsSection: String, CaseIterable, Identifiable {
@@ -3978,7 +3978,7 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .dockLayouts: ["dock", "layout", "preset", "preset switch", "hotkey", "apps"]
         case .mediaOptimizer: ["image", "video", "audio", "compress", "shrink", "optimize", "ocr", "clipboard", "file shelf"]
 
-        case .about: ["about", "version", "credits", "support", "sapphire update", "check for updates", "release channel", "beta", "automatic updates"]
+        case .about: ["about", "version", "credits", "support", "notchkit update", "check for updates", "release channel", "beta", "automatic updates"]
         }
     }
 

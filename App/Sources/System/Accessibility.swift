@@ -1,6 +1,6 @@
 //
 //  Accessibility.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-13
 
@@ -237,7 +237,7 @@ final class AccessibilityPermissionService: AccessibilityTrustProviding {
     private var trustObserver: NSObjectProtocol?
     private var debounceTask: Task<Void, Never>?
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.cshariq.sapphire", category: "AccessibilityPermissionService")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit", category: "AccessibilityPermissionService")
 
     var refreshDidFinish: (() -> Void)?
 

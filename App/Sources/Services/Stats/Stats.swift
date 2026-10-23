@@ -1,6 +1,6 @@
 //
 //  Stats.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-28.
 //
@@ -542,7 +542,7 @@ internal class Reader<T> {
         self.interval = interval
         self.callback = callback
         self.readerName = String(describing: T.self)
-        self.queue = DispatchQueue(label: "com.cshariq.sapphire.reader.\(readerName)", qos: .utility)
+        self.queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.reader.\(readerName)", qos: .utility)
     }
 
     public func start() {

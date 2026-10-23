@@ -1,6 +1,6 @@
 //
 //  NativeMediaController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-21
 
@@ -284,7 +284,7 @@ final class NativeMediaController: NSObject {
 
         var env = ProcessInfo.processInfo.environment
         env["PERLIO"] = ":unix"
-        env["SAPPHIRE_WATCH_PARENT_STDIN"] = "1"
+        env["NOTCHKIT_WATCH_PARENT_STDIN"] = "1"
         task.environment = env
         let stdin = Pipe()
         task.standardInput = stdin
@@ -295,7 +295,7 @@ final class NativeMediaController: NSObject {
         currentMergedMetadata.removeAll()
 
         let parser = NowPlayingStreamParser()
-        let parseQueue = DispatchQueue(label: "com.sapphire.mediaremote.stream-parse", qos: .userInitiated)
+        let parseQueue = DispatchQueue(label: "com.notchkit.mediaremote.stream-parse", qos: .userInitiated)
         stdout.fileHandleForReading.readabilityHandler = { [weak self] handle in
             let data = handle.availableData
             guard !data.isEmpty else {
@@ -469,7 +469,7 @@ final class NativeMediaController: NSObject {
         lastActiveClientKey = targetKey
 
         for (entryKey, value) in metadata {
-            if entryKey == "_sapphireSnapshot" { continue }
+            if entryKey == "_notchKitSnapshot" { continue }
             if value is NSNull || Self.isEmptyMergeValue(value) {
                 currentMergedMetadata.removeValue(forKey: entryKey)
             } else {

@@ -1,6 +1,6 @@
 //
 //  TimerDetailView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-09-26
 //
@@ -17,13 +17,13 @@ struct TimerDetailView: View {
     var body: some View {
         VStack(spacing: 16) {
             durationPickerSection
-            sapphireTimersSection
+            notchKitTimersSection
             systemTimersSection
             systemStopwatchesSection
 
             if timerManager.activeTimers.isEmpty
                 && timerManager.activeStopwatches.isEmpty
-                && timerManager.sapphireTimers.isEmpty {
+                && timerManager.notchKitTimers.isEmpty {
                 Text("No Active Timers or Stopwatches")
                     .font(.headline)
                     .foregroundColor(.secondary)
@@ -34,7 +34,7 @@ struct TimerDetailView: View {
         .frame(minWidth: 350)
         .animation(.default, value: timerManager.activeTimers.map(\.id))
         .animation(.default, value: timerManager.activeStopwatches.map(\.id))
-        .animation(.default, value: timerManager.sapphireTimers.map(\.id))
+        .animation(.default, value: timerManager.notchKitTimers.map(\.id))
     }
 
     // MARK: - Duration picker
@@ -81,14 +81,14 @@ struct TimerDetailView: View {
 
     private func startTimer() {
         let duration = TimeInterval(selectedMinutes * 60)
-        _ = timerManager.startSapphireTimer(duration: duration)
+        _ = timerManager.startNotchKitTimer(duration: duration)
     }
 
-    // MARK: - Sapphire-Owned Timers
+    // MARK: - NotchKit-Owned Timers
 
     @ViewBuilder
-    private var sapphireTimersSection: some View {
-        let timers = timerManager.sapphireTimers
+    private var notchKitTimersSection: some View {
+        let timers = timerManager.notchKitTimers
         if !timers.isEmpty {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
@@ -98,7 +98,7 @@ struct TimerDetailView: View {
                     Spacer()
                     if timers.contains(where: { $0.remainingTime <= 0 }) {
                         Button("Clear Finished") {
-                            timerManager.clearFinishedSapphireTimers()
+                            timerManager.clearFinishedNotchKitTimers()
                         }
                         .font(.caption)
                         .buttonStyle(.plain)
@@ -111,7 +111,7 @@ struct TimerDetailView: View {
                         Image(systemName: timer.isRunning ? "timer" : "timer.pause")
                             .foregroundColor(timer.isRunning ? .orange : .secondary)
 
-                        SapphireTimerClockText(timer: timer)
+                        NotchKitTimerClockText(timer: timer)
 
                         Spacer()
 
@@ -133,30 +133,30 @@ struct TimerDetailView: View {
     }
 
     @ViewBuilder
-    private func controls(for timer: SapphireTimer) -> some View {
+    private func controls(for timer: NotchKitTimer) -> some View {
         HStack(spacing: 6) {
             if timer.remainingTime <= 0 {
                 controlButton("checkmark", accent: .orange) {
-                    timerManager.clearFinishedSapphireTimers()
+                    timerManager.clearFinishedNotchKitTimers()
                 }
             } else if timer.isRunning {
                 controlButton("pause.fill", accent: .orange) {
-                    timerManager.pauseSapphireTimer(id: timer.id)
+                    timerManager.pauseNotchKitTimer(id: timer.id)
                 }
                 controlButton("hourglass.badge.plus", accent: .orange) {
-                    timerManager.addOneMinuteToSapphireTimer(id: timer.id)
+                    timerManager.addOneMinuteToNotchKitTimer(id: timer.id)
                 }
                 .help("Add 1 minute")
                 controlButton("stop.fill", accent: .red) {
-                    timerManager.removeSapphireTimer(id: timer.id)
+                    timerManager.removeNotchKitTimer(id: timer.id)
                 }
                 .help("Stop timer")
             } else {
                 controlButton("play.fill", accent: .green) {
-                    timerManager.resumeSapphireTimer(id: timer.id)
+                    timerManager.resumeNotchKitTimer(id: timer.id)
                 }
                 controlButton("stop.fill", accent: .red) {
-                    timerManager.removeSapphireTimer(id: timer.id)
+                    timerManager.removeNotchKitTimer(id: timer.id)
                 }
                 .help("Remove timer")
             }
@@ -254,8 +254,8 @@ private struct TimerClockLabel: View {
     }
 }
 
-private struct SapphireTimerClockText: View {
-    let timer: SapphireTimer
+private struct NotchKitTimerClockText: View {
+    let timer: NotchKitTimer
 
     var body: some View {
         if timer.isRunning {

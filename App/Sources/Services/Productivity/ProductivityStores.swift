@@ -2,9 +2,9 @@
 //  ProductivityStores.swift
 //  NotchKit
 //
-//  State for the widgets NotchKit had before it moved to Sapphire's design:
-//  Pomodoro, To-dos and Quick Apps. They keep NotchKit's original UserDefaults
-//  keys and value formats, so existing tasks, pinned apps and durations carry over.
+//  State for the Pomodoro, To-dos and Quick Apps widgets. They keep NotchKit 1.x's
+//  UserDefaults keys and value formats, so existing tasks, pinned apps and durations
+//  carry over.
 
 import AppKit
 import Combine

@@ -1,6 +1,6 @@
 //
 //  SettingsIndex.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-26
 
@@ -154,7 +154,7 @@ enum SettingsIndex {
     private static let stopWords: Set<String> = [
         "the", "a", "an", "to", "of", "in", "on", "off", "is", "it", "can", "i", "my", "me", "how", "do",
         "does", "and", "or", "for", "when", "with", "turn", "set", "make", "change", "enable", "disable",
-        "want", "please", "could", "would", "should", "sapphire", "setting", "settings", "option", "there",
+        "want", "please", "could", "would", "should", "notchkit", "setting", "settings", "option", "there",
         "what", "which", "where", "some", "any", "suggest", "suggestion", "suggestions", "idea", "ideas",
         "recommend", "tips", "help", "you", "your", "im", "get", "use", "using", "way", "ways"
     ]

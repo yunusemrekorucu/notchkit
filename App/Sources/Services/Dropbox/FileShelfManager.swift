@@ -1,6 +1,6 @@
 //
 //  FileShelfManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -22,7 +22,7 @@ class FileShelfManager: ObservableObject {
     @Published var files: [ShelfItem] = []
     private let storageURL: URL
     private let legacyTemporaryRoot: URL
-    private let ioQueue = DispatchQueue(label: "com.sapphire.file-shelf.io", qos: .utility)
+    private let ioQueue = DispatchQueue(label: "com.notchkit.file-shelf.io", qos: .utility)
     private var expiryTimer: Timer?
     private var activeCopies = 0
     private var copyProgress: [UUID: (copied: Int64, total: Int64)] = [:]
@@ -35,9 +35,9 @@ class FileShelfManager: ObservableObject {
         let fileManager = FileManager.default
         let appSupportURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
-        storageURL = appSupportURL.appendingPathComponent("com.shariq.Sapphire.FileShelf", isDirectory: true)
+        storageURL = appSupportURL.appendingPathComponent("com.yunusemrekorucu.notchkit.FileShelf", isDirectory: true)
         legacyTemporaryRoot = fileManager.temporaryDirectory
-            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.shariq.Sapphire")
+            .appendingPathComponent(Bundle.main.bundleIdentifier ?? "com.yunusemrekorucu.notchkit")
             .appendingPathComponent("TemporaryDrop", isDirectory: true)
 
         try? fileManager.createDirectory(at: storageURL, withIntermediateDirectories: true, attributes: nil)
@@ -110,7 +110,7 @@ class FileShelfManager: ObservableObject {
         updateExpiryTimer()
     }
 
-    // MARK: - Parking (copies into Sapphire's storage)
+    // MARK: - Parking (copies into NotchKit's storage)
 
     private func park(_ sources: [URL], renamedTo newName: String? = nil, replacing replacedID: UUID? = nil) {
         let batchID = UUID()
@@ -440,7 +440,7 @@ struct ShelfItem: Identifiable, Codable, Equatable, Hashable {
         dateAdded = try container.decode(Date.self, forKey: .dateAdded)
         bookmark = try container.decodeIfPresent(Data.self, forKey: .bookmark)
         isOwnedCopy = try container.decodeIfPresent(Bool.self, forKey: .isOwnedCopy)
-            ?? (storedAt.path.contains("/TemporaryDrop/") || storedAt.path.contains("/com.shariq.Sapphire.FileShelf/"))
+            ?? (storedAt.path.contains("/TemporaryDrop/") || storedAt.path.contains("/com.yunusemrekorucu.notchkit.FileShelf/"))
     }
 }
 
@@ -563,7 +563,7 @@ private struct FileShelfItemView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8, style: .continuous)
                     .fill(Color.secondary.opacity(0.25))
-                Image(systemName: item.storedAt.sapphireFileSymbolName)
+                Image(systemName: item.storedAt.notchKitFileSymbolName)
                     .font(.system(size: 24, weight: .bold))
                     .foregroundColor(.white)
             }

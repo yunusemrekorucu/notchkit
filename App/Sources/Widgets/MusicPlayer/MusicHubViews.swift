@@ -1,6 +1,6 @@
 //
 //  MusicHubViews.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-21
 
@@ -2897,11 +2897,11 @@ struct DevicesView: View {
 
             if !sortedNativeDevices.isEmpty {
                 ForEach(sortedNativeDevices, id: \.deviceId) { device in
-                    let isSapphireController = device.deviceId == musicManager.spotifyPrivateAPI.controllerDeviceID
+                    let isNotchKitController = device.deviceId == musicManager.spotifyPrivateAPI.controllerDeviceID
                     SpotifyNativeDeviceRow(
                         device: device,
                         isActive: device.deviceId == musicManager.spotifyPrivateAPI.activePlayerDeviceID,
-                        isControllerOnly: isSapphireController,
+                        isControllerOnly: isNotchKitController,
                         volume: $spotifyVolume,
                         onTransfer: {
                             Task.detached(priority: .userInitiated) {

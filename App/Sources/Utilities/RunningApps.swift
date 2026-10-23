@@ -1,6 +1,6 @@
 //
 //  RunningApps.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-02
 
@@ -69,7 +69,7 @@ private final class RunningApplicationTerminationWaiter {
 
 @MainActor
 extension NSRunningApplication {
-    func sapphireTerminateAndWait(timeout: TimeInterval) async -> Bool {
+    func notchKitTerminateAndWait(timeout: TimeInterval) async -> Bool {
         await RunningApplicationTerminationWaiter(application: self)
             .terminateAndWait(timeout: timeout)
     }

@@ -1,6 +1,6 @@
 //
 //  Bridging-Header.h
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-02.
 //
@@ -16,9 +16,9 @@
 #import "KeyboardBacklightManager.h"
 #import "PrivateAPI.h"
 #import "VirtualDisplay.h"
-#import "SapphireMemoryFlush.h"
+#import "NotchKitMemoryFlush.h"
 #import "RemoteViewCrashGuard.h"
-#import "SapphireObjCExceptionCatcher.h"
+#import "NotchKitObjCExceptionCatcher.h"
 #include "lowlevel.h"
 #import "MTPrivateTimerController.h"
 #import "ShortcutsActionRunner.h"

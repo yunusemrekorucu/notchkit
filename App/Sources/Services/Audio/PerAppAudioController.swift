@@ -1,6 +1,6 @@
 //
 //  PerAppAudioController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-05-09.
 //
@@ -23,11 +23,11 @@ final class PerAppAudioController {
     nonisolated static let changeKindUserInfoKey = "kind"
     nonisolated static let maxVolume: Float = 2.0
 
-    private let volumeDefaultsKey = "SapphirePerAppVolumeMap"
-    private let muteDefaultsKey = "SapphirePerAppMuteMap"
-    private let eqDefaultsKey = "SapphirePerAppEQMap"
-    private let eqBassDefaultsKey = "SapphirePerAppEQBassMap"
-    private let eqDeviceScopeDefaultsKey = "SapphirePerAppEQDeviceScopeMap"
+    private let volumeDefaultsKey = "NotchKitPerAppVolumeMap"
+    private let muteDefaultsKey = "NotchKitPerAppMuteMap"
+    private let eqDefaultsKey = "NotchKitPerAppEQMap"
+    private let eqBassDefaultsKey = "NotchKitPerAppEQBassMap"
+    private let eqDeviceScopeDefaultsKey = "NotchKitPerAppEQDeviceScopeMap"
 
     private var volumeMap: [String: Double] = [:]
     private var muteMap: [String: Bool] = [:]

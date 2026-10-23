@@ -1,6 +1,6 @@
 //
 //  DebugMode.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-20.
 //
@@ -24,8 +24,8 @@ final class DebugMode: ObservableObject {
         }
     }
 
-    private static let storageKey = "SapphireDebugModeEnabled"
-    private static let seLoggingKey = "SapphireSystemEnhanceLogging"
+    private static let storageKey = "NotchKitDebugModeEnabled"
+    private static let seLoggingKey = "NotchKitSystemEnhanceLogging"
 
     private init() {
         isEnabled = UserDefaults.standard.bool(forKey: Self.storageKey)

@@ -1,6 +1,6 @@
 //
 //  WeatherService.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //
@@ -43,7 +43,7 @@ final class WeatherService: NSObject, @MainActor CLLocationManagerDelegate {
         if let envKey = ProcessInfo.processInfo.environment["WEATHER_API_KEY"], !envKey.isEmpty {
             return envKey
         }
-        let homeConfig = (NSHomeDirectory() as NSString).appendingPathComponent(".sapphire/WeatherConfig.plist")
+        let homeConfig = (NSHomeDirectory() as NSString).appendingPathComponent(".notchkit/WeatherConfig.plist")
         if let dict = NSDictionary(contentsOfFile: homeConfig),
            let key = dict["APIKey"] as? String, !key.isEmpty {
             return key

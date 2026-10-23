@@ -1,6 +1,6 @@
 //
-//  SapphireInstanceCoordination.swift
-//  Sapphire
+//  NotchKitInstanceCoordination.swift
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-20
 
@@ -8,7 +8,7 @@ import AppKit
 import FileProvider
 import Foundation
 
-enum SapphireInstanceCoordination {
+enum NotchKitInstanceCoordination {
     struct Peer: Equatable {
         var bundleURL: URL
         var processIdentifier: pid_t

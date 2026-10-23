@@ -2,14 +2,13 @@
 //  Telemetry.swift
 //  NotchKit
 //
-//  Sapphire ships Firebase analytics, performance traces and a shared Firestore
-//  lyrics cache. NotchKit collects nothing, so these keep Sapphire's call sites
-//  compiling while doing no work. Based on Sapphire (AGPL-3.0, Shariq Charolia).
+//  NotchKit collects no analytics and has no shared lyrics database. These types keep
+//  the analytics, performance-trace and Firestore call sites compiling while doing no work.
 
 import Foundation
 
 @MainActor
-enum SapphireAnalytics {
+enum NotchKitAnalytics {
     static var isEnabled: Bool { false }
     static func scheduleBootstrap(after delay: TimeInterval) {}
     static func bootstrap() {}
@@ -19,7 +18,7 @@ enum SapphireAnalytics {
 }
 
 @MainActor
-final class SapphirePerformanceTrace {
+final class NotchKitPerformanceTrace {
     @discardableResult func setMetric(_ value: Int64, named metricName: String) -> Self { self }
     @discardableResult func incrementMetric(_ metricName: String, by value: Int64 = 1) -> Self { self }
     @discardableResult func setAttribute(_ value: String, named attributeName: String) -> Self { self }
@@ -27,9 +26,9 @@ final class SapphirePerformanceTrace {
 }
 
 @MainActor
-enum SapphirePerformance {
+enum NotchKitPerformance {
     static func setCollectionEnabled(_ enabled: Bool) {}
-    static func startTrace(name: String, attributes: [String: String] = [:]) -> SapphirePerformanceTrace? { nil }
+    static func startTrace(name: String, attributes: [String: String] = [:]) -> NotchKitPerformanceTrace? { nil }
     static func recordTrace(
         name: String,
         startTime: Date,

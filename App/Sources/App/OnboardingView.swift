@@ -1,6 +1,6 @@
 //
 //  OnboardingView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-09.
 //
@@ -640,7 +640,7 @@ private struct SubscriptionOverviewStepView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 50)
 
-                Link("Upgrade on website instead", destination: URL(string: "https://github.com/cshariq/Sapphire")!)
+                Link("NotchKit on GitHub", destination: URL(string: "https://github.com/yunusemrekorucu/notchkit")!)
                     .font(.caption)
                     .foregroundStyle(.purple)
             }
@@ -656,14 +656,8 @@ private struct SubscriptionOverviewStepView: View {
     }
 
     private func beginCheckout(for tier: SubscriptionTier) {
-        let plan = tier == .free ? "basic" : tier.rawValue
-        guard var components = URLComponents(string: "https://sapphire-app.tech/checkout.html") else { return }
-        components.queryItems = [
-            URLQueryItem(name: "plan", value: plan),
-            URLQueryItem(name: "qty", value: "1")
-        ]
-        guard let url = components.url else { return }
-        NSWorkspace.shared.open(url)
+        // NotchKit has no paid plans.
+        _ = tier
     }
 
     private func onboardingTierRank(_ tier: SubscriptionTier) -> Int {
@@ -853,9 +847,6 @@ private struct FinishStepView: View {
                 .foregroundStyle(.secondary)
 
             HStack(spacing: 12) {
-                Link(destination: URL(string: "https://github.com/cshariq/Sapphire")!) {
-                    Image(systemName: "link").resizable().aspectRatio(contentMode: .fit).frame(width: 18, height: 18).foregroundColor(.white).padding(6).background(Color.blue).clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                }.buttonStyle(PlainButtonStyle())
 
                 Link(destination: URL(string: "https://github.com/yunusemrekorucu/notchkit")!) {
                     Image("github_logo").resizable().renderingMode(.template).aspectRatio(contentMode: .fit).frame(width: 18, height: 18).foregroundColor(.white).padding(6).background(Color.black).clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
@@ -869,7 +860,7 @@ private struct FinishStepView: View {
             Spacer()
             OnboardingButton(title: "Explore NotchKit", action: onComplete)
 
-            Text("© 2025 Shariq Charolia. All rights reserved.")
+            Text("© 2026 Yunus Emre Korucu · Portions © 2025 Shariq Charolia · AGPL-3.0")
                 .font(.caption).foregroundStyle(.tertiary).padding(.bottom, 20)
         }
         .onAppear {

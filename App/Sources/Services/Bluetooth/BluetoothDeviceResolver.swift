@@ -1,6 +1,6 @@
 //
 //  BluetoothDeviceResolver.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-12
 //
@@ -19,7 +19,7 @@ class BluetoothDeviceResolver {
 
     private var didInitializeDBs = false
 
-    private let queue = DispatchQueue(label: "com.sapphire.resolver", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "com.notchkit.resolver", qos: .userInitiated)
 
     private init() {
         connectToDatabases()

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-04
 //
@@ -276,7 +276,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     private var sessionObserversInstalled = false
     private var networkPathSatisfied: Bool?
     private var pendingAllocatorRelief: DispatchWorkItem?
-    private var isPresentingSapphireVMLaunchFailure = false
+    private var isPresentingNotchKitVMLaunchFailure = false
     private let performanceLaunchStart = (
         date: Date(),
         uptime: ProcessInfo.processInfo.systemUptime
@@ -429,15 +429,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         AccessibilityTrustMonitor.shared.start()
         SystemMutationRecovery.restoreAfterUnexpectedExit()
 
-        SapphireStandardMenu.installIfNeeded()
+        NotchKitStandardMenu.installIfNeeded()
         ContinuityServicesProvider.shared.install()
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleHelperConnectionLost),
-            name: .sapphireHelperConnectionLost,
+            name: .notchKitHelperConnectionLost,
             object: nil
         )
-        SapphireAnalytics.scheduleBootstrap(after: 8)
+        NotchKitAnalytics.scheduleBootstrap(after: 8)
         if launchMode == .normal {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 FaceIDModelManager.shared.applyResidencyPolicy()
@@ -445,8 +445,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         }
         let launchStartDate = performanceLaunchStart.date
         let launchDuration = ProcessInfo.processInfo.systemUptime - performanceLaunchStart.uptime
-        SapphireAnalytics.whenReady {
-            SapphirePerformance.recordTrace(
+        NotchKitAnalytics.whenReady {
+            NotchKitPerformance.recordTrace(
                 name: "macos_app_start",
                 startTime: launchStartDate,
                 duration: launchDuration,
@@ -457,7 +457,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             )
         }
         if launchMode == .normal {
-            SapphireBrowserIntegration.shared.start()
+            NotchKitBrowserIntegration.shared.start()
         }
         SandboxIntegration.shared.start()
         _ = FocusProfileStore.shared
@@ -489,7 +489,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     @discardableResult
     private func routeAfterLaunch() -> Bool {
-        SapphireAnalytics.scheduleBootstrap(after: 1)
+        NotchKitAnalytics.scheduleBootstrap(after: 1)
         if OnboardingLaunchPolicy.shouldShowOnboarding {
             showOnboardingWindow()
             return false
@@ -523,7 +523,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             .map(\.googleAnalyticsEnabled)
             .dropFirst()
             .removeDuplicates()
-            .sink { _ in SapphireAnalytics.applyCollectionPreference() }
+            .sink { _ in NotchKitAnalytics.applyCollectionPreference() }
             .store(in: &cancellables)
 
         settingsModel.$settings
@@ -734,7 +734,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         )
         NotificationCenter.default.removeObserver(
             self,
-            name: .sapphireOpenAccountPane,
+            name: .notchKitOpenAccountPane,
             object: nil
         )
 
@@ -745,7 +745,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     // MARK: - Onboarding
 
     func showOnboardingWindow() {
-        SapphireAnalytics.logEvent("onboarding_started")
+        NotchKitAnalytics.logEvent("onboarding_started")
 
         if onboardingWindow == nil {
             let visibleFrame = UtilityWindowMetrics.visibleFrame()
@@ -789,7 +789,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         LaunchAtLoginReconciler.reconcile(wanted: settingsModel.current.launchAtLogin, isUserChange: true) { isOn in
             Self.adoptLaunchAtLogin(isOn)
         }
-        SapphireAnalytics.logEvent("onboarding_completed")
+        NotchKitAnalytics.logEvent("onboarding_completed")
         onboardingWindow?.orderOut(nil)
         onboardingWindow = nil
         if routeAfterLaunch() {
@@ -847,7 +847,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         isMainAppRunning = true
 
-        SapphireAnalytics.logEvent("main_app_started")
+        NotchKitAnalytics.logEvent("main_app_started")
 
         transitionToAgentApp()
 
@@ -927,13 +927,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         setupSessionObservers()
         NotificationCenter.default.addObserver(self, selector: #selector(handleSubscriptionPaywallRequest(_:)), name: .subscriptionPaywallRequested, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSubscriptionSessionRevoked(_:)), name: .subscriptionSessionRevoked, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleAccountPaneOpened), name: .sapphireOpenAccountPane, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleAccountPaneOpened), name: .notchKitOpenAccountPane, object: nil)
         UNUserNotificationCenter.current().delegate = self
         NearbyConnectionManager.shared.mainAppDelegate = self
         startNearbyShareIfNeeded()
         continuityManager.startIfEnabled()
-        // Sapphire's in-app updater expects Sapphire's signed ZIP releases; NotchKit
-        // points people at its GitHub releases from the About page instead.
+        // The in-app updater expects signed ZIP releases; NotchKit ships DMGs and links
+        // to its GitHub releases from the About page instead.
         InstalledAppUpdatesChecker.shared.applySettings(
             installedAppUpdatesEnabled: settingsModel.current.installedAppUpdatesEnabled,
             notificationsEnabled: settingsModel.current.installedAppUpdateNotificationsEnabled
@@ -1164,7 +1164,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
                 buttonTitles: ["Open Account Settings", "OK"]
             ) { buttonIndex in
                 if buttonIndex == 0 {
-                    NotificationCenter.default.post(name: .sapphireOpenAccountPane, object: nil)
+                    NotificationCenter.default.post(name: .notchKitOpenAccountPane, object: nil)
                 }
             }
         }
@@ -1476,7 +1476,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         }
         let dmgURLs = urls.filter { $0.pathExtension.lowercased() == "dmg" }
         let archiveURLs = urls.filter { !dmgURLs.contains($0) && ArchiveExtractor.isArchiveURL($0) }
-        let layoutURLs = urls.filter { !dmgURLs.contains($0) && !archiveURLs.contains($0) && $0.pathExtension.lowercased() == "sapphiredocklayout" }
+        let layoutURLs = urls.filter { !dmgURLs.contains($0) && !archiveURLs.contains($0) && $0.pathExtension.lowercased() == "notchkitdocklayout" }
         if !dmgURLs.isEmpty {
             dmgInstallerManager.handleOpenURLs(dmgURLs)
         }
@@ -1511,7 +1511,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
                 return
             }
             if !SandboxIntegration.shared.forwardValidatedDeepLink(url) {
-                presentSapphireVMLaunchFailureIfNeeded()
+                presentNotchKitVMLaunchFailureIfNeeded()
             }
             return
         }
@@ -1519,9 +1519,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         musicManager.tidalAPI.handleRedirect(url: url)
     }
 
-    private func presentSapphireVMLaunchFailureIfNeeded() {
-        guard !isPresentingSapphireVMLaunchFailure else { return }
-        isPresentingSapphireVMLaunchFailure = true
+    private func presentNotchKitVMLaunchFailureIfNeeded() {
+        guard !isPresentingNotchKitVMLaunchFailure else { return }
+        isPresentingNotchKitVMLaunchFailure = true
 
         HelperAlertPresenter.presentModal(
             messageText: "NotchKit VM Isn’t Available",
@@ -1529,7 +1529,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             alertStyle: .warning,
             buttonTitles: ["OK"]
         ) { [weak self] _ in
-            self?.isPresentingSapphireVMLaunchFailure = false
+            self?.isPresentingNotchKitVMLaunchFailure = false
         }
     }
 
@@ -1550,8 +1550,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         if isMainAppRunning && settingsModel.current.launchpadEnabled {
             if statusItem == nil {
                 statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-                statusItem?.autosaveName = "SapphireMainStatusItem"
-                seedStatusItemPreferredPositionIfNeeded(autosaveName: "SapphireMainStatusItem", seed: 3)
+                statusItem?.autosaveName = "NotchKitMainStatusItem"
+                seedStatusItemPreferredPositionIfNeeded(autosaveName: "NotchKitMainStatusItem", seed: 3)
 
                 statusItem?.button?.image = NSImage(
                     systemSymbolName: "square.grid.3x3.fill",
@@ -2024,7 +2024,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         guard isSettings || isLyrics else { return }
 
         if isSettings {
-            NotificationCenter.default.post(name: .sapphireSettingsWillClose, object: nil)
+            NotificationCenter.default.post(name: .notchKitSettingsWillClose, object: nil)
         }
 
         window.contentView = nil
@@ -2049,7 +2049,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         pendingAllocatorRelief?.cancel()
 
         let workItem = DispatchWorkItem {
-            SapphireMemoryFlushAllMallocZones()
+            NotchKitMemoryFlushAllMallocZones()
         }
         pendingAllocatorRelief = workItem
         DispatchQueue.global(qos: .utility).asyncAfter(
@@ -2080,7 +2080,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
     @objc func handleSubscriptionPaywallRequest(_ notification: Notification) {
         openSettingsWindow()
-        NotificationCenter.default.post(name: .sapphireOpenAccountPane, object: nil)
+        NotificationCenter.default.post(name: .notchKitOpenAccountPane, object: nil)
     }
 
     @objc func screenParametersChanged(notification: Notification) {
@@ -2283,8 +2283,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
-        if response.notification.request.content.categoryIdentifier == SapphireBrowserIntegration.linkNotificationCategory {
-            SapphireBrowserIntegration.shared.handleLinkNotificationResponse(response)
+        if response.notification.request.content.categoryIdentifier == NotchKitBrowserIntegration.linkNotificationCategory {
+            NotchKitBrowserIntegration.shared.handleLinkNotificationResponse(response)
             completionHandler()
             return
         }

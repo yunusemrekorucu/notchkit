@@ -1,15 +1,15 @@
 //
 //  HelperProtocol.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-02
 //
 
 import Foundation
 
-let SapphireHelperProtocolVersion: Int = 13
+let NotchKitHelperProtocolVersion: Int = 13
 
-let SapphireHelperFanLeaseProtocolVersion: Int = 13
+let NotchKitHelperFanLeaseProtocolVersion: Int = 13
 
 public enum ChargeControlMode: Int {
     case unsupported = 0

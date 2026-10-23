@@ -1,6 +1,6 @@
 //
 //  TidalLogin.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-05.
 //
@@ -83,7 +83,7 @@ private struct TidalLoginWebViewRepresentable: NSViewRepresentable {
             decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
         ) {
             if let url = navigationAction.request.url,
-               url.scheme?.lowercased() == "sapphire",
+               url.scheme?.lowercased() == "notchkit",
                url.host?.lowercased() == "callback" {
                 if !isCompleting {
                     isCompleting = true

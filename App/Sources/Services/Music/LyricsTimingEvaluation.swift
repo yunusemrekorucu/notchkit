@@ -1,6 +1,6 @@
 //
 //  LyricsTimingEvaluation.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-13
 
@@ -114,7 +114,7 @@ final class LyricsEvaluationHarness {
     private var timeout: Task<Void, Never>?
 
     private static let directory: URL = {
-        let url = FileManager.default.temporaryDirectory.appendingPathComponent("sapphire-lyrics-eval", isDirectory: true)
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("notchkit-lyrics-eval", isDirectory: true)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
     }()
@@ -122,7 +122,7 @@ final class LyricsEvaluationHarness {
     func install() {
         guard observer == nil else { return }
         observer = DistributedNotificationCenter.default().addObserver(
-            forName: Notification.Name("com.cshariq.sapphire.debug.lyrics"),
+            forName: Notification.Name("com.yunusemrekorucu.notchkit.debug.lyrics"),
             object: nil,
             queue: .main
         ) { notification in

@@ -2,9 +2,8 @@
 //  ProductivityWidgetViews.swift
 //  NotchKit
 //
-//  NotchKit's Pomodoro, To-dos and Quick Apps widgets, drawn with Sapphire's widget
-//  language: a large rounded readout with a gradient ring on the left, compact stat
-//  rows on the right, and the shared mini-list chrome for lists.
+//  Pomodoro, To-dos and Quick Apps widgets: a large rounded readout with a gradient ring
+//  on the left, compact stat rows on the right, and the shared mini-list chrome for lists.
 
 import AppKit
 import SwiftUI

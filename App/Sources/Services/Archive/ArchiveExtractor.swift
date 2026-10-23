@@ -1,6 +1,6 @@
 //
 //  ArchiveExtractor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-14
 
@@ -584,7 +584,7 @@ final class ArchiveExtractor: ObservableObject {
         content.body = body
         content.sound = .default
         let request = UNNotificationRequest(
-            identifier: "sapphire-archive-\(UUID().uuidString)",
+            identifier: "notchkit-archive-\(UUID().uuidString)",
             content: content,
             trigger: nil
         )

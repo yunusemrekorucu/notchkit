@@ -1,13 +1,13 @@
 //
 //  HelperError.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-02
 //
 
 import Foundation
 
-public let HelperErrorDomain = "com.shariq.sapphireHelper.ErrorDomain"
+public let HelperErrorDomain = "com.yunusemrekorucu.notchkitHelper.ErrorDomain"
 
 public enum HelperErrorCode: Int {
     case smcOpenFailed = 1

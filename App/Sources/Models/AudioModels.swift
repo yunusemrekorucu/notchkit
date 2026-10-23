@@ -1,6 +1,6 @@
 //
 //  AudioModels.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-13.
 //
@@ -9,7 +9,7 @@ import Foundation
 
 enum AudioEQ {
     static let bandCount = 31
-    static let displayedBandCountDefaultsKey = "SapphireEQDisplayedBandCount"
+    static let displayedBandCountDefaultsKey = "NotchKitEQDisplayedBandCount"
 
     static let frequencies: [Double] = [
         20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200,

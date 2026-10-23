@@ -1,10 +1,10 @@
 //
 //  PremiumFeatureModels.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-15
 
-#if !SAPPHIRE_FULL_BUILD
+#if !NOTCHKIT_FULL_BUILD
 import AppKit
 import Combine
 import Foundation
@@ -82,7 +82,7 @@ enum MouseButtonAction: String, Codable, CaseIterable, Identifiable {
     case none, back, forward, copy, paste, cut, undo, redo, selectAll
     case missionControl, launchpad, showDesktop, appSwitcher, spotlight
     case closeWindow, minimize, newTab, newWindow, reload, fullScreen
-    case lockScreen, openSapphireSettings
+    case lockScreen, openNotchKitSettings
 
     var id: String { rawValue }
 }
@@ -312,6 +312,6 @@ final class MenuBarProfileEngine {
 }
 
 extension Notification.Name {
-    static let menuBarProfilesDidChange = Notification.Name("com.sapphire.menuBarProfilesDidChange")
+    static let menuBarProfilesDidChange = Notification.Name("com.notchkit.menuBarProfilesDidChange")
 }
 #endif

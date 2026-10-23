@@ -1,6 +1,6 @@
 //
 //  TidalAPI.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-05.
 //
@@ -172,7 +172,7 @@ class TidalAPIManager {
     @ObservationIgnored private var accessTokenExpiresAt: Date?
     @ObservationIgnored private var clientId = ""
     @ObservationIgnored private var clientSecret = ""
-    private let redirectURI = "sapphire://callback"
+    private let redirectURI = "notchkit://callback"
     private let baseURL = "https://openapi.tidal.com/v2"
     private let tokenURL = "https://auth.tidal.com/v1/oauth2/token"
     private let authorizeURL = "https://login.tidal.com/authorize"
@@ -319,7 +319,7 @@ class TidalAPIManager {
         let succeeded = await consumeTokenResponse(from: request, storingRefreshToken: true, signsOutOnInvalidGrant: false)
         self.pkceCodeVerifier = nil
         if !succeeded {
-            loginError = "TIDAL accepted the login but did not issue a token. Check the Client ID, Client Secret and that the redirect URI is sapphire://callback."
+            loginError = "TIDAL accepted the login but did not issue a token. Check the Client ID, Client Secret and that the redirect URI is notchkit://callback."
         }
     }
 

@@ -2,8 +2,7 @@
 //  ProductivitySettingsView.swift
 //  NotchKit
 //
-//  Settings for NotchKit's own widgets (Pomodoro, To-dos, Quick Apps), laid out
-//  with Sapphire's settings components.
+//  Settings for the Pomodoro, To-dos and Quick Apps widgets.
 
 import AppKit
 import SwiftUI

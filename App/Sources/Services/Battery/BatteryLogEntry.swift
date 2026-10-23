@@ -1,6 +1,6 @@
 //
 //  BatteryLogEntry.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-09-14.
 //
@@ -67,7 +67,7 @@ class BatteryDataLogger {
 
     private static let appendFlushDelay: Duration = .seconds(5)
 
-    private nonisolated static let ioQueue = DispatchQueue(label: "com.sapphire.battery-log.io", qos: .utility)
+    private nonisolated static let ioQueue = DispatchQueue(label: "com.notchkit.battery-log.io", qos: .utility)
 
     private let legacyLogFileURL: URL
     private let sleepLogFileURL: URL

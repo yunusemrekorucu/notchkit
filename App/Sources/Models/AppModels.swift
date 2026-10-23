@@ -1,6 +1,6 @@
 //
 //  AppModels.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 205-07-06.
 //

@@ -1,6 +1,6 @@
 //
 //  LyricsLog.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-14
 
@@ -8,7 +8,7 @@ import Foundation
 import os
 
 enum LyricsLog {
-    static let logger = Logger(subsystem: "com.shariq.sapphire", category: "lyrics")
+    static let logger = Logger(subsystem: "com.yunusemrekorucu.notchkit", category: "lyrics")
 
     private static let lastByKey = OSAllocatedUnfairLock(initialState: [String: String]())
 

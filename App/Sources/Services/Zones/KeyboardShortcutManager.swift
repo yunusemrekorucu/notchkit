@@ -1,6 +1,6 @@
 //
 //  KeyboardShortcutManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-11.
 //
@@ -226,7 +226,7 @@ class KeyboardShortcutManager {
 
     nonisolated private func handleEvent(_ type: CGEventType, _ event: CGEvent) -> EventTapDecision {
         guard type == .keyDown else { return .pass }
-        guard event.getIntegerValueField(.eventSourceUserData) != SapphireSyntheticEventMarker.plainTextPaste else {
+        guard event.getIntegerValueField(.eventSourceUserData) != NotchKitSyntheticEventMarker.plainTextPaste else {
             return .pass
         }
 
@@ -246,7 +246,7 @@ class KeyboardShortcutManager {
     @discardableResult
     private func handleNSEvent(_ event: NSEvent, swallow: Bool) -> Bool {
         guard event.type == .keyDown, !event.isARepeat else { return false }
-        guard event.cgEvent?.getIntegerValueField(.eventSourceUserData) != SapphireSyntheticEventMarker.plainTextPaste else {
+        guard event.cgEvent?.getIntegerValueField(.eventSourceUserData) != NotchKitSyntheticEventMarker.plainTextPaste else {
             return false
         }
 

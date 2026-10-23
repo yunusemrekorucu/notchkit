@@ -1,6 +1,6 @@
 //
 //  EarbudControlManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-29
 
@@ -703,12 +703,11 @@ final class EarbudControlManager: ObservableObject {
         publishIfNeeded()
     }
 
-    // Sapphire mirrors earbud state to a paired phone here; NotchKit has no phone link.
+    // Earbud state is not mirrored anywhere; NotchKit has no phone link.
     private func publishIfNeeded() {}
 }
 
-/// A control change for the connected earbuds. Sapphire also sends these to a paired
-/// phone; NotchKit only runs them locally.
+/// A control change for the connected earbuds, run locally.
 struct ContinuityEarbudCommand {
     var action: String
     var stringValue: String?

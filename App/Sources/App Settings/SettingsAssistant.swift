@@ -1,6 +1,6 @@
 //
 //  SettingsAssistant.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-26
 
@@ -188,23 +188,23 @@ final class SettingsAssistant: ObservableObject {
     }
 
     private static let decisionInstructions = """
-    You decide whether a message to the Sapphire settings assistant is an instruction to change a \
+    You decide whether a message to the NotchKit settings assistant is an instruction to change a \
     setting, and which one. Questions never change anything. Only use keys from the listed settings. \
     For a setting whose title starts with Hide, on means hidden.
     """
 
     private static let instructions = """
-    You are the settings assistant inside Sapphire, a Mac app that adds a Dynamic Island style notch, \
+    You are the settings assistant inside NotchKit, a Mac app that adds a Dynamic Island style notch, \
     live activities, widgets, a music player and system utilities.
-    Answer questions about what Sapphire can do and how to adjust it. Each question comes with the \
+    Answer questions about what NotchKit can do and how to adjust it. Each question comes with the \
     settings that matched it. Answer from those. If none of them fit, call findSettings with other \
-    words, such as the feature's name or the pane it would be in, before saying Sapphire can't do it. \
+    words, such as the feature's name or the pane it would be in, before saying NotchKit can't do it. \
     Never invent settings or panes.
-    Sapphire's settings panes:
+    NotchKit's settings panes:
     \(paneCatalog)
-    Each message ends with what Sapphire did. Report changes and failures truthfully, and never say \
+    Each message ends with what NotchKit did. Report changes and failures truthfully, and never say \
     you changed something that wasn't changed. When they ask whether something is possible or want \
-    ideas, describe the matching settings and where they are; Sapphire only changes settings when told to.
+    ideas, describe the matching settings and where they are; NotchKit only changes settings when told to.
     When asked for suggestions, look up a few relevant settings and recommend specific values with a \
     one-line reason each.
     Keep answers short: two to four sentences. Mention the pane a setting is in. When a setting does \

@@ -1,6 +1,6 @@
 //
 //  DevTaskDetailModel.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-10-15
 //
@@ -18,7 +18,7 @@ final class DevTaskDetailModel: ObservableObject {
     @Published var confirmingStop = false
 
     nonisolated private static let inspector = DevTaskInspector()
-    nonisolated private static let queue = DispatchQueue(label: "com.shariq.sapphire.devtask.inspect", qos: .userInitiated)
+    nonisolated private static let queue = DispatchQueue(label: "com.yunusemrekorucu.notchkit.devtask.inspect", qos: .userInitiated)
     private static let pollInterval: Duration = .seconds(2)
 
     private var statusTask: Task<Void, Never>?

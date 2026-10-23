@@ -1,6 +1,6 @@
 //
 //  ProcessCPUMonitor.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-10
 
@@ -24,7 +24,7 @@ final class ProcessCPUMonitor: ObservableObject {
     @Published private(set) var operations: [String: OperationStats] = [:]
     @Published private(set) var isEnabled = false
 
-    private let queue = DispatchQueue(label: "com.sapphire.perfmon", qos: .utility)
+    private let queue = DispatchQueue(label: "com.notchkit.perfmon", qos: .utility)
 
     func enable() { isEnabled = true }
     func disable() { isEnabled = false }

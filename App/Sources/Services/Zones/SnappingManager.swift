@@ -1,6 +1,6 @@
 //
 //  SnappingManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-11.
 //
@@ -42,7 +42,7 @@ final class SnappingManager {
         let visibleFrame: CGRect
     }
 
-    private nonisolated static let queue = DispatchQueue(label: "com.sapphire.snapping", qos: .userInteractive)
+    private nonisolated static let queue = DispatchQueue(label: "com.notchkit.snapping", qos: .userInteractive)
 
     private nonisolated static let generationLock = NSLock()
     private nonisolated(unsafe) static var generations: [pid_t: UInt64] = [:]

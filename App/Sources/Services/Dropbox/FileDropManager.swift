@@ -1,6 +1,6 @@
 //
 //  FileDropManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -111,7 +111,7 @@ class FileDropManager: ObservableObject {
             .store(in: &cancellables)
 
         nearbyDownloadObserver = NotificationCenter.default.addObserver(
-            forName: .sapphireNearbyFileDownloaded,
+            forName: .notchKitNearbyFileDownloaded,
             object: nil,
             queue: .main
         ) { [weak self] notification in

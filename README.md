@@ -5,15 +5,14 @@
 <h1 align="center">NotchKit</h1>
 
 <p align="center">
-  A free, open-source macOS app that turns your MacBook's notch into a home for widgets, live activities and system tools.<br>
-  NotchKit 2 is built on <a href="https://github.com/cshariq/Sapphire">Sapphire</a> by Shariq Charolia and keeps only the parts that cost nothing to run.
+  A free, open-source macOS app that turns your MacBook's notch into a home for widgets, live activities and system tools.
 </p>
 
 ---
 
 ## What's in NotchKit 2
 
-NotchKit 2 uses Sapphire's notch, widgets and settings. Everything that needs a paid service, an AI API or a paid Apple Developer account was left out, so nothing in the app costs money to run.
+Everything that needs a paid service, an AI API or a paid Apple Developer account was left out, so nothing in the app costs money to run.
 
 ### Notch and widgets
 
@@ -44,7 +43,7 @@ While the notch is closed, it shows what's going on: the track that's playing, t
 
 ### Left out on purpose
 
-Gemini Live, Blip and other AI features, sports, finance and Shopify widgets, Nearby Share, phone continuity, the virtual audio driver, the camera extension, Face ID unlock, Spotify/TIDAL account login, analytics and Sapphire's premium-only features.
+Gemini Live, Blip and other AI features, sports, finance and Shopify widgets, Nearby Share, phone continuity, the virtual audio driver, the camera extension, Face ID unlock, Spotify/TIDAL account login and analytics.
 
 ## Install
 
@@ -112,12 +111,12 @@ NotchKit walks you through permissions on first launch. Each one only powers the
 
 ```
 App/
-├── Sources/          Sapphire's Swift sources, trimmed and rebranded
+├── Sources/          Swift sources
 │   ├── Notch/        Notch window, shape, morph animation and layout
-│   ├── Widgets/      Widget views, including NotchKit's Productivity widgets
+│   ├── Widgets/      Widget views
 │   ├── Services/     Music, weather, calendar, zones, menu bar, lock screen and more
 │   ├── App Settings/ Settings window
-│   └── Stubs/        No-op stand-ins for Sapphire's private and paid modules
+│   └── Stubs/        No-op stand-ins for features NotchKit does not ship
 ├── ObjC/             Objective-C helpers and the bridging header
 ├── PrivateHeaders/   Private framework headers
 └── Resources/        Asset catalog

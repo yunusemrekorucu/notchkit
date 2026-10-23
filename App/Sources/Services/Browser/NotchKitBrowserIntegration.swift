@@ -1,6 +1,6 @@
 //
-//  SapphireBrowserIntegration.swift
-//  Sapphire
+//  NotchKitBrowserIntegration.swift
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30.
 //
@@ -10,20 +10,20 @@ import AppKit
 import UserNotifications
 
 @MainActor
-final class SapphireBrowserIntegration {
+final class NotchKitBrowserIntegration {
 
-    static let shared = SapphireBrowserIntegration()
+    static let shared = NotchKitBrowserIntegration()
 
     enum BridgeNotification {
-        static let downloadedFile = "com.cshariq.sapphire.browserDownloadedFile"
-        static let link = "com.cshariq.sapphire.browserLink"
-        static let nowPlaying = "com.cshariq.sapphire.browserNowPlaying"
-        static let nowPlayingStopped = "com.cshariq.sapphire.browserNowPlayingStopped"
-        static let openURL = "com.cshariq.sapphire.browserOpenURL"
+        static let downloadedFile = "com.yunusemrekorucu.notchkit.browserDownloadedFile"
+        static let link = "com.yunusemrekorucu.notchkit.browserLink"
+        static let nowPlaying = "com.yunusemrekorucu.notchkit.browserNowPlaying"
+        static let nowPlayingStopped = "com.yunusemrekorucu.notchkit.browserNowPlayingStopped"
+        static let openURL = "com.yunusemrekorucu.notchkit.browserOpenURL"
     }
 
-    static let linkNotificationCategory = "SAPPHIRE_BROWSER_LINK"
-    static let browserBundleID = "com.cshariq.sapphirebrowser"
+    static let linkNotificationCategory = "NOTCHKIT_BROWSER_LINK"
+    static let browserBundleID = "com.yunusemrekorucu.notchkitbrowser"
 
     private var observers: [NSObjectProtocol] = []
     private var hasStarted = false
@@ -33,10 +33,10 @@ final class SapphireBrowserIntegration {
 
     var isEnabled: Bool {
         get {
-            UserDefaults.standard.object(forKey: "SapphireBrowserIntegrationEnabled") as? Bool ?? true
+            UserDefaults.standard.object(forKey: "NotchKitBrowserIntegrationEnabled") as? Bool ?? true
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "SapphireBrowserIntegrationEnabled")
+            UserDefaults.standard.set(newValue, forKey: "NotchKitBrowserIntegrationEnabled")
         }
     }
 
@@ -83,7 +83,7 @@ final class SapphireBrowserIntegration {
         })
     }
 
-    // MARK: - Browser → Sapphire
+    // MARK: - Browser → NotchKit
 
     private func handleDownloadedFile(_ notification: Notification) {
         guard isEnabled else { return }
@@ -146,10 +146,10 @@ final class SapphireBrowserIntegration {
         )
     }
 
-    // MARK: - Sapphire → Browser
+    // MARK: - NotchKit → Browser
 
     func openInBrowser(url: URL) {
-        guard var components = URLComponents(string: "sapphirebrowser://open") else { return }
+        guard var components = URLComponents(string: "notchkitbrowser://open") else { return }
         components.queryItems = [URLQueryItem(name: "url", value: url.absoluteString)]
         guard let deepLink = components.url else { return }
 
@@ -216,7 +216,7 @@ final class SapphireBrowserIntegration {
             content.userInfo = userInfo
         }
         let request = UNNotificationRequest(
-            identifier: "sapphire-browser-\(UUID().uuidString)",
+            identifier: "notchkit-browser-\(UUID().uuidString)",
             content: content,
             trigger: nil
         )
@@ -226,7 +226,7 @@ final class SapphireBrowserIntegration {
 
 // MARK: - Notification action handling
 
-extension SapphireBrowserIntegration {
+extension NotchKitBrowserIntegration {
     func handleLinkNotificationResponse(_ response: UNNotificationResponse) {
         let action = response.actionIdentifier
         guard action == UNNotificationDefaultActionIdentifier || action == "OPEN_IN_BROWSER" else { return }

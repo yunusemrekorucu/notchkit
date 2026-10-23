@@ -1,6 +1,6 @@
 //
 //  SpotifyOfficialAPI.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-09-22.
 //
@@ -24,7 +24,7 @@ class SpotifyOfficialAPIManager {
     @ObservationIgnored private var accessTokenExpiresAt: Date?
     @ObservationIgnored private var clientId = ""
     @ObservationIgnored private var clientSecret = ""
-    private let redirectURI = "sapphire://callback"
+    private let redirectURI = "notchkit://callback"
 
     @ObservationIgnored private var refreshTask: Task<Bool, Never>?
 

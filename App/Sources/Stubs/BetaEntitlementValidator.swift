@@ -1,10 +1,10 @@
 //
 //  BetaEntitlementValidator.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-08-30
 
-#if !SAPPHIRE_FULL_BUILD
+#if !NOTCHKIT_FULL_BUILD
 import Foundation
 
 class BetaEntitlementValidator: NSObject {

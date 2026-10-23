@@ -1,6 +1,6 @@
 //
 //  lowlevel.c
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-09-13.
 //
@@ -77,7 +77,7 @@ bool acquirePreventSleepAssertions(void)
         result = IOPMAssertionCreateWithName(
             kIOPMAssertPreventUserIdleSystemSleep,
             kIOPMAssertionLevelOn,
-            CFSTR("Sapphire Caffeinate"),
+            CFSTR("NotchKit Caffeinate"),
             &userIdleSystemSleepAssertionID
         );
         anySuccess = anySuccess || (result == kIOReturnSuccess);
@@ -89,7 +89,7 @@ bool acquirePreventSleepAssertions(void)
         result = IOPMAssertionCreateWithName(
             kIOPMAssertPreventUserIdleDisplaySleep,
             kIOPMAssertionLevelOn,
-            CFSTR("Sapphire Caffeinate"),
+            CFSTR("NotchKit Caffeinate"),
             &userIdleDisplaySleepAssertionID
         );
         anySuccess = anySuccess || (result == kIOReturnSuccess);
@@ -118,7 +118,7 @@ bool acquirePreventSystemSleepOnlyAssertion(void)
         IOReturn result = IOPMAssertionCreateWithName(
             kIOPMAssertPreventUserIdleSystemSleep,
             kIOPMAssertionLevelOn,
-            CFSTR("Sapphire Battery"),
+            CFSTR("NotchKit Battery"),
             &userIdleSystemSleepAssertionID
         );
         return result == kIOReturnSuccess;
@@ -135,7 +135,7 @@ bool preventSleepAssertionsAreActive(void)
 void wakeDisplay(void)
 {
     static IOPMAssertionID assertionID;
-    IOPMAssertionDeclareUserActivity(CFSTR("Sapphire Bluetooth Unlock"), kIOPMUserActiveLocal, &assertionID);
+    IOPMAssertionDeclareUserActivity(CFSTR("NotchKit Bluetooth Unlock"), kIOPMUserActiveLocal, &assertionID);
 }
 
 void sleepDisplay(void)

@@ -1,6 +1,6 @@
 //
 //  AudioDeviceController.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-13.
 //
@@ -11,14 +11,14 @@ import os.log
 
 struct AudioDeviceController {
     static let shared = AudioDeviceController()
-    private let logger = Logger(subsystem: "com.cshariq.sapphire", category: "AudioDeviceController")
+    private let logger = Logger(subsystem: "com.yunusemrekorucu.notchkit", category: "AudioDeviceController")
 
     func createAggregateDevice(outputDevices: [AudioDevice], masterDeviceUID: String) -> AudioDeviceID? {
         let subDeviceUIDs = outputDevices.map { $0.uid as CFString }
 
         let description: [String: Any] = [
             kAudioAggregateDeviceNameKey: "NotchKit Multi-Output",
-            kAudioAggregateDeviceUIDKey: "com.cshariq.sapphire.multi-output-device",
+            kAudioAggregateDeviceUIDKey: "com.yunusemrekorucu.notchkit.multi-output-device",
             kAudioAggregateDeviceSubDeviceListKey: subDeviceUIDs,
             kAudioAggregateDeviceMasterSubDeviceKey: masterDeviceUID as CFString,
             kAudioAggregateDeviceIsStackedKey: true

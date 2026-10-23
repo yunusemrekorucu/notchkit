@@ -2,8 +2,8 @@
 #
 # mediaremote-queue.pl FRAMEWORK_PATH FUNCTION
 #
-# Runs one SapphireMediaQueue.framework function inside /usr/bin/perl, a
-# platform binary MediaRemote still answers (see SapphireMediaQueue.m).
+# Runs one NotchKitMediaQueue.framework function inside /usr/bin/perl, a
+# platform binary MediaRemote still answers (see NotchKitMediaQueue.m).
 # Parameters are passed as SMQ_* environment variables; output is one JSON line.
 
 use strict;

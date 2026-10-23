@@ -1,6 +1,6 @@
 //
 //  LyricsWordTimingGenerator.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-15
 
@@ -141,7 +141,7 @@ final class LyricsWordTimingGenerator {
         let (inputs, continuation) = AsyncStream.makeStream(of: AnalyzerInput.self)
         let feeder = LyricsAudioFeeder(outputFormat: analyzerFormat, continuation: continuation)
         let audioFile = evaluate == nil ? nil : FileManager.default.temporaryDirectory
-            .appendingPathComponent("sapphire-lyrics-eval", isDirectory: true)
+            .appendingPathComponent("notchkit-lyrics-eval", isDirectory: true)
             .appendingPathComponent("\(request.trackIdentity.replacingOccurrences(of: "eval:", with: "").replacingOccurrences(of: ":", with: "-")).caf")
         if let audioFile { feeder.record(to: audioFile) }
         let tap = LyricsAudioTap()

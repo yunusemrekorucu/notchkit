@@ -1,6 +1,6 @@
 //
 //  CalibrationManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-23
 //
@@ -75,7 +75,7 @@ class CalibrationManager: ObservableObject {
             .store(in: &cancellables)
 
         // Calibration needs a full charge, so hand the native limit back until it finishes.
-        if NativeChargeLimit.sapphireOwnsLimit {
+        if NativeChargeLimit.notchKitOwnsLimit {
             Task { await NativeChargeLimit.release() }
         }
 

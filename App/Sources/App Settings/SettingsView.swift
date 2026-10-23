@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //
@@ -46,13 +46,13 @@ struct SettingsView: View {
         .clipShape(RoundedRectangle(cornerRadius: NotchConfiguration.settingsWindowCornerRadius, style: .continuous))
         .ignoresSafeArea(.container, edges: .top)
         .preferredColorScheme(.dark)
-        .onReceive(NotificationCenter.default.publisher(for: .sapphireOpenAccountPane)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .notchKitOpenAccountPane)) { _ in
             withAnimation(.easeInOut(duration: 0.15)) {
                 showAccountPane = true
                 selectedSection = nil
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .sapphireSettingsWillClose)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .notchKitSettingsWillClose)) { _ in
             editingSession.flushPendingSave()
             SystemAppFetcher.shared.releaseCachedApps()
             AppIconLoader.releaseCache()

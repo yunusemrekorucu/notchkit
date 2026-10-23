@@ -10,7 +10,7 @@
             <objects>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Sapphiress" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="NotchKit" customModuleProvider="target"/>
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6"/>
                     <connections>

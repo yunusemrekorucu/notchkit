@@ -1,6 +1,6 @@
 //
 //  PermissionsManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-10.
 //
@@ -557,12 +557,12 @@ enum ScreenRecordingStatusPolicy {
 final class LocalNetworkAccessProbe {
     enum Result { case granted, denied, undetermined }
 
-    private static let serviceType = "_sapphire-lnp._tcp"
+    private static let serviceType = "_notchkit-lnp._tcp"
     private static let timeout: TimeInterval = 8
 
     private let completion: @MainActor (Result) -> Void
-    private let serviceName = "Sapphire-\(UUID().uuidString.prefix(8))"
-    private let queue = DispatchQueue(label: "com.sapphire.local-network-probe", qos: .utility)
+    private let serviceName = "NotchKit-\(UUID().uuidString.prefix(8))"
+    private let queue = DispatchQueue(label: "com.notchkit.local-network-probe", qos: .utility)
     private var listener: NWListener?
     private var browser: NWBrowser?
     private var timeoutWork: DispatchWorkItem?

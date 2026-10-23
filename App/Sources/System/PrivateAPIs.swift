@@ -1,6 +1,6 @@
 //
 //  PrivateAPIs.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-04.
 //
@@ -271,14 +271,14 @@ public final class CGSSpace {
     }
 }
 
-// MARK: - System HUD Management (Sapphire's placeholder)
-class SapphireOSDManager {
+// MARK: - System HUD Management (NotchKit's placeholder)
+class NotchKitOSDManager {
     static func disableSystemHUD() {
-        print("[SapphireOSDManager] LOG: `disableSystemHUD` called.")
+        print("[NotchKitOSDManager] LOG: `disableSystemHUD` called.")
     }
 
     static func enableSystemHUD() {
-        print("[SapphireOSDManager] LOG: `enableSystemHUD` called.")
+        print("[NotchKitOSDManager] LOG: `enableSystemHUD` called.")
     }
 }
 

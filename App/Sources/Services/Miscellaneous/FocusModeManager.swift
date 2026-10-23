@@ -1,6 +1,6 @@
 //
 //  FocusModeManager.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-07
 //
@@ -96,7 +96,7 @@ class FocusModeManager: NSObject, ObservableObject {
         monitor.start()
 
         focusStatusObserver = NotificationCenter.default.addObserver(
-            forName: .sapphireFocusStatusDidChange,
+            forName: .notchKitFocusStatusDidChange,
             object: nil,
             queue: .main
         ) { [weak self] _ in
@@ -252,5 +252,5 @@ private struct AssertionDetails: Decodable {
 }
 
 extension Notification.Name {
-    static let sapphireFocusStatusDidChange = Notification.Name("INFocusStatusDidChangeNotification")
+    static let notchKitFocusStatusDidChange = Notification.Name("INFocusStatusDidChangeNotification")
 }

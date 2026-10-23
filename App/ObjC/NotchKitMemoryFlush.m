@@ -1,25 +1,25 @@
 //
-//  SapphireMemoryFlush.m
-//  Sapphire
+//  NotchKitMemoryFlush.m
+//  NotchKit
 //
-//  See SapphireMemoryFlush.h for the intent — these are the Objective-C
+//  See NotchKitMemoryFlush.h for the intent — these are the Objective-C
 //  counterparts of the memory-cache clearing mlx-swift performs in its
 //  ObjC++ Metal allocator (`mlx/backend/metal/allocator.cpp`).
 //
 
-#import "SapphireMemoryFlush.h"
+#import "NotchKitMemoryFlush.h"
 #import <malloc/malloc.h>
 #import <mach/mach.h>
 #import <IOSurface/IOSurface.h>
 
-void SapphireMemoryDrainAutoreleasePools(void) {
+void NotchKitMemoryDrainAutoreleasePools(void) {
     @autoreleasepool {
     }
     @autoreleasepool {
     }
 }
 
-void SapphireMemoryFlushAllMallocZones(void) {
+void NotchKitMemoryFlushAllMallocZones(void) {
     // Enumerate every malloc zone in the process. `malloc_get_all_zones`
     // is declared in <malloc/malloc.h>; reading with a NULL reader works
     // for the current task.
@@ -38,7 +38,7 @@ void SapphireMemoryFlushAllMallocZones(void) {
     malloc_zone_pressure_relief(malloc_default_zone(), 0);
 }
 
-bool SapphireMemoryMarkPixelBufferPurgeable(CVPixelBufferRef buffer) {
+bool NotchKitMemoryMarkPixelBufferPurgeable(CVPixelBufferRef buffer) {
     if (buffer == NULL) {
         return false;
     }
@@ -51,7 +51,7 @@ bool SapphireMemoryMarkPixelBufferPurgeable(CVPixelBufferRef buffer) {
     return result == KERN_SUCCESS;
 }
 
-void SapphireMemoryFlushPixelBufferPool(CVPixelBufferPoolRef pool) {
+void NotchKitMemoryFlushPixelBufferPool(CVPixelBufferPoolRef pool) {
     if (pool == NULL) {
         return;
     }

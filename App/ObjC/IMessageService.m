@@ -1,6 +1,6 @@
 ////
 ////  NSObject.h
-////  Sapphire
+////  NotchKit
 ////
 ////  Created by Shariq Charolia on 2025-09-18.
 ////
@@ -71,14 +71,14 @@
 //- (instancetype)init {
 //    self = [super init];
 //    if (self) {
-//        NSLog(@"[SapphireHelper] IMessageService initializing...");
+//        NSLog(@"[NotchKitHelper] IMessageService initializing...");
 //        [self setupListeners];
 //    }
 //    return self;
 //}
 //
 //- (void)setupListeners {
-//    NSLog(@"[SapphireHelper] Attaching listeners for Messages and FaceTime...");
+//    NSLog(@"[NotchKitHelper] Attaching listeners for Messages and FaceTime...");
 //    
 //    // Listen for new iMessages
 //    [[NSNotificationCenter defaultCenter] addObserver:self
@@ -91,29 +91,29 @@
 //                                             selector:@selector(callStatusChanged:)
 //                                                 name:TUCallCenterCallStatusChangedNotification
 //                                               object:[TUCallCenter sharedInstance]];
-//    NSLog(@"[SapphireHelper] Listeners attached.");
+//    NSLog(@"[NotchKitHelper] Listeners attached.");
 //}
 //
 //- (void)messageReceived:(NSNotification *)notification {
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] <<< EVENT: Received '__IMChatRegistryMessageReceivedNotification' notification.");
-//    NSLog(@"[SapphireHelper] Raw Notification UserInfo: %@", [notification.userInfo prettyDescription]);
+//    NSLog(@"[NotchKitHelper] <<< EVENT: Received '__IMChatRegistryMessageReceivedNotification' notification.");
+//    NSLog(@"[NotchKitHelper] Raw Notification UserInfo: %@", [notification.userInfo prettyDescription]);
 //
 //    IMMessage *message = notification.userInfo[@"__IMMessage"];
 //    if (!message) {
-//        NSLog(@"[SapphireHelper] Notification did not contain an IMMessage object. Ignoring.");
+//        NSLog(@"[NotchKitHelper] Notification did not contain an IMMessage object. Ignoring.");
 //        return;
 //    }
 //
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] Raw IMMessage Object:\n%@", message);
+//    NSLog(@"[NotchKitHelper] Raw IMMessage Object:\n%@", message);
 //
 //    if (message.isFromMe) {
-//        NSLog(@"[SapphireHelper] Message is from me. Ignoring.");
+//        NSLog(@"[NotchKitHelper] Message is from me. Ignoring.");
 //        return;
 //    }
 //    if (message.isSystemMessage) {
-//        NSLog(@"[SapphireHelper] Message is a system message. Ignoring.");
+//        NSLog(@"[NotchKitHelper] Message is a system message. Ignoring.");
 //        return;
 //    }
 //    
@@ -128,7 +128,7 @@
 //    };
 //    
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] >>> FORWARDING to Swift (onMessageReceived):\n%@", [messageData prettyDescription]);
+//    NSLog(@"[NotchKitHelper] >>> FORWARDING to Swift (onMessageReceived):\n%@", [messageData prettyDescription]);
 //    
 //    if (self.onMessageReceived) {
 //        self.onMessageReceived(messageData);
@@ -137,16 +137,16 @@
 //
 //- (void)callStatusChanged:(NSNotification *)notification {
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] <<< EVENT: Received 'TUCallCenterCallStatusChangedNotification' notification.");
+//    NSLog(@"[NotchKitHelper] <<< EVENT: Received 'TUCallCenterCallStatusChangedNotification' notification.");
 //    
 //    TUCall *call = notification.object;
 //    if (!call) {
-//        NSLog(@"[SapphireHelper] Call status notification did not contain a TUCall object. Ignoring.");
+//        NSLog(@"[NotchKitHelper] Call status notification did not contain a TUCall object. Ignoring.");
 //        return;
 //    }
 //
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] Raw TUCall Object:\n%@", call);
+//    NSLog(@"[NotchKitHelper] Raw TUCall Object:\n%@", call);
 //
 //    NSDictionary *callData = @{
 //        @"callUUID": call.uniqueProxyIdentifier ?: [NSNull null],
@@ -159,7 +159,7 @@
 //    };
 //
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] >>> FORWARDING to Swift (onCallStatusChanged):\n%@", [callData prettyDescription]);
+//    NSLog(@"[NotchKitHelper] >>> FORWARDING to Swift (onCallStatusChanged):\n%@", [callData prettyDescription]);
 //    
 //    if (self.onCallStatusChanged) {
 //        self.onCallStatusChanged(callData);
@@ -173,7 +173,7 @@
 //    NSString *transactionId = command[@"transactionId"];
 //
 //    // MARK: - LOGGING
-//    NSLog(@"[SapphireHelper] <<< COMMAND received from Swift: '%@' with data:\n%@", action, [data prettyDescription]);
+//    NSLog(@"[NotchKitHelper] <<< COMMAND received from Swift: '%@' with data:\n%@", action, [data prettyDescription]);
 //
 //    if ([action isEqualToString:@"send-message"]) {
 //        [self handleSendMessage:data transactionId:transactionId];
@@ -184,7 +184,7 @@
 //    } else if ([action isEqualToString:@"hangup-call"]) {
 //        [self handleHangupCall:data transactionId:transactionId];
 //    } else {
-//        NSLog(@"[SapphireHelper] WARN: Unhandled command action '%@'", action);
+//        NSLog(@"[NotchKitHelper] WARN: Unhandled command action '%@'", action);
 //    }
 //}
 //
@@ -194,20 +194,20 @@
 //    NSString *chatGuid = data[@"chatGuid"];
 //    NSString *messageText = data[@"message"];
 //    
-//    NSLog(@"[SapphireHelper] Attempting to send message '%@' to chat '%@'", messageText, chatGuid);
+//    NSLog(@"[NotchKitHelper] Attempting to send message '%@' to chat '%@'", messageText, chatGuid);
 //    
 //    IMChat *chat = [[IMChatRegistry sharedInstance] existingChatWithGUID:chatGuid];
 //    if (chat && messageText) {
-//        NSLog(@"[SapphireHelper] Found IMChat object: %@", chat);
+//        NSLog(@"[NotchKitHelper] Found IMChat object: %@", chat);
 //        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:messageText];
 //        IMMessage *message = [IMMessage instantMessageWithText:attrString messageSubject:nil flags:0];
 //        
-//        NSLog(@"[SapphireHelper] Created IMMessage object: %@", message);
+//        NSLog(@"[NotchKitHelper] Created IMMessage object: %@", message);
 //        [chat sendMessage:message];
-//        NSLog(@"[SapphireHelper] sendMessage: called. Message is now queued for sending.");
+//        NSLog(@"[NotchKitHelper] sendMessage: called. Message is now queued for sending.");
 //        // Note: Success/failure is asynchronous and not easily tracked here.
 //    } else {
-//        NSLog(@"[SapphireHelper] ERROR: Could not find chat with GUID '%@' or message text was nil.", chatGuid);
+//        NSLog(@"[NotchKitHelper] ERROR: Could not find chat with GUID '%@' or message text was nil.", chatGuid);
 //    }
 //}
 //
@@ -216,28 +216,28 @@
 //    NSString *messageGuid = data[@"messageGuid"];
 //    NSString *chatGuid = data[@"chatGuid"];
 //    
-//    NSLog(@"[SapphireHelper] Attempting to send reaction '%@' to message '%@' in chat '%@'", reactionType, messageGuid, chatGuid);
+//    NSLog(@"[NotchKitHelper] Attempting to send reaction '%@' to message '%@' in chat '%@'", reactionType, messageGuid, chatGuid);
 //    
 //    IMChat *chat = [[IMChatRegistry sharedInstance] existingChatWithGUID:chatGuid];
 //    if (!chat) {
-//        NSLog(@"[SapphireHelper] ERROR: Could not find chat with GUID '%@' for reaction.", chatGuid);
+//        NSLog(@"[NotchKitHelper] ERROR: Could not find chat with GUID '%@' for reaction.", chatGuid);
 //        return;
 //    }
 //    
 //    long long reactionInt = [self parseReactionType:reactionType];
 //    if (reactionInt == 0) {
-//        NSLog(@"[SapphireHelper] ERROR: Invalid reaction type '%@'.", reactionType);
+//        NSLog(@"[NotchKitHelper] ERROR: Invalid reaction type '%@'.", reactionType);
 //        return;
 //    }
 //    
-//    NSLog(@"[SapphireHelper] Loading original message with GUID '%@'...", messageGuid);
+//    NSLog(@"[NotchKitHelper] Loading original message with GUID '%@'...", messageGuid);
 //    [[IMChatHistoryController sharedInstance] loadMessageWithGUID:messageGuid completionBlock:^(IMMessage *message) {
 //        if (!message) {
-//            NSLog(@"[SapphireHelper] ERROR: Could not find original message with GUID '%@' to react to.", messageGuid);
+//            NSLog(@"[NotchKitHelper] ERROR: Could not find original message with GUID '%@' to react to.", messageGuid);
 //            return;
 //        }
 //        
-//        NSLog(@"[SapphireHelper] Found original message: %@", message);
+//        NSLog(@"[NotchKitHelper] Found original message: %@", message);
 //        
 //        struct _NSRange range = NSMakeRange(0, [message.text length]);
 //        NSDictionary *summaryInfo = @{@"amc":@1, @"ams":message.text.string ?: @""};
@@ -249,9 +249,9 @@
 //                                                                     associatedMessageRange:range
 //                                                                         messageSummaryInfo:summaryInfo];
 //        
-//        NSLog(@"[SapphireHelper] Created reaction IMMessage object: %@", reactionMessage);
+//        NSLog(@"[NotchKitHelper] Created reaction IMMessage object: %@", reactionMessage);
 //        [chat sendMessage:reactionMessage];
-//        NSLog(@"[SapphireHelper] sendReaction: called. Reaction is now queued for sending.");
+//        NSLog(@"[NotchKitHelper] sendReaction: called. Reaction is now queued for sending.");
 //    }];
 //}
 //
@@ -274,38 +274,38 @@
 //
 //- (void)handleAnswerCall:(NSDictionary *)data transactionId:(NSString *)transactionId {
 //    NSString *callUUID = data[@"callUUID"];
-//    NSLog(@"[SapphireHelper] Attempting to answer call with UUID '%@'", callUUID);
+//    NSLog(@"[NotchKitHelper] Attempting to answer call with UUID '%@'", callUUID);
 //    
 //    TUCall *call = [[TUCallCenter sharedInstance] callWithUUID:[[NSUUID alloc] initWithUUIDString:callUUID]];
 //    
 //    if (call && call.isIncoming) {
-//        NSLog(@"[SapphireHelper] Found incoming TUCall object: %@", call);
+//        NSLog(@"[NotchKitHelper] Found incoming TUCall object: %@", call);
 //        TUAnswerRequest *request = [[TUAnswerRequest alloc] initWithCall:call];
-//        NSLog(@"[SapphireHelper] Created TUAnswerRequest: %@", request);
+//        NSLog(@"[NotchKitHelper] Created TUAnswerRequest: %@", request);
 //        [[TUCallCenter sharedInstance] answerWithRequest:request];
-//        NSLog(@"[SapphireHelper] answerWithRequest: called.");
+//        NSLog(@"[NotchKitHelper] answerWithRequest: called.");
 //    } else {
-//        NSLog(@"[SapphireHelper] ERROR: Call not found or is not an incoming call. Current call object: %@", call);
+//        NSLog(@"[NotchKitHelper] ERROR: Call not found or is not an incoming call. Current call object: %@", call);
 //    }
 //}
 //
 //- (void)handleHangupCall:(NSDictionary *)data transactionId:(NSString *)transactionId {
 //    NSString *callUUID = data[@"callUUID"];
-//    NSLog(@"[SapphireHelper] Attempting to hang up call with UUID '%@'", callUUID);
+//    NSLog(@"[NotchKitHelper] Attempting to hang up call with UUID '%@'", callUUID);
 //    
 //    TUCall *call = [[TUCallCenter sharedInstance] callWithUUID:[[NSUUID alloc] initWithUUIDString:callUUID]];
 //    
 //    if (call) {
-//        NSLog(@"[SapphireHelper] Found TUCall object to hang up: %@", call);
+//        NSLog(@"[NotchKitHelper] Found TUCall object to hang up: %@", call);
 //        [call disconnectWithReason:1]; // 1 = Ended by user
-//        NSLog(@"[SapphireHelper] disconnectWithReason: called.");
+//        NSLog(@"[NotchKitHelper] disconnectWithReason: called.");
 //    } else {
-//        NSLog(@"[SapphireHelper] ERROR: Call to hang up not found.");
+//        NSLog(@"[NotchKitHelper] ERROR: Call to hang up not found.");
 //    }
 //}
 //
 //- (void)dealloc {
-//    NSLog(@"[SapphireHelper] IMessageService deallocating. Removing listeners.");
+//    NSLog(@"[NotchKitHelper] IMessageService deallocating. Removing listeners.");
 //    [[NSNotificationCenter defaultCenter] removeObserver:self];
 //}
 //

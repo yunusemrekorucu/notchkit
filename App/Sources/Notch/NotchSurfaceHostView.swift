@@ -1,6 +1,6 @@
 //
 //  NotchSurfaceHostView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-15
 //
@@ -40,7 +40,7 @@ struct NotchSurfaceStyle: Equatable {
     }
 
     #if DEBUG
-    static let profilingDisablesGlass = ProcessInfo.processInfo.environment["SAPPHIRE_PROF_NO_GLASS"] != nil
+    static let profilingDisablesGlass = ProcessInfo.processInfo.environment["NOTCHKIT_PROF_NO_GLASS"] != nil
     #else
     static let profilingDisablesGlass = false
     #endif

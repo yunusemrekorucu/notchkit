@@ -1,6 +1,6 @@
 //
 //  SystemHUD.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-06.
 //
@@ -118,7 +118,7 @@ private enum MediaKeyAction {
 class SystemHUDManager: ObservableObject {
     static let shared = SystemHUDManager()
 
-    private static let volumeFeedbackQueue = DispatchQueue(label: "com.sapphire.hud.volume-feedback", qos: .userInitiated)
+    private static let volumeFeedbackQueue = DispatchQueue(label: "com.notchkit.hud.volume-feedback", qos: .userInitiated)
     nonisolated(unsafe) private static var volumeFeedbackPlayer: AVAudioPlayer?
 
     private static func playVolumeFeedback() {

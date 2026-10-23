@@ -1,6 +1,6 @@
 //
 //  FileActionView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-08-12.
 //
@@ -29,7 +29,7 @@ private struct FileMetadata: Sendable {
             type: contentType?.localizedDescription ?? "Unknown Type",
             size: size,
             added: formatter.string(from: dateAdded),
-            iconName: contentType?.sapphireFileSymbolName ?? "doc.fill"
+            iconName: contentType?.notchKitFileSymbolName ?? "doc.fill"
         )
     }
 }

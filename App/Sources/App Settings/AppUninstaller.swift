@@ -1,6 +1,6 @@
 //
 //  AppUninstaller.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2026-09-13
 
@@ -603,7 +603,7 @@ enum AppUninstaller {
                   let runningURL = $0.bundleURL else { return false }
             return runningURL.standardizedFileURL.resolvingSymlinksInPath() == selectedAppPath
         }) {
-            guard await running.sapphireTerminateAndWait(timeout: 6) else {
+            guard await running.notchKitTerminateAndWait(timeout: 6) else {
                 return AppUninstallResult(
                     appName: app.name,
                     applicationURL: app.url,
@@ -616,7 +616,7 @@ enum AppUninstaller {
             }
         }
         for helper in runningApplications where isNestedBundle(helper.bundleURL, in: selectedAppPath) {
-            _ = await helper.sapphireTerminateAndWait(timeout: 3)
+            _ = await helper.notchKitTerminateAndWait(timeout: 3)
         }
 
         let ordered = artifacts.sorted {

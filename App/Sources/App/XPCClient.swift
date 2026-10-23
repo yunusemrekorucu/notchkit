@@ -1,6 +1,6 @@
 //
 //  XPCClient.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-10-26
 
@@ -14,7 +14,7 @@ final class XPCClient {
     private var failureNotificationSent = false
     private var lastForcedReconnect = Date.distantPast
     private let forcedReconnectInterval: TimeInterval = 1
-    private let machServiceName = "com.shariq.sapphireHelper"
+    private let machServiceName = "com.yunusemrekorucu.notchkitHelper"
 
     private init() {}
 
@@ -200,7 +200,7 @@ final class XPCClient {
         lock.unlock()
         if shouldNotify {
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .sapphireHelperConnectionRestored, object: nil)
+                NotificationCenter.default.post(name: .notchKitHelperConnectionRestored, object: nil)
             }
         }
     }
@@ -220,7 +220,7 @@ final class XPCClient {
 
         if shouldNotify {
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: .sapphireHelperConnectionLost, object: nil)
+                NotificationCenter.default.post(name: .notchKitHelperConnectionLost, object: nil)
             }
         }
     }

@@ -1,6 +1,6 @@
 //
 //  FileTaskView.swift
-//  Sapphire
+//  NotchKit
 //
 //  Created by Shariq Charolia on 2025-07-05.
 //
@@ -756,7 +756,7 @@ private struct LocalFileIconView: View {
         TaskIconView(systemName: systemName, color: .secondary)
             .task(id: url) {
                 let loadedName = await Task.detached(priority: .utility) {
-                    url.sapphireFileSymbolName
+                    url.notchKitFileSymbolName
                 }.value
                 guard !Task.isCancelled else { return }
                 systemName = loadedName
