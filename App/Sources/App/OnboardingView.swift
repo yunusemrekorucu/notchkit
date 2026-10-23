@@ -45,19 +45,14 @@ struct OnboardingView: View {
                     case .welcome:
                         WelcomeStepView(onGetStarted: { currentStep = .permissions })
                     case .permissions:
-                        PermissionsStepView(onContinue: { currentStep = .helperInstallation })
+                        // NotchKit ships no privileged helper and collects no analytics, so those steps are skipped.
+                        PermissionsStepView(onContinue: { currentStep = .musicChoice })
                     case .helperInstallation:
                         HelperInstallationStepView(onContinue: { currentStep = .privacyPolicy })
                     case .privacyPolicy:
                         PrivacyStepView(onContinue: { currentStep = .musicChoice })
                     case .musicChoice:
-                        MusicChoiceStepView(onNext: {
-                            if settings.settings.defaultMusicPlayer == .spotify {
-                                currentStep = .spotifySetup
-                            } else {
-                                currentStep = .batterySetup
-                            }
-                        })
+                        MusicChoiceStepView(onNext: { currentStep = .batterySetup })
                     case .spotifySetup:
                         SpotifySetupStepView(
                             onNext: { currentStep = .batterySetup },
@@ -69,7 +64,7 @@ struct OnboardingView: View {
                     case .corePreferences:
                         CorePreferencesStepView(onNext: { currentStep = .lockScreenSetup })
                     case .lockScreenSetup:
-                        LockScreenSetupStepView(onNext: { currentStep = .subscriptionOverview })
+                        LockScreenSetupStepView(onNext: { currentStep = .finish })
                     case .subscriptionOverview:
                         SubscriptionOverviewStepView(onNext: { currentStep = .finish })
                     case .finish:
@@ -101,7 +96,7 @@ private struct WelcomeStepView: View {
                 .frame(width: 80, height: 80)
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
 
-            Text("Welcome to Sapphire")
+            Text("Welcome to NotchKit")
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .multilineTextAlignment(.center)
 
@@ -128,7 +123,7 @@ private struct PermissionsStepView: View {
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .padding(.top, 40).padding(.bottom, 10)
 
-            Text("Sapphire needs a few permissions for its core features.")
+            Text("NotchKit needs a few permissions for its core features.")
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
@@ -176,7 +171,7 @@ private struct HelperInstallationStepView: View {
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .padding(.top, 40).padding(.bottom, 10)
 
-            Text("Sapphire needs a privileged helper for battery management and system integrations. macOS will ask you to allow it under Login Items → Background Activity.")
+            Text("NotchKit needs a privileged helper for battery management and system integrations. macOS will ask you to allow it under Login Items → Background Activity.")
                 .font(.body)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.secondary)
@@ -261,15 +256,15 @@ private struct HelperInstallationStepView: View {
     private var stepGuidance: String {
         switch helperManager.status {
         case .requiresApproval:
-            return "System Settings should be open. Under Allow in the Background, turn on both Sapphire and Sapphire Helper, then return here."
+            return "System Settings should be open. Under Allow in the Background, turn on both NotchKit and NotchKit Helper, then return here."
         case .enabled where !helperManager.isRunning:
-            return "The helper is approved but not responding. Tap Reset Helper so Sapphire can unregister its own background items and reinstall the helper."
+            return "The helper is approved but not responding. Tap Reset Helper so NotchKit can unregister its own background items and reinstall the helper."
         case .enabled:
             return "Helper is ready. You can continue."
         case .notFound:
-            return "macOS lost the helper registration (SAP-H3). Tap Reset Helper to rebuild it; Sapphire relaunches itself if the helper stays stuck."
+            return "macOS lost the helper registration (SAP-H3). Tap Reset Helper to rebuild it; NotchKit relaunches itself if the helper stays stuck."
         default:
-            return "Tap Install Helper. Approve the macOS prompt, then enable Sapphire under System Settings → General → Login Items → Background Activity."
+            return "Tap Install Helper. Approve the macOS prompt, then enable NotchKit under System Settings → General → Login Items → Background Activity."
         }
     }
 
@@ -301,7 +296,7 @@ private struct PrivacyStepView: View {
                 VStack(alignment: .leading, spacing: 18) {
                     PrivacySection(
                         title: "Data We Collect (Analytics)",
-                        content: "To improve Sapphire, we collect completely anonymous, aggregated usage data. This helps us understand which features are popular, identify bugs, and make the app better for everyone."
+                        content: "To improve NotchKit, we collect completely anonymous, aggregated usage data. This helps us understand which features are popular, identify bugs, and make the app better for everyone."
                     )
 
                     PrivacySection(
@@ -330,7 +325,7 @@ private struct PrivacyStepView: View {
             .padding(.top, 20)
 
             Toggle(isOn: $settings.settings.googleAnalyticsEnabled) {
-                Text("Share anonymous usage data with Google Analytics to help improve Sapphire. You can change this anytime in Settings > General.")
+                Text("Share anonymous usage data with Google Analytics to help improve NotchKit. You can change this anytime in Settings > General.")
                     .font(.callout)
             }
             .padding(.horizontal, 50)
@@ -511,7 +506,7 @@ private struct CorePreferencesStepView: View {
                     SettingsSwitch(isOn: $settings.settings.eyeBreakLiveActivityEnabled)
                 }
                 ModernOnboardingRow(iconName: "thermometer.sun.fill", iconColor: .orange, title: "Temperature Unit", description: "Preferred unit for weather forecasts.") { Picker("", selection: $settings.settings.weatherUseCelsius) { Text("°C").tag(true); Text("°F").tag(false) }.pickerStyle(.segmented).labelsHidden().frame(width: 100) }
-                ModernOnboardingRow(iconName: "bolt.horizontal.circle.fill", iconColor: .purple, title: "Launch at Login", description: "Start Sapphire automatically with your Mac.") { SettingsSwitch(isOn: $settings.settings.launchAtLogin) }
+                ModernOnboardingRow(iconName: "bolt.horizontal.circle.fill", iconColor: .purple, title: "Launch at Login", description: "Start NotchKit automatically with your Mac.") { SettingsSwitch(isOn: $settings.settings.launchAtLogin) }
             }.padding(50)
             Spacer()
             OnboardingButton(title: "Continue", action: onNext)
@@ -536,7 +531,7 @@ private struct LockScreenSetupStepView: View {
                 .padding(.horizontal, 50)
 
             VStack(spacing: 15) {
-                ModernOnboardingRow(iconName: "lock.display", iconColor: .red, title: "Enable on Lock Screen", description: "Show Sapphire's notch and features when your Mac is locked.") {
+                ModernOnboardingRow(iconName: "lock.display", iconColor: .red, title: "Enable on Lock Screen", description: "Show NotchKit's notch and features when your Mac is locked.") {
                     SettingsSwitch(isOn: $settings.settings.lockScreenShowNotch)
                 }
 
@@ -573,7 +568,7 @@ private struct SubscriptionOverviewStepView: View {
         VStack(spacing: 20) {
             Spacer()
 
-            Text("Your Sapphire Plan")
+            Text("Your NotchKit Plan")
                 .font(.system(size: 32, weight: .bold, design: .rounded))
 
             Text("Link an account anytime in Settings to sync your subscription across devices.")
@@ -645,7 +640,7 @@ private struct SubscriptionOverviewStepView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 50)
 
-                Link("Upgrade on website instead", destination: URL(string: "https://sapphire-app.tech/")!)
+                Link("Upgrade on website instead", destination: URL(string: "https://github.com/cshariq/Sapphire")!)
                     .font(.caption)
                     .foregroundStyle(.purple)
             }
@@ -858,24 +853,21 @@ private struct FinishStepView: View {
                 .foregroundStyle(.secondary)
 
             HStack(spacing: 12) {
-                Link(destination: URL(string: "https://sapphire-app.tech/")!) {
+                Link(destination: URL(string: "https://github.com/cshariq/Sapphire")!) {
                     Image(systemName: "link").resizable().aspectRatio(contentMode: .fit).frame(width: 18, height: 18).foregroundColor(.white).padding(6).background(Color.blue).clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }.buttonStyle(PlainButtonStyle())
 
-                Link(destination: URL(string: "https://github.com/cshariq/Sapphire")!) {
+                Link(destination: URL(string: "https://github.com/yunusemrekorucu/notchkit")!) {
                     Image("github_logo").resizable().renderingMode(.template).aspectRatio(contentMode: .fit).frame(width: 18, height: 18).foregroundColor(.white).padding(6).background(Color.black).clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
                 }.buttonStyle(PlainButtonStyle())
 
-                Link(destination: URL(string: "https://discord.gg/TdRjC2kNnU")!) {
-                    Image("discord_logo").resizable().aspectRatio(contentMode: .fit).frame(width: 18, height: 18).padding(6).background(Color(red: 0.35, green: 0.40, blue: 0.95)).clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                }.buttonStyle(PlainButtonStyle())
             }
 
             OnboardingUpdateStatusView(updateChecker: updateChecker)
                 .padding(.top)
 
             Spacer()
-            OnboardingButton(title: "Explore Sapphire", action: onComplete)
+            OnboardingButton(title: "Explore NotchKit", action: onComplete)
 
             Text("© 2025 Shariq Charolia. All rights reserved.")
                 .font(.caption).foregroundStyle(.tertiary).padding(.bottom, 20)
@@ -893,7 +885,7 @@ private struct OnboardingUpdateStatusView: View {
             switch updateChecker.status {
             case .checking: HStack(spacing: 8) { ProgressView().controlSize(.small); Text("Checking for updates...").foregroundStyle(.secondary) }
             case .upToDate: HStack(spacing: 8) { Image(systemName: "checkmark.circle.fill").foregroundStyle(.green); Text("You are up to date!").foregroundStyle(.secondary) }
-            case .available(let version, _): VStack(spacing: 8) { Text("Version \(version) is available!").font(.headline); Link(destination: URL(string: "https://github.com/cshariq/Sapphire/releases")!) { Text("Download from GitHub") }.buttonStyle(.bordered).tint(.accentColor) }
+            case .available(let version, _): VStack(spacing: 8) { Text("Version \(version) is available!").font(.headline); Link(destination: URL(string: "https://github.com/yunusemrekorucu/notchkit/releases")!) { Text("Download from GitHub") }.buttonStyle(.bordered).tint(.accentColor) }
             case .error(let message): HStack(spacing: 8) { Image(systemName: "xmark.octagon.fill").foregroundColor(.red); Text(message).foregroundStyle(.secondary).lineLimit(1) }
             default: EmptyView()
             }

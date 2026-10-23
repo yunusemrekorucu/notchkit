@@ -52,7 +52,7 @@ final class AppleMusicLyricsProvider {
                     return lines
                 } catch let error as MusicDataRequest.Error where error.status == 400 && error.code == 40012 {
                     deniedByApple = true
-                    LyricsLog.info("Apple Music lyrics: Apple doesn't grant lyric access to Sapphire's MusicKit token; not asking again this session")
+                    LyricsLog.info("Apple Music lyrics: Apple doesn't grant lyric access to NotchKit's MusicKit token; not asking again this session")
                     return nil
                 } catch {
                     LyricsLog.info("Apple Music lyrics: \(endpoint) for song \(songID) failed: \(String(describing: error))")

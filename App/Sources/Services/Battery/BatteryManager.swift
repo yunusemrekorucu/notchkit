@@ -12,7 +12,7 @@ import ServiceManagement
 import AppKit
 import OSLog
 
-private let helperLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "BatteryManager")
+private let helperLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "BatteryManager")
 
 public struct PowerAdapterInfo: Equatable {
     var name: String = "N/A"
@@ -658,7 +658,7 @@ class BatteryManager {
         let appSupportURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fileManager.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support")
         return appSupportURL
-            .appendingPathComponent("Sapphire/BatteryLogs")
+            .appendingPathComponent("NotchKit/BatteryLogs")
             .appendingPathComponent("battery_sleep_log.jsonl")
     }
 

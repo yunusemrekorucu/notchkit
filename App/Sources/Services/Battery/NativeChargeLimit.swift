@@ -11,7 +11,7 @@ import Foundation
 import ObjectiveC
 import OSLog
 
-private let nativeLimitLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "NativeChargeLimit")
+private let nativeLimitLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "NativeChargeLimit")
 
 enum NativeChargeLimit {
     /// Firmware only accepts limits in this range.
@@ -227,6 +227,6 @@ enum NativeChargeLimit {
         _ = Unmanaged.passRetained(allocated)
 
         let initFn = unsafeBitCast(method_getImplementation(initMethod), to: InitFn.self)
-        client = initFn(allocated, initSel, "Sapphire")?.takeRetainedValue()
+        client = initFn(allocated, initSel, "NotchKit")?.takeRetainedValue()
     }
 }

@@ -506,7 +506,7 @@ final class NotchMorphEngine: ObservableObject {
         #if DEBUG
         if !loggedUnknownAnimation {
             loggedUnknownAnimation = true
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "NotchMorph")
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "NotchMorph")
                 .debug("Notch outline changed under a non-morph animation; using the default spring")
         }
         #endif

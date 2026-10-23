@@ -76,7 +76,7 @@ final class DevTaskDetailModel: ObservableObject {
             return "Runs in \(detail.agent?.entrypoint?.replacingOccurrences(of: "-", with: " ").capitalized ?? "an app") — reply there"
         }
         if let host = detail.host, host.isEditor { return "Runs in \(host.name)'s terminal — type there" }
-        return "\(task.title) isn't running in a terminal Sapphire can reach"
+        return "\(task.title) isn't running in a terminal NotchKit can reach"
     }
 
     // MARK: - Actions

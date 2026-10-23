@@ -61,7 +61,7 @@ final class LyricsAudioTap {
         }
 
         let aggregateDescription: [String: Any] = [
-            kAudioAggregateDeviceNameKey: "Sapphire Lyrics Timing",
+            kAudioAggregateDeviceNameKey: "NotchKit Lyrics Timing",
             kAudioAggregateDeviceUIDKey: "com.shariq.sapphire.lyrics-tap.\(UUID().uuidString)",
             kAudioAggregateDeviceIsPrivateKey: true,
             kAudioAggregateDeviceIsStackedKey: false,

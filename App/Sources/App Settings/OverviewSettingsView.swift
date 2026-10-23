@@ -16,7 +16,7 @@ struct OverviewSettingsView: View {
             VStack(alignment: .leading, spacing: 20) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Overview").font(.largeTitle.bold())
-                    Text("Ask about any setting, get suggestions, or have Sapphire change things for you.")
+                    Text("Ask about any setting, get suggestions, or have NotchKit change things for you.")
                         .foregroundStyle(.secondary)
                 }
 
@@ -51,7 +51,7 @@ private struct SettingsAssistantCard: View {
     ]
 
     var body: some View {
-        SettingsCard(title: "Ask Sapphire", description: "Runs on-device with Apple Intelligence. Changes apply right away and can be undone.") {
+        SettingsCard(title: "Ask NotchKit", description: "Runs on-device with Apple Intelligence. Changes apply right away and can be undone.") {
             VStack(alignment: .leading, spacing: 12) {
                 if let reason = assistant.unavailableReason {
                     InfoContainer(text: reason, iconName: "apple.intelligence", color: .orange)

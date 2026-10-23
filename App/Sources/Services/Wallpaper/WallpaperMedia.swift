@@ -127,7 +127,7 @@ enum WallpaperAssetStore {
     static var directory: URL {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? URL(fileURLWithPath: NSTemporaryDirectory())
-        return base.appendingPathComponent("Sapphire/Wallpapers", isDirectory: true)
+        return base.appendingPathComponent("NotchKit/Wallpapers", isDirectory: true)
     }
 
     static var postersDirectory: URL {

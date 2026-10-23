@@ -176,7 +176,7 @@ final class SandboxIntegration {
         NotificationManager.shared.latestNotification = NotificationPayload(
             id: "sandbox-\(snapshot.eventID.uuidString)",
             appIdentifier: SapphireVMLifecycleContract.writerBundleIdentifier,
-            title: "Sapphire VM · \(snapshot.state.displayName)",
+            title: "NotchKit VM · \(snapshot.state.displayName)",
             body: body,
             date: snapshot.occurredAt,
             appIcon: appIcon
@@ -275,7 +275,7 @@ final class SandboxIntegration {
             )
         } else {
             integrationDirectory = applicationSupport?
-                .appendingPathComponent("Sapphire", isDirectory: true)
+                .appendingPathComponent("NotchKit", isDirectory: true)
                 .appendingPathComponent(
                     SapphireVMLifecycleContract.integrationDirectoryName,
                     isDirectory: true

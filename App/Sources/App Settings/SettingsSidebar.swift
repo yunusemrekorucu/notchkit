@@ -15,11 +15,11 @@ struct SettingsSidebarGroup: Identifiable {
 
 extension SettingsSection {
     static let sidebarGroups: [SettingsSidebarGroup] = [
-        .init(title: "General", sections: (SettingsAssistant.isSupported ? [.overview] : []) + [.general, .keyboardShortcuts, .bluetoothUnlock, .intelligence, .nearbyShare, .continuity]),
+        .init(title: "General", sections: (SettingsAssistant.isSupported ? [.overview] : []) + [.general, .keyboardShortcuts, .bluetoothUnlock]),
         .init(title: "Notch", sections: [.appearance, .widgets, .liveActivities, .appActivities, .fileProgress, .lockScreen, .notifications, .hud]),
-        .init(title: "Widgets & Content", sections: [.music, .weather, .calendar, .sports, .finance, .battery, .audio, .bluetooth, .shortcuts, .fileShelf, .notes, .clipboard, .mirror, .caffeine]),
-        .init(title: "System & Utilities", sections: [.systemEnhance, .snapZones, .dockLayouts, .mediaOptimizer, .mouse, .monitoring, .devActivity, .emoji, .archives, .apps, .storage]),
-        .init(title: "Focus & Security", sections: [.eyeBreak, .focusSession, .appLock]),
+        .init(title: "Widgets & Content", sections: [.music, .weather, .calendar, .battery, .audio, .bluetooth, .shortcuts, .fileShelf, .notes, .clipboard, .mirror, .caffeine]),
+        .init(title: "System & Utilities", sections: [.snapZones, .devActivity, .apps]),
+        .init(title: "Focus & Security", sections: [.eyeBreak, .focusSession]),
         .init(title: "", sections: [.about])
     ]
 }
@@ -68,17 +68,6 @@ struct SettingsSidebarView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             .padding(.horizontal, 12)
             .padding(.bottom, 12)
-
-            // MARK: 2. Apple ID Style Account Sidebar Card (Below Search Bar)
-            SidebarAccountCardView(
-                subscriptionManager: subscriptionManager,
-                isSelected: showAccountPane
-            ) {
-                withAnimation(.easeInOut(duration: 0.15)) {
-                    showAccountPane = true
-                    selectedSection = nil
-                }
-            }
 
             // MARK: 3. Settings Sections list
             List(selection: Binding(

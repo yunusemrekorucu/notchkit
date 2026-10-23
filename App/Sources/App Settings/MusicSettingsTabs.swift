@@ -130,7 +130,7 @@ struct AppleMusicAccountCard: View {
     var body: some View {
         SettingsCard(
             title: "Apple Music",
-            description: "Sapphire uses MusicKit for Apple Music artwork, artist details, the queue and your library. No login is needed beyond Apple Music access."
+            description: "NotchKit uses MusicKit for Apple Music artwork, artist details, the queue and your library. No login is needed beyond Apple Music access."
         ) {
             HStack(spacing: 10) {
                 Image(systemName: statusIcon).foregroundStyle(statusColor)
@@ -192,7 +192,7 @@ struct AppleMusicAccountCard: View {
         case .notDetermined:
             return "Allow access to show artwork, artist profiles and Up Next for Apple Music."
         case .denied, .restricted:
-            return "Turn on Sapphire in System Settings › Privacy & Security › Media & Apple Music."
+            return "Turn on NotchKit in System Settings › Privacy & Security › Media & Apple Music."
         @unknown default:
             return nil
         }

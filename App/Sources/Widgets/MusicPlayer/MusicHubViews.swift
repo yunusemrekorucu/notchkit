@@ -2887,7 +2887,7 @@ struct DevicesView: View {
             if musicManager.isPrivateAPIAuthenticated,
                sortedNativeDevices.filter({ $0.deviceId != musicManager.spotifyPrivateAPI.controllerDeviceID }).isEmpty,
                sortedOfficialDevices.isEmpty {
-                Text("No Spotify speakers online. Open the Spotify desktop app (or another Connect device) to play audio — Sapphire only controls playback.")
+                Text("No Spotify speakers online. Open the Spotify desktop app (or another Connect device) to play audio — NotchKit only controls playback.")
                     .font(.system(size: 11, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
                     .padding(12)
@@ -4948,7 +4948,7 @@ struct LoginPromptView: View {
             Text("Login Required")
                 .font(.title2).bold()
 
-            Text("Please log in to Spotify via the Music section in Sapphire's settings to use this feature.")
+            Text("Please log in to Spotify via the Music section in NotchKit's settings to use this feature.")
                 .font(.subheadline).foregroundColor(.secondary).multilineTextAlignment(.center)
 
             Text("Use the back control in the notch to return.")
@@ -4972,7 +4972,7 @@ struct ApiKeysMissingView: View {
             Text("Spotify API Keys Missing")
                 .font(.title2).bold()
 
-            Text("To enable Spotify integration, please add your API credentials in Sapphire's settings.")
+            Text("To enable Spotify integration, please add your API credentials in NotchKit's settings.")
                 .font(.subheadline).foregroundColor(.secondary).multilineTextAlignment(.center)
 
             Text("Use the back control in the notch to return.")
@@ -4996,7 +4996,7 @@ struct GeminiApiKeysMissingView: View {
             Text("Gemini API Key Missing")
                 .font(.title2).bold()
 
-            Text("To use Gemini Live, please add your Google AI Studio API key in Sapphire's settings.")
+            Text("To use Gemini Live, please add your Google AI Studio API key in NotchKit's settings.")
                 .font(.subheadline).foregroundColor(.secondary).multilineTextAlignment(.center)
 
             Text("Use the back control in the notch to return.")
@@ -5414,7 +5414,7 @@ struct AppleMusicSearchView: View {
             Text(denied ? "Apple Music access is off" : "Connect Apple Music")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
             Text(denied
-                 ? "Allow Sapphire under System Settings → Privacy & Security → Media & Apple Music."
+                 ? "Allow NotchKit under System Settings → Privacy & Security → Media & Apple Music."
                  : "Browse your library, recommendations and the full catalog, and play without leaving the notch.")
                 .font(.system(size: 11, weight: .medium, design: .rounded))
                 .foregroundStyle(.secondary)

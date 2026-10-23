@@ -96,7 +96,7 @@ final class SapphireBrowserIntegration {
             FileShelfManager.shared.addFiles(from: [url])
             postLocalNotification(
                 title: "Saved to File Shelf",
-                body: "\(url.lastPathComponent) from Sapphire Browser",
+                body: "\(url.lastPathComponent) from NotchKit Browser",
                 category: nil,
                 userInfo: nil
             )
@@ -127,7 +127,7 @@ final class SapphireBrowserIntegration {
                 )
             } else {
                 postLocalNotification(
-                    title: "Link from Sapphire Browser",
+                    title: "Link from NotchKit Browser",
                     body: title,
                     category: Self.linkNotificationCategory,
                     userInfo: ["url": url.absoluteString]
@@ -163,7 +163,7 @@ final class SapphireBrowserIntegration {
                 options: [.deliverImmediately]
             )
             postLocalNotification(
-                title: "Sapphire Browser isn't installed",
+                title: "NotchKit Browser isn't installed",
                 body: "Install it to open \(url.host ?? "this link").",
                 category: nil,
                 userInfo: nil

@@ -989,7 +989,7 @@ private enum ElectronUpdater {
             var request = URLRequest(url: url)
             request.timeoutInterval = 12
             request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode) else {
                 return .error("GitHub releases unavailable")
@@ -1036,7 +1036,7 @@ private enum ElectronUpdater {
         do {
             var request = URLRequest(url: manifestURL)
             request.timeoutInterval = 12
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode) else {
                 return .error("Update manifest unavailable")
@@ -1131,7 +1131,7 @@ private enum AppStoreClient {
         do {
             var request = URLRequest(url: url)
             request.timeoutInterval = 12
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode) else {
                 return requests.map { ($0.id, .error("App Store lookup failed")) }
@@ -1828,7 +1828,7 @@ private enum HomebrewClient {
         var request = URLRequest(url: url)
         request.timeoutInterval = 12
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+        request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
         guard let loaded = try? await InstalledAppHTTPClient.data(for: request, maximumBytes: 512 * 1_024),
               (200..<300).contains(loaded.1.statusCode),
               let response = try? JSONDecoder().decode(BrewAPICaskResponse.self, from: loaded.0),
@@ -1995,7 +1995,7 @@ private enum MozillaUpdater {
         do {
             var request = URLRequest(url: url)
             request.timeoutInterval = 12
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode) else {
                 return .error("Mozilla version info unavailable")
@@ -2079,7 +2079,7 @@ private enum JSONManifestUpdater {
             var request = URLRequest(url: url)
             request.timeoutInterval = 12
             request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             if http.statusCode == 204 {
                 return .upToDate(latestVersion: currentVersion)
@@ -2128,7 +2128,7 @@ private enum VSCodeUpdater {
             var request = URLRequest(url: url)
             request.timeoutInterval = 12
             request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             if http.statusCode == 204 {
                 return .upToDate(latestVersion: currentVersion)
@@ -2243,7 +2243,7 @@ private enum AndroidStudioUpdater {
             var request = URLRequest(url: feedURL)
             request.timeoutInterval = 12
             request.setValue("application/xml", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode),
                   let latest = AndroidStudioUpdateParser.latestStableRelease(data: data) else {
@@ -2302,7 +2302,7 @@ private enum JetBrainsUpdater {
             var request = URLRequest(url: url)
             request.timeoutInterval = 12
             request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode) else {
                 return .error("JetBrains update service unavailable")
@@ -2369,7 +2369,7 @@ private enum MicrosoftEdgeUpdater {
             var request = URLRequest(url: catalogURL)
             request.timeoutInterval = 15
             request.setValue("application/json", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode),
                   let latest = MicrosoftEdgeCatalogParser.latestVersion(data: data, channel: channel) else {
@@ -2415,7 +2415,7 @@ private enum BlenderUpdater {
             var request = URLRequest(url: pageURL)
             request.timeoutInterval = 12
             request.setValue("text/html", forHTTPHeaderField: "Accept")
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode),
                   let html = String(data: data, encoding: .utf8),
@@ -3083,7 +3083,7 @@ final class InstalledAppUpdatesChecker: ObservableObject {
         do {
             var request = URLRequest(url: appcastURL)
             request.timeoutInterval = 12
-            request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+            request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)
             guard (200..<300).contains(http.statusCode) else {
                 return .error("Update feed unavailable")
@@ -3126,7 +3126,7 @@ final class InstalledAppUpdatesChecker: ObservableObject {
         request.timeoutInterval = 12
         request.httpMethod = "POST"
         request.setValue("application/xml", forHTTPHeaderField: "Content-Type")
-        request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+        request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
         request.httpBody = KeystoneClient.requestXML(appID: appID, currentVersion: currentVersion).data(using: .utf8)
         do {
             let (data, http) = try await InstalledAppHTTPClient.data(for: request)

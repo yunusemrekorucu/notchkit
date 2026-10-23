@@ -46,7 +46,7 @@ public enum SubscriptionFeatureCatalog {
     public static func features(for tier: SubscriptionTier) -> Set<AppFeature> { [] }
     public static func minimumTier(for feature: AppFeature) -> SubscriptionTier { .free }
     public static func tierDisplayName(_ tier: SubscriptionTier) -> String { tier.rawValue.capitalized }
-    public static func marketingSubtitle(for tier: SubscriptionTier) -> String { "Includes the core Sapphire experience." }
+    public static func marketingSubtitle(for tier: SubscriptionTier) -> String { "Includes the core NotchKit experience." }
     public static func marketingTierHighlights() -> [(tier: SubscriptionTier, features: [String])] {
         [
             (tier: .free, features: ["Core notch experience"]),
@@ -58,7 +58,25 @@ public enum SubscriptionFeatureCatalog {
 }
 
 public enum SubscriptionAccess {
-    public static func hasAccess(to feature: AppFeature) -> Bool { false }
+    /// NotchKit has no paid tier. Everything whose implementation ships in the public
+    /// source is unlocked; the rest stays off because only a no-op stub exists for it.
+    public static func hasAccess(to feature: AppFeature) -> Bool {
+        !unavailableFeatures.contains(feature)
+    }
+
+    static let unavailableFeatures: Set<AppFeature> = [
+        .geminiLive, .circleToSearch, .liveSports, .financeWidget, .sportsWidget, .financeLiveActivity,
+        .appLock, .betaSoftwareUpdates, .prioritizedFeedback,
+        .androidContinuitySyncMedia, .androidContinuityWidgets, .androidContinuityPhotoDisk,
+        .continuityUniversalKeyboard, .continuityEarbudHandoff, .continuityHandoff,
+        .continuityDocumentScanning, .continuityCameraAndMic, .continuityMacTabsOnPhone,
+        .androidNotificationsOnMac, .continuityCloudflareRelay, .macScreenMirroringOnAndroid,
+        .macScreenExtensionOnMac, .androidInstantHotspot, .androidRemoteConnection,
+        .mediaTools, .basicMouseSettings, .allMouseSettings, .dockPresets, .windowsPreview, .dockPreview,
+        .emojiSuggestAsYouType, .basicStorageFeatures, .advancedStorageFeatures, .storageWidgets,
+        .clipboardPicker, .clipboardAdvancedTools, .dmgInstaller, .ocrFeature
+    ]
+
     public static func resolvedTier() -> SubscriptionTier { .free }
     public static func intelligenceDailyRunLimit() -> Int { 8 }
 }

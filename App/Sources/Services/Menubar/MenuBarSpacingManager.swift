@@ -17,7 +17,7 @@ class MenuBarSpacingManager {
     @Published var hasUnsavedChanges: Bool = false
 
     private var cancellables = Set<AnyCancellable>()
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "MenuBarSpacingManager")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MenuBarSpacingManager")
 
     private let forceTerminateDelay: TimeInterval = 1.0
 

@@ -98,7 +98,7 @@ struct NotchWidgetPlaneRoot: View {
 private struct NotchWidgetPlaneGraphProbe: ViewModifier {
     #if DEBUG
     @State private var token = String(UUID().uuidString.prefix(8))
-    private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "NotchWidgetPlane")
+    private static let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "NotchWidgetPlane")
 
     func body(content: Content) -> some View {
         content.onAppear { [token] in

@@ -188,7 +188,7 @@ private struct FullScreenSelectedActivitiesCard: View {
     var body: some View {
         SettingsCard(title: "Hide Selected", description: "Activities hidden in full screen on displays set to Hide Selected.") {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: 12, alignment: .leading)], alignment: .leading, spacing: 10) {
-                ForEach(LiveActivityType.allCases) { type in
+                ForEach(LiveActivityType.allCases.filter { !LiveActivityType.hiddenInNotchKit.contains($0) }) { type in
                     Toggle(type.displayName, isOn: binding(for: type))
                         .toggleStyle(.checkbox)
                 }

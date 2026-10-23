@@ -566,7 +566,7 @@ enum AppUninstaller {
         var errorDescription: String? {
             switch self {
             case .protectedApplication:
-                return "Sapphire and macOS system apps cannot be removed here."
+                return "NotchKit and macOS system apps cannot be removed here."
             case .applicationChanged:
                 return "The application changed after it was scanned. Scan it again before removing it."
             case .applicationDidNotQuit:
@@ -574,7 +574,7 @@ enum AppUninstaller {
             case .artifactChanged(let url):
                 return "A related item changed after it was scanned and was left in place: \(url.path)"
             case .unsafePath(let url):
-                return "Sapphire refused to remove an unsafe path: \(url.path)"
+                return "NotchKit refused to remove an unsafe path: \(url.path)"
             case .launchItemDeactivationFailed(let url, let reason):
                 return "The launch item could not be stopped and was left in place: \(url.path). \(reason)"
             }

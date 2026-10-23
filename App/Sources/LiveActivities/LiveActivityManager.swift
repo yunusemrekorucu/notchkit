@@ -334,7 +334,7 @@ class LiveActivityManager {
     private(set) var activityAnchorDisplayID: CGDirectDisplayID?
 
     // MARK: - Private Properties
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "LiveActivityManager")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "LiveActivityManager")
     @ObservationIgnored private var hasStarted = false
     @ObservationIgnored private var dismissalTimer: Timer?
     @ObservationIgnored private var cancellables = Set<AnyCancellable>()

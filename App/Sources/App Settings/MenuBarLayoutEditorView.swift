@@ -17,7 +17,7 @@ struct MenuBarLayoutEditorView: View {
             HStack(alignment: .firstTextBaseline) {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Menu Bar Layout").font(.headline)
-                    Text("Choose where each app's items go. Option-click the control item to arrange them in the menu bar instead; Sapphire learns the new layout when you click it again.")
+                    Text("Choose where each app's items go. Option-click the control item to arrange them in the menu bar instead; NotchKit learns the new layout when you click it again.")
                         .font(.caption).foregroundColor(.secondary)
                 }
                 Spacer()

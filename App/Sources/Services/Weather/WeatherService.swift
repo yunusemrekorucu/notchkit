@@ -406,7 +406,7 @@ enum WeatherServiceError: LocalizedError {
         case .missingAPIKey: return "Weather API key is not configured."
         case .locationDisabled: return "Location services are disabled system-wide."
         case .locationDenied: return "Location access was denied. Please enable it in System Settings."
-        case .locationNotDetermined: return "Grant Location access in Sapphire's Permissions settings to show weather."
+        case .locationNotDetermined: return "Grant Location access in NotchKit's Permissions settings to show weather."
         case .locationUnavailable: return "Could not determine your location."
         case .unknownAuthorization: return "Unknown location authorization status."
         case .invalidURL: return "Invalid weather API URL."

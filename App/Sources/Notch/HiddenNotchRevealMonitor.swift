@@ -7,7 +7,7 @@
 import AppKit
 import os.log
 
-private let hiddenNotchRevealLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "HiddenNotchReveal")
+private let hiddenNotchRevealLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "HiddenNotchReveal")
 
 extension Notification.Name {
     static let sapphireRevealHiddenNotch = Notification.Name("sapphireRevealHiddenNotch")

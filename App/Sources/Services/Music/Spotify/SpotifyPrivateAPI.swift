@@ -1526,7 +1526,7 @@ class SpotifyPrivateAPIManager {
     func transferPlayback(to toDeviceId: String) async -> Bool {
         if toDeviceId == controllerDeviceID {
             await MainActor.run {
-                self.deviceTransferNotice = "Sapphire is not a Spotify speaker. Choose the desktop app or another device."
+                self.deviceTransferNotice = "NotchKit is not a Spotify speaker. Choose the desktop app or another device."
                 self.scheduleDeviceTransferNoticeClear()
             }
             return false
@@ -1773,7 +1773,7 @@ class SpotifyPrivateAPIManager {
                 "device_type": "computer",
                 "metadata": [:],
                 "model": "web_player",
-                "name": "Sapphire",
+                "name": "NotchKit",
                 "platform_identifier": "osx",
                 "is_group": false,
                 "is_public": false

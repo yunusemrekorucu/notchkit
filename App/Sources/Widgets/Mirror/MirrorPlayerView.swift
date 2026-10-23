@@ -268,7 +268,7 @@ struct MirrorPlayerView: View {
         } else if camera.isError {
             return camera.errorMessage ?? "No suitable camera found or camera in use by another app."
         } else if camera.status == .requestingPermission {
-            return "Waiting for camera access. Allow Sapphire in the system prompt."
+            return "Waiting for camera access. Allow NotchKit in the system prompt."
         } else if camera.isPending {
             return "Opening the camera…"
         } else {

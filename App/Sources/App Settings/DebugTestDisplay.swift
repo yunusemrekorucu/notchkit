@@ -18,7 +18,7 @@ final class DebugTestDisplay: NSObject, ObservableObject {
     @Published private(set) var isActive = false
     @Published private(set) var captureError: String?
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "DebugTestDisplay")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "DebugTestDisplay")
     private var display: CGVirtualDisplay?
     private var window: NSWindow?
     private var previewLayer: CALayer?
@@ -33,7 +33,7 @@ final class DebugTestDisplay: NSObject, ObservableObject {
         guard display == nil else { return }
 
         let descriptor = CGVirtualDisplayDescriptor()
-        descriptor.name = "Sapphire Test Display"
+        descriptor.name = "NotchKit Test Display"
         descriptor.maxPixelsWide = UInt32(Self.size.width)
         descriptor.maxPixelsHigh = UInt32(Self.size.height)
         descriptor.sizeInMillimeters = CGSize(width: 600, height: 340)
@@ -143,7 +143,7 @@ final class DebugTestDisplay: NSObject, ObservableObject {
             self.stream = stream
         } catch {
             logger.error("Test display capture failed: \(error.localizedDescription, privacy: .public)")
-            captureError = "Can't show the test display: \(error.localizedDescription). Sapphire needs Screen Recording permission. The display still works; drag windows to it."
+            captureError = "Can't show the test display: \(error.localizedDescription). NotchKit needs Screen Recording permission. The display still works; drag windows to it."
         }
     }
 

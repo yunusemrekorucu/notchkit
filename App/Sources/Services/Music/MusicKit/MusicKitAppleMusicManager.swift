@@ -67,7 +67,7 @@ final class MusicKitAppleMusicManager {
             startSubscriptionUpdates()
         } else {
             account.lastError = status == .denied
-                ? "Apple Music access is off for Sapphire. Turn it on in System Settings → Privacy & Security → Media & Apple Music."
+                ? "Apple Music access is off for NotchKit. Turn it on in System Settings → Privacy & Security → Media & Apple Music."
                 : nil
         }
     }
@@ -121,7 +121,7 @@ final class MusicKitAppleMusicManager {
         switch account.authorization {
         case .authorized: lines.append("Access: granted")
         case .notDetermined: lines.append("Access: not requested yet")
-        case .denied: lines.append("Access: denied — enable Sapphire under Privacy & Security → Media & Apple Music")
+        case .denied: lines.append("Access: denied — enable NotchKit under Privacy & Security → Media & Apple Music")
         case .restricted: lines.append("Access: restricted on this Mac")
         @unknown default: lines.append("Access: \(account.authorization.rawValue)")
         }
@@ -146,7 +146,7 @@ final class MusicKitAppleMusicManager {
             case .privacyAcknowledgementRequired:
                 account.lastError = "Open the Music app once and accept Apple Music's privacy notice."
             case .permissionDenied:
-                account.lastError = "Apple Music access is off for Sapphire."
+                account.lastError = "Apple Music access is off for NotchKit."
             default:
                 account.lastError = tokenError.localizedDescription
             }

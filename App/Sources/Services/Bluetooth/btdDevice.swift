@@ -63,7 +63,7 @@ enum AccessoryBatteryStore {
     static var storageDirectory: URL {
         let support = fd.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? fd.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support", isDirectory: true)
-        return support.appendingPathComponent("Sapphire/AccessoryBatteries", isDirectory: true)
+        return support.appendingPathComponent("NotchKit/AccessoryBatteries", isDirectory: true)
     }
 
     static func updateDevice(_ device: BatteryDevice) {

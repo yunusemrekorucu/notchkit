@@ -22,7 +22,7 @@ final class MenuBarPresentationMonitor {
     private static let cameraHoldDelay: TimeInterval = 3
 
     private let onChange: (Bool) -> Void
-    private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "MenuBarPresentation")
+    private let log = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MenuBarPresentation")
 
     private var configuration = Configuration(whilePresenting: false, whileCameraInUse: false)
     private var cancellables = Set<AnyCancellable>()

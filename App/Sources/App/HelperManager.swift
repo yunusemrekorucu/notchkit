@@ -11,7 +11,7 @@ import AppKit
 import SwiftUI
 import OSLog
 
-private let helperLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "HelperManager")
+private let helperLogger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "HelperManager")
 private let sapphireHelperPlistName = "com.shariq.sapphireHelper.plist"
 
 // MARK: - Error codes
@@ -42,9 +42,9 @@ enum HelperIssue: Equatable {
         case .spawnFailed:
             return "Permission is granted, but macOS still will not launch the helper."
         case .needsApproval:
-            return "Turn on Sapphire and Sapphire Helper in Login Items."
+            return "Turn on NotchKit and NotchKit Helper in Login Items."
         case .notFound:
-            return "macOS lost the helper (status 3). Reset the helper; Sapphire will relaunch if it stays stuck."
+            return "macOS lost the helper (status 3). Reset the helper; NotchKit will relaunch if it stays stuck."
         }
     }
 
@@ -481,7 +481,7 @@ class HelperManager: ObservableObject {
             return
         }
 
-        helperLogger.info("[HelperManager] Helper still not running; relaunching Sapphire to rebuild BTM")
+        helperLogger.info("[HelperManager] Helper still not running; relaunching NotchKit to rebuild BTM")
         HelperManager.relaunchApp()
     }
 

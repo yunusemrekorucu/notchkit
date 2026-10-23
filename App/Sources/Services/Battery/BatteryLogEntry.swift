@@ -42,7 +42,7 @@ class BatteryDataLogger {
         guard let appSupportURL = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             fatalError("Could not find Application Support directory.")
         }
-        let logDirURL = appSupportURL.appendingPathComponent("Sapphire/BatteryLogs")
+        let logDirURL = appSupportURL.appendingPathComponent("NotchKit/BatteryLogs")
         self.logFileURL = logDirURL.appendingPathComponent("battery_log.jsonl")
         self.legacyLogFileURL = logDirURL.appendingPathComponent("battery_log.json")
         self.sleepLogFileURL = logDirURL.appendingPathComponent("battery_sleep_log.jsonl")

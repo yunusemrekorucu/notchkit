@@ -3064,7 +3064,7 @@ class MusicManager {
 
             if case .lyrics(let databaseLines) = databaseResult {
                 LyricsLog.info(
-                    "Lyrics applied from Sapphire database for '\(title)': \(databaseLines.count) lines (\(databaseLines.filter(\.hasWordTiming).count) word-synced)"
+                    "Lyrics applied from NotchKit database for '\(title)': \(databaseLines.count) lines (\(databaseLines.filter(\.hasWordTiming).count) word-synced)"
                 )
                 self.lyricsRetry.recordSuccess(attemptKey)
                 self.replaceLyrics(databaseLines)
@@ -3125,9 +3125,9 @@ class MusicManager {
                     if fit.found >= 0.8, let timed = overlay.apply(to: providerLyrics, minimumCoverage: 0) {
                         displayedLyrics = timed
                         stored = .init(overlay: overlay, samples: samples, confidence: confidence)
-                        LyricsLog.info("Lyrics timing from Sapphire database applied to \(Int(fit.coverage * 100))% of '\(title)' (\(samples) listen(s))")
+                        LyricsLog.info("Lyrics timing from NotchKit database applied to \(Int(fit.coverage * 100))% of '\(title)' (\(samples) listen(s))")
                     } else {
-                        LyricsLog.info("Lyrics timing from Sapphire database doesn't fit the \(source) text for '\(title)'")
+                        LyricsLog.info("Lyrics timing from NotchKit database doesn't fit the \(source) text for '\(title)'")
                     }
                 }
                 let measuredLines = displayedLyrics.filter(\.hasWordTiming).count

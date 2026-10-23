@@ -375,7 +375,7 @@ enum HomebrewCommand {
         export PATH='\(searchPath)'
         export HOMEBREW_NO_AUTO_UPDATE=1
         export HOMEBREW_NO_ENV_HINTS=1
-        echo "Sapphire is upgrading: \(tokens.joined(separator: " "))"
+        echo "NotchKit is upgrading: \(tokens.joined(separator: " "))"
         echo "Homebrew may ask for your administrator password."
         echo
         '\(brewPath)' \(quoted)

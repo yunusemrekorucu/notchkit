@@ -10,8 +10,8 @@ import Combine
 import ApplicationServices
 import os.log
 
-private let activeAppLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "ActiveAppMonitor")
-private let fullScreenLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "FullScreenDetection")
+private let activeAppLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "ActiveAppMonitor")
+private let fullScreenLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "FullScreenDetection")
 
 extension Notification.Name {
     static let activeAppDidChange = Notification.Name("com.sapphire.activeAppDidChange")

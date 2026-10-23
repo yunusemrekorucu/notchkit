@@ -81,7 +81,7 @@ private final class KeepAwakeAssertions {
         let result = IOPMAssertionCreateWithName(
             kind.rawValue as CFString,
             IOPMAssertionLevel(kIOPMAssertionLevelOn),
-            "Sapphire Keep Awake" as CFString,
+            "NotchKit Keep Awake" as CFString,
             &id
         )
         if result == kIOReturnSuccess {

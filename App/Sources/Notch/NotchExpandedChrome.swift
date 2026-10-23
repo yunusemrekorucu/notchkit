@@ -251,15 +251,8 @@ private struct NotchChromeButton: View {
                 SubtleIconButton(systemName: "list.clipboard", action: { context.navigationStack.wrappedValue.append(.clipboardPlayer) })
             }
         case .intelligence:
-            if settings.settings.intelligenceEnabled {
-                NotchIntelligenceControls(
-                    notchState: context.notchState,
-                    onOpenBlipHub: context.onOpenBlipHub,
-                    onOpenAgentS: context.onOpenAgentS
-                )
-            } else {
-                EmptyView()
-            }
+            // Gemini/Blip need paid API access; NotchKit leaves them out.
+            EmptyView()
         case .intelligenceLive:
             EmptyView()
         case .focusSession:
@@ -282,13 +275,8 @@ private struct NotchChromeButton: View {
                 EmptyView()
             }
         case .continuity:
-            if settings.settings.continuityEnabled && settings.settings.continuityShowPhoneBattery {
-                ContinuityPhoneStatusItem {
-                    context.navigationStack.wrappedValue.append(.continuityDetail)
-                }
-            } else {
-                EmptyView()
-            }
+            // Phone continuity is not part of NotchKit.
+            EmptyView()
         case .multiAudio:
             if settings.settings.showMultiAudioIcon {
                 SubtleIconButton(systemName: "hifispeaker.and.homepod.mini.fill", action: { context.navigationStack.wrappedValue.append(.multiAudio) })

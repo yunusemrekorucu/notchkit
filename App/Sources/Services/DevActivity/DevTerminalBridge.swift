@@ -20,7 +20,7 @@ enum DevTerminalSendResult: Equatable {
         switch self {
         case .sent: return nil
         case .sentToFrontTab: return "Sent to the front tab"
-        case .needsAccessibility: return "Allow Accessibility for Sapphire to type into this app"
+        case .needsAccessibility: return "Allow Accessibility for NotchKit to type into this app"
         case .failed(let reason): return reason
         }
     }
@@ -117,7 +117,7 @@ nonisolated enum DevTerminalBridge {
                 switch result?.trimmingCharacters(in: .whitespacesAndNewlines) {
                 case "ok": continuation.resume(returning: .sent)
                 case "missing": continuation.resume(returning: .failed("The terminal tab was closed"))
-                default: continuation.resume(returning: .failed("Allow Sapphire to control the terminal in Privacy & Security › Automation"))
+                default: continuation.resume(returning: .failed("Allow NotchKit to control the terminal in Privacy & Security › Automation"))
                 }
             }
         }

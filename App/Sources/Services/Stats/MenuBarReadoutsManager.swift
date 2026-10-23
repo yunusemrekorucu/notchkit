@@ -191,7 +191,7 @@ final class MenuBarReadoutsManager {
         if button.attributedTitle.string != title {
             button.attributedTitle = NSAttributedString(string: title, attributes: [.font: Self.readoutFont])
         }
-        let toolTip = "Sapphire readouts — CPU, RAM, network rates"
+        let toolTip = "NotchKit readouts — CPU, RAM, network rates"
         if button.toolTip != toolTip { button.toolTip = toolTip }
     }
 

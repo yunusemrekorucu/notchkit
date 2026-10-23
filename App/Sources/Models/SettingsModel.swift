@@ -1138,7 +1138,7 @@ struct Settings: Codable, Equatable {
     var launchAtLogin: Bool = true
     var appLanguage: String = "en"
     var hapticFeedbackEnabled: Bool = true
-    var googleAnalyticsEnabled: Bool = true
+    var googleAnalyticsEnabled: Bool = false
     var hideFromScreenSharing: Bool = false
     var notchDisplayTarget: NotchDisplayTarget = .allDisplays
     var floatingIslandOnNotchlessDisplays: Bool = true
@@ -2057,7 +2057,7 @@ struct SettingsBackupPayload: Codable {
     let settings: Settings
 
     init(settings: Settings, exportedAt: Date = .now) {
-        self.appName = "Sapphire"
+        self.appName = "NotchKit"
         self.schemaVersion = 1
         self.exportedAt = exportedAt
         self.settings = settings
@@ -2102,7 +2102,7 @@ struct SettingsBackupDocument: FileDocument {
         throw DecodingError.dataCorrupted(
             DecodingError.Context(
                 codingPath: [],
-                debugDescription: "The file could not be read as a Sapphire settings backup."
+                debugDescription: "The file could not be read as a NotchKit settings backup."
             )
         )
     }
@@ -2207,7 +2207,7 @@ enum SettingsPersistence {
 
     static var directoryURL: URL {
         let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Sapphire", isDirectory: true)
+            .appendingPathComponent("NotchKit", isDirectory: true)
         try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
         return url
     }
@@ -2788,7 +2788,7 @@ final class SettingsModel: ObservableObject {
         let plan = SettingsLaunchPlan.make(for: stored.assessment)
         isHoldingNewerPayload = plan.holdUntilUserChange
         if plan.holdUntilUserChange {
-            print("[SettingsModel] Settings were saved by a newer Sapphire (schema \(stored.assessment.storedSchemaVersion ?? 1) > \(SettingsPayloadFormat.currentSchemaVersion)). Keeping them untouched until a setting is changed here; unknown keys use defaults in memory.")
+            print("[SettingsModel] Settings were saved by a newer NotchKit (schema \(stored.assessment.storedSchemaVersion ?? 1) > \(SettingsPayloadFormat.currentSchemaVersion)). Keeping them untouched until a setting is changed here; unknown keys use defaults in memory.")
         } else if stored.assessment.decodedTolerantly {
             print("[SettingsModel] Stored settings needed a tolerant decode; backing up the original payload before rewriting it.")
         }
@@ -2854,7 +2854,7 @@ final class SettingsModel: ObservableObject {
               let raw = defaults.string(forKey: animationProfileKey),
               let saved = AnimationProfile(rawValue: raw),
               saved != settings.animationProfile else { return }
-        print("[SettingsModel] An older Sapphire reset the animation profile; restoring \(saved.rawValue).")
+        print("[SettingsModel] An older NotchKit reset the animation profile; restoring \(saved.rawValue).")
         settings.animationProfile = saved
     }
 
@@ -3158,10 +3158,10 @@ final class SettingsModel: ObservableObject {
 
     private func reloadAfterPeerWrite() {
         guard !hasUnsavedChanges() else {
-            print("[SettingsModel] Another Sapphire saved settings, but this copy has unsaved changes; keeping this copy's.")
+            print("[SettingsModel] Another NotchKit saved settings, but this copy has unsaved changes; keeping this copy's.")
             return
         }
-        reloadFromStorage(reason: "another Sapphire saved settings")
+        reloadFromStorage(reason: "another NotchKit saved settings")
     }
 
     private func reloadFromStorage(reason: String) {
@@ -3310,6 +3310,15 @@ enum WidgetType: String, Codable, CaseIterable, Identifiable, Equatable {
         case .agent: return "Agent"
         }
     }
+}
+
+extension WidgetType {
+    /// Widgets that need paid services or private Sapphire code. NotchKit never offers them.
+    static let hiddenInNotchKit: Set<WidgetType> = [.sports, .finance, .shopify, .storage, .agent]
+}
+
+extension LiveActivityType {
+    static let hiddenInNotchKit: Set<LiveActivityType> = [.sports, .finance]
 }
 
 enum MusicLiveActivityRightTextMode: String, Codable, CaseIterable, Identifiable, Equatable {
@@ -3874,16 +3883,16 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .appActivities: "Live activities and controls for Zoom, Google Meet, Teams, Slack, Discord, FaceTime, recorders and more."
         case .fileProgress: "Download, copy and AirDrop progress per app — Safari, Chrome, Edge, Firefox, Finder and others."
         case .appearance: "Tune the notch look, materials, colors, and layout styling."
-        case .lockScreen: "Configure Sapphire content and behavior while your Mac is locked."
+        case .lockScreen: "Configure NotchKit content and behavior while your Mac is locked."
         case .bluetoothUnlock: "Set up proximity-based authentication and trusted device behavior."
-        case .shortcuts: "Manage quick actions and shortcut surfaces shown in Sapphire."
-        case .keyboardShortcuts: "Reference page listing every keyboard shortcut in Sapphire — global hotkeys, snap zones, and in-app shortcuts."
+        case .shortcuts: "Manage quick actions and shortcut surfaces shown in NotchKit."
+        case .keyboardShortcuts: "Reference page listing every keyboard shortcut in NotchKit — global hotkeys, snap zones, and in-app shortcuts."
         case .snapZones: "Configure window snapping behavior, layouts, and zone actions."
         case .audio: "Audio adjustments, EQ, and per-app volume adjustments."
         case .battery: "Battery widgets, history, charging preferences, and power-related controls."
         case .bluetooth: "Bluetooth device integrations, visibility, and connection behavior."
         case .hud: "Heads-up display overlays for volume, brightness, keyboard, and media feedback."
-        case .notifications: "Choose which system notifications Sapphire mirrors or enhances."
+        case .notifications: "Choose which system notifications NotchKit mirrors or enhances."
         case .nearbyShare: "Nearby sharing preferences, transfers, and device discovery options."
         case .continuity: "Pair an Android phone for clipboard, notifications, media, battery, and Instant Hotspot."
         case .fileShelf: "Manage temporary file storage, drag targets, and shelf behavior."
@@ -3902,13 +3911,13 @@ enum SettingsSection: String, CaseIterable, Identifiable {
         case .eyeBreak: "Break reminders, timing, and focus nudges for healthier screen habits."
         case .focusSession: "Session-style Focus Profiles with timers, app/website blocking, social filters, triggers, and cross-device sync."
         case .appLock: "Lock apps behind Touch ID or password — blur overlays, idle/sleep auto-lock, and auto-close."
-        case .intelligence: "Sapphire Blip — Mac agent with memory, skills, tools, and computer use."
+        case .intelligence: "NotchKit Blip — Mac agent with memory, skills, tools, and computer use."
         case .sports: "Sports widget settings, favorite teams selection, and scoreboard configurations."
         case .finance: "Stock market ticker configurations, favorite stocks, and trendline visualizations."
         case .dockLayouts: "Save Dock layouts as presets and switch between them with a click or hotkey."
         case .mediaOptimizer: "Automatically shrink images, compress media, and extract text with OCR."
 
-        case .about: "App version details, Sapphire updates, release channels, credits, links, and project information."
+        case .about: "App version details, NotchKit updates, release channels, credits, links, and project information."
         }
     }
 

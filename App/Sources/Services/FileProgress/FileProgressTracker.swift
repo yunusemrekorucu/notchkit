@@ -10,7 +10,7 @@ import Combine
 import SQLite3
 import os
 
-private let fileProgressLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "FileProgress")
+private let fileProgressLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "FileProgress")
 
 struct TrackedTransfer: Identifiable, Equatable {
     enum Operation: Equatable { case download, copy, move, airDrop, other }

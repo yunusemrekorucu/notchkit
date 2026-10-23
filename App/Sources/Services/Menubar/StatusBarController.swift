@@ -825,7 +825,7 @@ final class StatusBarController {
 
     private func fallBackToFittedDivider() {
         guard usesRestriction else { return }
-        print("[StatusBarController] The visibility restriction hid Sapphire's control item; falling back to fitted dividers.")
+        print("[StatusBarController] The visibility restriction hid NotchKit's control item; falling back to fitted dividers.")
         restrictionFailed = true
         learnGeneration += 1
         MenuBarVisibilityRestrictor.shared.releaseAll()
@@ -1044,9 +1044,9 @@ final class StatusBarController {
         zenItem.state = isZenModeActive ? .on : .off
         menu.addItem(zenItem)
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Open Sapphire Setting", action: #selector(openPreferences), keyEquivalent: ",").target = self
+        menu.addItem(withTitle: "Open NotchKit Setting", action: #selector(openPreferences), keyEquivalent: ",").target = self
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Sapphire", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        menu.addItem(withTitle: "Quit NotchKit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         return menu
     }
 
@@ -1063,7 +1063,7 @@ final class StatusBarController {
         }
         menu.addItem(withTitle: "Preferences", action: #selector(openPreferences), keyEquivalent: ",").target = self
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Quit Sapphire", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        menu.addItem(withTitle: "Quit NotchKit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
         return menu
     }
 

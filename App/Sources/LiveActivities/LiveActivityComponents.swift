@@ -1262,7 +1262,7 @@ struct UpdateAvailableWidgetView: View {
             }
             .buttonStyle(.plain)
 
-            Text("Updates are installed from the About page in Sapphire's settings.")
+            Text("Updates are installed from the About page in NotchKit's settings.")
                 .font(.caption)
                 .foregroundColor(.white.opacity(0.45))
                 .multilineTextAlignment(.center)

@@ -614,7 +614,7 @@ class LyricsFetcher {
     private static var lrclibUserAgent: String {
         let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
         let displayVersion = version.flatMap { $0.isEmpty ? nil : $0 } ?? "unknown"
-        return "Sapphire v\(displayVersion) (https://github.com/cshariq/Sapphire)"
+        return "NotchKit v\(displayVersion) (https://github.com/yunusemrekorucu/notchkit)"
     }
 }
 

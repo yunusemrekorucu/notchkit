@@ -16,7 +16,7 @@ import Network
 import os.log
 
 private let appDelegateLog = Logger(
-    subsystem: Bundle.main.bundleIdentifier ?? "Sapphire",
+    subsystem: Bundle.main.bundleIdentifier ?? "NotchKit",
     category: "AppDelegate"
 )
 
@@ -757,7 +757,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
             window.standardWindowButton(.closeButton)?.isHidden = true
             window.standardWindowButton(.miniaturizeButton)?.isHidden = true
             window.standardWindowButton(.zoomButton)?.isHidden = true
-            window.title = "Sapphire Onboarding"
+            window.title = "NotchKit Onboarding"
             window.isMovableByWindowBackground = true
             window.isOpaque = false
             window.backgroundColor = .clear
@@ -945,6 +945,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     }
 
     private func requestScreenRecordingForSystemEnhanceIfNeeded() {
+        // System Enhance (window previews, hinge animation) is not part of NotchKit.
+        return
         let settings = settingsModel.settings
         let needsWindowCapture = settings.systemEnhanceDockPreviewsEnabled || settings.systemEnhanceWindowSwitcherEnabled
         let needsHingeCapture = settings.systemEnhanceHingeAnimationEnabled && LidAngleSensor.shared.isAvailable
@@ -1154,7 +1156,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
         DispatchQueue.main.async {
             HelperAlertPresenter.presentModal(
-                messageText: "Signed Out of Sapphire",
+                messageText: "Signed Out of NotchKit",
                 informativeText: reason.alertMessage,
                 alertStyle: .warning,
                 buttonTitles: ["Open Account Settings", "OK"]
@@ -1464,7 +1466,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     func application(_ application: NSApplication, open urls: [URL]) {
         guard !Self.isRunningUnitTests else { return }
         if !isMainAppRunning, let other = DefaultFileHandler.otherRunningInstance(), let otherURL = other.bundleURL {
-            appDelegateLog.info("Forwarding \(urls.count, privacy: .public) opened file(s) to the running Sapphire instance (pid \(other.processIdentifier, privacy: .public))")
+            appDelegateLog.info("Forwarding \(urls.count, privacy: .public) opened file(s) to the running NotchKit instance (pid \(other.processIdentifier, privacy: .public))")
             NSWorkspace.shared.open(urls, withApplicationAt: otherURL, configuration: NSWorkspace.OpenConfiguration()) { _, _ in
                 DispatchQueue.main.async { exit(0) }
             }
@@ -1520,8 +1522,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         isPresentingSapphireVMLaunchFailure = true
 
         HelperAlertPresenter.presentModal(
-            messageText: "Sapphire VM Isn’t Available",
-            informativeText: "Sapphire couldn’t open this virtual machine link. Make sure the standalone Sapphire VM app is installed, then try again.",
+            messageText: "NotchKit VM Isn’t Available",
+            informativeText: "NotchKit couldn’t open this virtual machine link. Make sure the standalone NotchKit VM app is installed, then try again.",
             alertStyle: .warning,
             buttonTitles: ["OK"]
         ) { [weak self] _ in
@@ -1551,12 +1553,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
 
                 statusItem?.button?.image = NSImage(
                     systemSymbolName: "square.grid.3x3.fill",
-                    accessibilityDescription: "Sapphire Launchpad"
+                    accessibilityDescription: "NotchKit Launchpad"
                 )
                 let menu = NSMenu()
                 menu.addItem(NSMenuItem(title: "Show Launchpad", action: #selector(showLaunchpadAction), keyEquivalent: ""))
                 menu.addItem(.separator())
-                menu.addItem(NSMenuItem(title: "Quit Sapphire", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
+                menu.addItem(NSMenuItem(title: "Quit NotchKit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
                 for item in menu.items { item.target = self }
                 statusItem?.menu = menu
             }

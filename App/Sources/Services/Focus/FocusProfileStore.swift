@@ -30,7 +30,7 @@ final class FocusProfileStore: ObservableObject {
 
     private init() {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("Sapphire", isDirectory: true)
+            .appendingPathComponent("NotchKit", isDirectory: true)
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
         url = base.appendingPathComponent("focus-profiles.json")
         activeProfileID = UUID()

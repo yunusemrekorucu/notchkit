@@ -306,7 +306,7 @@ struct DevTaskDetailPane: View {
                 symbol: "text.bubble",
                 text: task.tool.id == DevToolCatalog.claude.id || task.tool.id == DevToolCatalog.codex.id
                     ? "No conversation recorded yet."
-                    : "\(task.tool.displayName) doesn't keep a transcript Sapphire can read. Processes are listed on the right tab."
+                    : "\(task.tool.displayName) doesn't keep a transcript NotchKit can read. Processes are listed on the right tab."
             )
         }
     }
@@ -333,7 +333,7 @@ struct DevTaskDetailPane: View {
     private func outputHint(_ detail: DevTaskDetail) -> String {
         guard let host = detail.host else { return "This task has no terminal window; its processes are on the Processes tab." }
         if host.kind.isScriptable {
-            return "Reading \(host.name)… If nothing appears, allow Sapphire to control \(host.name) in System Settings › Privacy & Security › Automation."
+            return "Reading \(host.name)… If nothing appears, allow NotchKit to control \(host.name) in System Settings › Privacy & Security › Automation."
         }
         return "\(host.name) doesn't let other apps read its tabs. Send input below or open it to see the output."
     }

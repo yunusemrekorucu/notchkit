@@ -26,7 +26,7 @@ enum SapphireStandardMenu {
         let appMenu = NSMenu()
         appMenuItem.submenu = appMenu
         appMenu.addItem(
-            withTitle: "Quit Sapphire",
+            withTitle: "Quit NotchKit",
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"
         )
@@ -173,7 +173,7 @@ enum HelperAlertPresenter {
 
     static func showHelperConnectionLost(onDismiss: (() -> Void)? = nil) {
         presentModal(
-            messageText: "Sapphire Helper Needs Attention",
+            messageText: "NotchKit Helper Needs Attention",
             informativeText: """
             Sapphire lost connection to its system helper.
 
@@ -193,7 +193,7 @@ enum HelperAlertPresenter {
         let buttons: [String]
         switch issue {
         case .notFound:
-            buttons = ["Reset Helper", "Relaunch Sapphire", "OK"]
+            buttons = ["Reset Helper", "Relaunch NotchKit", "OK"]
         case .needsApproval:
             buttons = ["Open Login Items", "OK"]
         case .spawnFailed:
@@ -201,7 +201,7 @@ enum HelperAlertPresenter {
         }
 
         presentModal(
-            messageText: "Sapphire Helper  ·  \(issue.code)",
+            messageText: "NotchKit Helper  ·  \(issue.code)",
             informativeText: issue.instructions,
             alertStyle: issue == .spawnFailed ? .critical : .warning,
             buttonTitles: buttons
@@ -275,7 +275,7 @@ enum HelperAlertPresenter {
             backing: .buffered,
             defer: false
         )
-        window.title = "Sapphire"
+        window.title = "NotchKit"
         window.isOpaque = false
         window.backgroundColor = .clear
         window.alphaValue = 0.001

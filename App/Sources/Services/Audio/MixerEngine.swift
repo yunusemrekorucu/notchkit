@@ -160,7 +160,7 @@ final class MixerEngine: @unchecked Sendable {
     var onActiveBundles: (@Sendable (Set<String>) -> Void)?
     var onProcessListChanged: (@Sendable () -> Void)?
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "MixerEngine")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MixerEngine")
     private let queue = DispatchQueue(label: "com.sapphire.mixer.hal", qos: .userInitiated)
     private let queueKey = DispatchSpecificKey<Void>()
 

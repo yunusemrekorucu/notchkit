@@ -1767,7 +1767,7 @@ private enum StorageDeletionPolicy {
 
     static func rejectionReason(for entry: StorageEntry, within scope: URL) -> String? {
         if isTrashLocation(entry.url) {
-            return "Sapphire does not permanently delete items that are already in Trash. Review or empty Trash in Finder."
+            return "NotchKit does not permanently delete items that are already in Trash. Review or empty Trash in Finder."
         }
         if entry.isSystemProtected || isProtectedLocation(entry.url) {
             return "This is a protected location and can only be inspected."
@@ -4080,7 +4080,7 @@ private struct StoragePresentedScan {
             let size = trashEntries.reduce(Int64(0)) { saturatingAdd($0, $1.size) }
             recommendations.append(CleanupRecommendation(
                 category: .trash,
-                description: "Sapphire never permanently deletes Trash contents; review and empty Trash in Finder when ready",
+                description: "NotchKit never permanently deletes Trash contents; review and empty Trash in Finder when ready",
                 potentialSpaceFreed: size,
                 actionDescription: "Review Trash in Finder",
                 isAutomatic: false,

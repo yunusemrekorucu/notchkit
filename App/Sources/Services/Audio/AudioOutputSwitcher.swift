@@ -47,7 +47,7 @@ final class AudioOutputSwitcher: ObservableObject {
         }
     }
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "AudioOutputSwitcher")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "AudioOutputSwitcher")
     private let hotkeys = AudioHotkeyTable()
     private var tapToken: GlobalEventTap.Token?
     private var isShortcutRecording = false
@@ -211,7 +211,7 @@ final class AudioHotkeyTable: @unchecked Sendable {
 // MARK: - Headphone disconnect
 
 private final class HeadphoneDisconnectMonitor: @unchecked Sendable {
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "HeadphoneDisconnect")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "HeadphoneDisconnect")
     private let queue = DispatchQueue(label: "com.sapphire.audio.headphone-disconnect", qos: .utility)
     private static let savedVolumesKey = "SapphireSavedSpeakerVolumesByUID"
 

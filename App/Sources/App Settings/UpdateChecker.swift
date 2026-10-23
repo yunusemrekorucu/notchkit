@@ -267,12 +267,12 @@ private enum UpdateMetadataError: LocalizedError {
         case .httpStatus(let status): return "The update server returned HTTP \(status)."
         case .rateLimited(let retry):
             if let retry { return "GitHub rate-limited update checks. Retrying \(retry.formatted(date: .omitted, time: .shortened))." }
-            return "GitHub rate-limited update checks. Sapphire will retry automatically."
+            return "GitHub rate-limited update checks. NotchKit will retry automatically."
         case .responseTooLarge: return "The update metadata was unexpectedly large."
         case .emptyCache: return "No cached update information is available."
         case .invalidMetadata: return "The update information could not be verified."
         case .noEligibleRelease: return "No release is available for the selected channel."
-        case .noEligibleAsset: return "This release does not include a trusted Sapphire ZIP for this Mac."
+        case .noEligibleAsset: return "This release does not include a trusted NotchKit ZIP for this Mac."
         }
     }
 }
@@ -367,7 +367,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             guard notificationSettings.authorizationStatus == .authorized
                 || notificationSettings.authorizationStatus == .provisional else { return }
             let content = UNMutableNotificationContent()
-            content.title = "Sapphire \(version) is available"
+            content.title = "NotchKit \(version) is available"
             content.body = "A new version is ready to download. Open Settings → About → Updates to install it."
             content.sound = .default
             let request = UNNotificationRequest(
@@ -536,14 +536,14 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
     }
 
     private func fetchReleases(useConditionalRequest: Bool = true) async throws -> FetchedGitHubReleases {
-        guard let url = URL(string: "https://api.github.com/repos/cshariq/Sapphire/releases?per_page=50") else {
+        guard let url = URL(string: "https://api.github.com/repos/yunusemrekorucu/notchkit/releases?per_page=50") else {
             throw UpdateMetadataError.invalidResponse
         }
         var request = URLRequest(url: url)
         request.timeoutInterval = 25
         request.cachePolicy = .reloadIgnoringLocalCacheData
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+        request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
         request.setValue("2022-11-28", forHTTPHeaderField: "X-GitHub-Api-Version")
         if useConditionalRequest,
            let etag = UserDefaults.standard.string(forKey: releasesCacheETagKey) {
@@ -812,7 +812,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         }
         releaseNotesVersion = targetVersion
         releaseNotes = nil
-        releaseNotesURL = URL(string: "https://github.com/cshariq/Sapphire/releases")
+        releaseNotesURL = URL(string: "https://github.com/yunusemrekorucu/notchkit/releases")
     }
 
     private static func normalizedNotes(_ body: String?) -> String? {
@@ -952,7 +952,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
               asset.name.lowercased().hasSuffix(".zip"),
               asset.name.lowercased().contains("sapphire"),
               asset.size.map({ $0 > 0 && $0 <= Self.maximumDownloadBytes }) == true else {
-            applyStatus(.error("The release download did not pass Sapphire's security policy."))
+            applyStatus(.error("The release download did not pass NotchKit's security policy."))
             return
         }
 
@@ -969,7 +969,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         downloadSession = session
         var request = URLRequest(url: asset.browserDownloadUrl)
         request.setValue("application/octet-stream", forHTTPHeaderField: "Accept")
-        request.setValue("Sapphire/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
+        request.setValue("NotchKit/\(currentAppVersion)", forHTTPHeaderField: "User-Agent")
         downloadTask = session.downloadTask(with: request)
         downloadTask?.resume()
 
@@ -1162,10 +1162,10 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         expectedVersion: String
     ) async -> PrivilegedUpdateInstallOutcome {
         guard let version = await XPCClient.shared.helperProtocolVersion(timeout: 5) else {
-            return .failure("The privileged update helper is unavailable. Reinstall or repair Sapphire's helper, then try again.")
+            return .failure("The privileged update helper is unavailable. Reinstall or repair NotchKit's helper, then try again.")
         }
         guard version >= SapphireHelperProtocolVersion else {
-            return .failure("The privileged update helper is out of date. Reinstall or repair Sapphire's helper, then try again.")
+            return .failure("The privileged update helper is out of date. Reinstall or repair NotchKit's helper, then try again.")
         }
 
         return await withCheckedContinuation { continuation in
@@ -1176,7 +1176,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
             }
 
             guard let helper = XPCClient.shared.helper else {
-                resumeOnce(.failure("The privileged update helper could not be contacted. Reinstall or repair Sapphire's helper, then try again."))
+                resumeOnce(.failure("The privileged update helper could not be contacted. Reinstall or repair NotchKit's helper, then try again."))
                 return
             }
 
@@ -1194,7 +1194,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
 
             DispatchQueue.global(qos: .utility).asyncAfter(deadline: .now() + 90) {
                 resumeOnce(.failure(
-                    "The privileged update helper did not respond within 90 seconds. Sapphire will not start a second installer while the first result is unknown; reopen Sapphire and verify its version before retrying."
+                    "The privileged update helper did not respond within 90 seconds. NotchKit will not start a second installer while the first result is unknown; reopen NotchKit and verify its version before retrying."
                 ))
             }
         }
@@ -1250,7 +1250,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
                     throw NSError(
                         domain: "UpdateError",
                         code: 23,
-                        userInfo: [NSLocalizedDescriptionKey: "Sapphire is running through an application symlink. Move the real app into Applications before updating."]
+                        userInfo: [NSLocalizedDescriptionKey: "NotchKit is running through an application symlink. Move the real app into Applications before updating."]
                     )
                 }
                 guard let currentBundleIdentifier = Bundle.main.bundleIdentifier,
@@ -1258,7 +1258,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
                         in: tempUnzipDirectory,
                         bundleIdentifier: currentBundleIdentifier
                       ) else {
-                    throw NSError(domain: "UpdateError", code: 3, userInfo: [NSLocalizedDescriptionKey: "The archive did not contain the expected Sapphire app."])
+                    throw NSError(domain: "UpdateError", code: 3, userInfo: [NSLocalizedDescriptionKey: "The archive did not contain the expected NotchKit app."])
                 }
                 try Self.validateRuntimeArchitecture(newAppURL)
                 try Self.validateUpdatePublisher(candidate: newAppURL, replacing: currentAppURL)
@@ -1298,7 +1298,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
                         throw NSError(
                             domain: "UpdateError",
                             code: 9,
-                            userInfo: [NSLocalizedDescriptionKey: "Sapphire isn't in a user-writable location. Install or repair the privileged helper, then use the standard install method."]
+                            userInfo: [NSLocalizedDescriptionKey: "NotchKit isn't in a user-writable location. Install or repair the privileged helper, then use the standard install method."]
                         )
                     case .standard:
                         let outcome = await Self.installViaPrivilegedHelper(
@@ -1589,7 +1589,7 @@ class UpdateChecker: NSObject, ObservableObject, @preconcurrency URLSessionDownl
         guard downloadSession === session else { return }
         if totalBytesWritten > Self.maximumDownloadBytes
             || totalBytesExpectedToWrite > Self.maximumDownloadBytes {
-            downloadPolicyFailure = "The update archive exceeded Sapphire's maximum allowed size."
+            downloadPolicyFailure = "The update archive exceeded NotchKit's maximum allowed size."
             downloadTask.cancel()
             return
         }

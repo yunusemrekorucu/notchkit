@@ -309,7 +309,7 @@ final class SettingsInstanceGuard {
         self.onPeerPersisted = onPeerPersisted
         role = Self.evaluate(excluding: nil)
         if role.hasPeers {
-            print("[SettingsModel] Another Sapphire is running; this copy \(role.isWriter ? "owns" : "will not write") settings.")
+            print("[SettingsModel] Another NotchKit is running; this copy \(role.isWriter ? "owns" : "will not write") settings.")
         }
 
         let workspace = NSWorkspace.shared.notificationCenter
@@ -376,7 +376,7 @@ final class SettingsInstanceGuard {
         guard updated != role else { return }
         let old = role
         role = updated
-        print("[SettingsModel] Sapphire copies changed; this copy \(updated.isWriter ? "now owns" : "no longer writes") settings.")
+        print("[SettingsModel] NotchKit copies changed; this copy \(updated.isWriter ? "now owns" : "no longer writes") settings.")
         onRoleChange(old, updated)
     }
 

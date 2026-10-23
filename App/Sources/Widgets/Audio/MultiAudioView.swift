@@ -48,7 +48,7 @@ struct MultiAudioPermissionRequiredView: View {
             Text("Screen Recording Required")
                 .font(.title2).bold()
 
-            Text("Multi-audio won't work without Screen Recording permission. Sapphire needs it to adjust app volumes, eqs and more.")
+            Text("Multi-audio won't work without Screen Recording permission. NotchKit needs it to adjust app volumes, eqs and more.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)

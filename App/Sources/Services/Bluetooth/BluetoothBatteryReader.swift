@@ -61,7 +61,7 @@ class BluetoothBatteryReader: NSObject, ObservableObject {
     private let slowRefresh = SingleFlight<Void>()
     private var lastSlowRefresh: Date?
     private(set) var systemProfilerBatteries: [SystemProfilerBattery] = []
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "BluetoothBatteryReader")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "BluetoothBatteryReader")
 
     private override init() {
         super.init()

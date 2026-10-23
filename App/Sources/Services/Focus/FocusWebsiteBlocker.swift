@@ -17,8 +17,8 @@ final class FocusWebsiteBlocker {
     private let pageServer = FocusBlockPageServer()
     private var productiveAccessValidator: ((String) -> Bool)?
 
-    private static let hostsMarkerStart = "# >>> Sapphire Focus Block >>>"
-    private static let hostsMarkerEnd = "# <<< Sapphire Focus Block <<<"
+    private static let hostsMarkerStart = "# >>> NotchKit Focus Block >>>"
+    private static let hostsMarkerEnd = "# <<< NotchKit Focus Block <<<"
 
     private init() {
         NotificationCenter.default.addObserver(

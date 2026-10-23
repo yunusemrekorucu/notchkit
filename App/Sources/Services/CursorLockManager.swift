@@ -20,7 +20,7 @@ final class CursorLockManager {
         let allowedAppStates: [String: Bool]
     }
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "CursorLock")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "CursorLock")
 
     private let lock = NSRecursiveLock()
 

@@ -107,7 +107,7 @@ final class SettingsAssistant: ObservableObject {
                 outcome = change(key: decision.key, to: value)
             }
             guard !Task.isCancelled else { return }
-            let turn = grounded + "\n\nWhat Sapphire did: " + outcome
+            let turn = grounded + "\n\nWhat NotchKit did: " + outcome
             var reply: String
             var failed = false
             do {
@@ -251,7 +251,7 @@ final class SettingsAssistant: ObservableObject {
             } else if case .bool? = SettingsIndex.value(of: entry.key, in: settings) {
                 line += " | allowed: on / off"
             }
-            if entry.section?.isPremiumLocked == true { line += " | needs a Sapphire subscription" }
+            if entry.section?.isPremiumLocked == true { line += " | needs a NotchKit subscription" }
             if let detail = entry.detail { line += " | " + String(detail.prefix(110)) }
             return line
         }.joined(separator: "\n")
@@ -300,7 +300,7 @@ final class SettingsAssistant: ObservableObject {
 @available(macOS 27, *)
 private struct FindSettingsTool: Tool {
     let name = "findSettings"
-    let description = "Searches Sapphire's settings by keywords and returns matching settings with their key, title, pane, current value and allowed values."
+    let description = "Searches NotchKit's settings by keywords and returns matching settings with their key, title, pane, current value and allowed values."
 
     @Generable
     struct Arguments {

@@ -12,7 +12,7 @@ import AppKit
 import Carbon.HIToolbox
 import os.log
 
-private let notchLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "NotchController")
+private let notchLog = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "NotchController")
 
 private struct FileDropResult {
     let fallbackZone: DropZone?

@@ -270,7 +270,7 @@ private struct MicrophoneAmplifierSettingsView: View {
 
             CompactToggleRow(
                 title: "Preview gain",
-                description: "Applies gain to Sapphire's live level meter so you can check clipping. Other apps still receive the original microphone signal.",
+                description: "Applies gain to NotchKit's live level meter so you can check clipping. Other apps still receive the original microphone signal.",
                 isOn: $mic.amplifierEnabled
             )
 

@@ -15,7 +15,7 @@ import Accelerate
 final class MicrophoneUsageManager: ObservableObject {
     static let shared = MicrophoneUsageManager()
 
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "MicrophoneUsageManager")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MicrophoneUsageManager")
     private let gainDefaultsKey = "SapphireMicrophoneAmplifierGain"
     private let amplifierEnabledDefaultsKey = "SapphireMicrophoneAmplifierEnabled"
 
@@ -356,7 +356,7 @@ enum MicrophoneUsageFilter {
 }
 
 private final class MicrophoneMeteringTap: @unchecked Sendable {
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "Sapphire", category: "MicrophoneMeteringTap")
+    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "NotchKit", category: "MicrophoneMeteringTap")
     let deviceID: AudioDeviceID
     let gain: Float
     private let callback: (Float, Float, Bool) -> Void
