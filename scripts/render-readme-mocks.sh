@@ -21,3 +21,8 @@ render home 1180,240
 render music 520,70
 render weather 520,70
 render pomodoro 520,70
+render developer 900,350
+render usage 900,300
+render forecast 780,330
+render charging 520,70
+render agent 520,70

@@ -12,11 +12,6 @@
   <img src="docs/screenshots/home.png" alt="The open notch showing music, weather, calendar and developer widgets">
 </p>
 
-<p align="center">
-  <img src="docs/screenshots/music.png" width="32%" alt="Closed notch playing music, with the home bubble on the left">
-  <img src="docs/screenshots/weather.png" width="32%" alt="Closed notch showing the weather, with the home bubble on the left">
-  <img src="docs/screenshots/pomodoro.png" width="32%" alt="Closed notch counting down a Pomodoro, with the home bubble on the left">
-</p>
 
 <p align="center"><sub>Screenshots use sample data.</sub></p>
 
@@ -48,6 +43,22 @@ While the notch is closed, it shows what's going on: the track that's playing, t
 
 Whenever a live activity is showing, a **home bubble** sits beside the notch. Click it to jump straight to your widgets. Side bubbles grow with the notch when you hover over it.
 
+<p align="center">
+  <img src="docs/screenshots/music.png" width="32%" alt="Closed notch playing music, with the home bubble on the left">
+  <img src="docs/screenshots/weather.png" width="32%" alt="Closed notch showing the weather, with the home bubble on the left">
+  <img src="docs/screenshots/pomodoro.png" width="32%" alt="Closed notch counting down a Pomodoro, with the home bubble on the left">
+</p>
+<p align="center">
+  <img src="docs/screenshots/agent.png" width="32%" alt="Closed notch showing a running AI agent and its run time">
+  <img src="docs/screenshots/charging.png" width="32%" alt="Closed notch showing the battery charging at 82 percent">
+</p>
+
+Open a widget for its full view. The weather opens to an hourly forecast:
+
+<p align="center">
+  <img src="docs/screenshots/forecast.png" width="70%" alt="The weather widget opened to current conditions and an hourly forecast">
+</p>
+
 ### Developer panel
 
 The Developer widget follows what's running on your Mac while you code:
@@ -55,6 +66,13 @@ The Developer widget follows what's running on your Mac while you code:
 - **Activity**: AI coding agents (Claude, Codex, Cursor, Gemini, Copilot, Aider, OpenCode and others), builds (Xcode, Gradle, Swift, Cargo, Go, Flutter, Make) and dev servers, each with its run time, CPU, memory, folder and Git branch. Open a task to read the agent's conversation or its processes, send it a message, interrupt it or jump to its terminal.
 - **Usage**: plan limits and daily usage for your AI tools
 - **Terminal**: run commands in a project folder and keep their output
+
+<p align="center">
+  <img src="docs/screenshots/developer.png" width="80%" alt="The Developer panel showing an AI agent's conversation, run time, CPU, memory, folder and branch">
+</p>
+<p align="center">
+  <img src="docs/screenshots/usage.png" width="80%" alt="The Developer panel's Usage tab with session and weekly limits for Claude and Codex">
+</p>
 
 In the closed notch, a running task shows as a compact activity with its own side bubble.
 

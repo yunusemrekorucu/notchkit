@@ -88,6 +88,28 @@
   .task { display: flex; align-items: center; gap: 8px; background: var(--chip); border-radius: 9px;
     padding: 5px 8px; margin-top: 5px; font-size: 12px; font-weight: 600; white-space: nowrap; }
   .task .t { margin-left: auto; font-family: ui-monospace, "SF Mono", monospace; font-size: 11px; }
+
+  .back { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.1);
+    display: grid; place-items: center; }
+  .seg { display: flex; background: rgba(255,255,255,.07); border-radius: 99px; padding: 2px; }
+  .seg span { font-size: 9px; font-weight: 800; letter-spacing: .4px; padding: 6px 11px; border-radius: 99px;
+    color: rgba(255,255,255,.42); }
+  .seg span.on { background: rgba(255,255,255,.2); color: #fff; }
+  .chips { display: flex; gap: 6px; flex-wrap: nowrap; }
+  .chips span { display: flex; align-items: center; gap: 5px; background: var(--chip); border-radius: 7px;
+    padding: 3px 7px; font-size: 11px; font-weight: 600; white-space: nowrap; }
+  .msg-user { align-self: flex-end; background: #5a3424; border-radius: 10px; padding: 7px 10px; font-size: 12px;
+    max-width: 330px; }
+  .msg-tool { font-family: ui-monospace, "SF Mono", monospace; font-size: 11px; color: var(--dim);
+    display: flex; gap: 6px; align-items: center; }
+  .msg-text { font-size: 12px; line-height: 1.4; }
+  .input { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border-radius: 99px;
+    padding: 7px 12px; font-size: 12px; color: var(--faint); flex: 1; }
+  .round { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,.1); display: grid; place-items: center; }
+  .hour { text-align: center; font-size: 11px; font-weight: 700; display: grid; gap: 7px; justify-items: center; }
+  .hour b { color: var(--dim); font-size: 10px; }
+  .meter { height: 6px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; margin-top: 5px; }
+  .meter i { display: block; height: 100%; border-radius: 3px; }
 </style>
 </head>
 <body>
@@ -116,6 +138,13 @@
     <symbol id="drop" viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z" fill="#fff"/></symbol>
     <symbol id="umbrella" viewBox="0 0 24 24"><g fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M3 12a9 9 0 0 1 18 0z"/><path d="M12 12v6a2 2 0 0 0 4 0"/></g></symbol>
     <symbol id="timer" viewBox="0 0 24 24"><g fill="none" stroke="#ff6b6b" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9.5 2.5h5"/></g></symbol>
+    <symbol id="chev" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="#4ade80"/></symbol>
+    <symbol id="stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2" fill="#fff"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M8 16L16 8M9 8h7v7" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="tool" viewBox="0 0 24 24"><path d="M14 6a4 4 0 0 0 5 5l-8 8a2 2 0 0 1-3-3l8-8z" fill="none" stroke="#e8835a" stroke-width="1.8"/></symbol>
+    <symbol id="rain" viewBox="0 0 64 56"><path d="M16 36h32a10 10 0 0 0 1-20 14 14 0 0 0-27 4 8 8 0 0 0-6 16z" fill="#fff"/><path d="M22 42l-3 7M31 42l-3 7M40 42l-3 7" stroke="#5ec8ff" stroke-width="3" stroke-linecap="round"/></symbol>
+    <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" fill="#ffc53d"/><g stroke="#ffc53d" stroke-width="2" stroke-linecap="round"><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></symbol>
   </defs>
 </svg>
 
@@ -212,6 +241,123 @@
   <div class="notch closed" style="width:300px">
     <svg width="20" height="20"><use href="#timer"/></svg>
     <div style="font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;color:#ff8a8a">24:13</div>
+  </div>
+</div>
+
+<!-- Expanded notch: the Developer panel -->
+<div class="scene" id="developer" style="width:900px;height:350px">
+  <div class="notch open" style="width:740px;height:318px;padding:12px 18px 0">
+    <div class="back"><svg width="14" height="14"><use href="#chev"/></svg></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+      <div class="dev-icon"><svg width="15" height="15"><use href="#code"/></svg></div>
+      <div class="title">Developer</div>
+      <div class="badge" style="margin-left:2px">2</div>
+      <div class="seg" style="margin-left:auto"><span class="on">ACTIVITY</span><span>USAGE</span><span>TERMINAL</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:190px 1fr;gap:12px;margin-top:10px">
+      <div style="display:grid;gap:6px;align-content:start">
+        <div class="task" style="margin:0;padding:8px;background:rgba(255,255,255,.12)"><svg width="16" height="16"><use href="#spark"/></svg><div><div>Claude</div><div class="sub" style="font-size:10px;margin:0">weather-app</div></div><span class="t" style="color:#e8835a">3:12</span></div>
+        <div class="task" style="margin:0;padding:8px"><svg width="16" height="16"><use href="#term"/></svg><div><div>npm run dev</div><div class="sub" style="font-size:10px;margin:0">weather-app</div></div><span class="t" style="color:#9ae6b4">12:40</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;align-items:flex-start">
+          <div><div class="title" style="font-size:14px">Add hourly forecast</div><div class="sub" style="font-size:11px;margin:0">Claude · Running · weather-app</div></div>
+          <div class="seg" style="margin-left:auto"><span class="on">CHAT</span><span>PROCESSES</span></div>
+        </div>
+        <div class="chips"><span>⏱ 3:12</span><span>CPU 4%</span><span>412 MB</span><span style="color:#7cb4ff">weather-app</span><span style="color:#ff9f7a">feature/hourly</span></div>
+        <div style="display:flex;flex-direction:column;gap:7px;height:118px;overflow:hidden">
+          <div class="msg-user">Add an hourly forecast row under the current conditions.</div>
+          <div class="msg-tool"><svg width="12" height="12"><use href="#tool"/></svg>Read · ForecastView.swift</div>
+          <div class="msg-tool"><svg width="12" height="12"><use href="#tool"/></svg>Edit · ForecastView.swift</div>
+          <div class="msg-text">Added an <b>HourlyForecastRow</b> with the next eight hours and wired it to the existing weather model. Building now to check it compiles.</div>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <div class="input">Send a message to Claude…</div>
+          <div class="round"><svg width="12" height="12"><use href="#stop"/></svg></div>
+          <div class="round"><svg width="13" height="13"><use href="#arrow"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Expanded notch: Developer usage -->
+<div class="scene" id="usage" style="width:900px;height:300px">
+  <div class="notch open" style="width:740px;height:266px;padding:12px 18px 0">
+    <div class="back"><svg width="14" height="14"><use href="#chev"/></svg></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:10px">
+      <div class="dev-icon"><svg width="15" height="15"><use href="#code"/></svg></div>
+      <div class="title">Developer</div>
+      <div class="seg" style="margin-left:auto"><span>ACTIVITY</span><span class="on">USAGE</span><span>TERMINAL</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+      <div class="dev" style="padding:12px">
+        <div style="display:flex;gap:8px;align-items:center"><svg width="18" height="18"><use href="#spark"/></svg><div class="title" style="font-size:13px">Claude</div><div class="sub" style="margin:0 0 0 auto">Max plan</div></div>
+        <div style="margin-top:12px;font-size:11px;font-weight:600;display:flex"><span>Session</span><span style="margin-left:auto;color:var(--dim)">resets in 2 h</span></div>
+        <div class="meter"><i style="width:38%;background:#e8835a"></i></div>
+        <div style="margin-top:10px;font-size:11px;font-weight:600;display:flex"><span>Week</span><span style="margin-left:auto;color:var(--dim)">resets Mon</span></div>
+        <div class="meter"><i style="width:61%;background:#e8835a"></i></div>
+        <div style="display:flex;gap:4px;align-items:flex-end;height:34px;margin-top:12px">
+          <i style="flex:1;height:30%;background:rgba(232,131,90,.5);border-radius:2px"></i><i style="flex:1;height:55%;background:rgba(232,131,90,.5);border-radius:2px"></i><i style="flex:1;height:42%;background:rgba(232,131,90,.5);border-radius:2px"></i><i style="flex:1;height:80%;background:rgba(232,131,90,.5);border-radius:2px"></i><i style="flex:1;height:64%;background:rgba(232,131,90,.5);border-radius:2px"></i><i style="flex:1;height:35%;background:rgba(232,131,90,.5);border-radius:2px"></i><i style="flex:1;height:90%;background:#e8835a;border-radius:2px"></i>
+        </div>
+      </div>
+      <div class="dev" style="padding:12px">
+        <div style="display:flex;gap:8px;align-items:center"><svg width="18" height="18"><use href="#code"/></svg><div class="title" style="font-size:13px">Codex</div><div class="sub" style="margin:0 0 0 auto">Plus plan</div></div>
+        <div style="margin-top:12px;font-size:11px;font-weight:600;display:flex"><span>5-hour limit</span><span style="margin-left:auto;color:var(--dim)">resets in 4 h</span></div>
+        <div class="meter"><i style="width:22%;background:#19b89c"></i></div>
+        <div style="margin-top:10px;font-size:11px;font-weight:600;display:flex"><span>Week</span><span style="margin-left:auto;color:var(--dim)">resets Thu</span></div>
+        <div class="meter"><i style="width:47%;background:#19b89c"></i></div>
+        <div style="display:flex;gap:4px;align-items:flex-end;height:34px;margin-top:12px">
+          <i style="flex:1;height:20%;background:rgba(25,184,156,.5);border-radius:2px"></i><i style="flex:1;height:45%;background:rgba(25,184,156,.5);border-radius:2px"></i><i style="flex:1;height:70%;background:rgba(25,184,156,.5);border-radius:2px"></i><i style="flex:1;height:30%;background:rgba(25,184,156,.5);border-radius:2px"></i><i style="flex:1;height:52%;background:rgba(25,184,156,.5);border-radius:2px"></i><i style="flex:1;height:66%;background:rgba(25,184,156,.5);border-radius:2px"></i><i style="flex:1;height:40%;background:#19b89c;border-radius:2px"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Expanded notch: weather detail -->
+<div class="scene" id="forecast" style="width:780px;height:330px">
+  <div class="notch open" style="width:620px;height:296px;padding:12px 22px 0">
+    <div class="back"><svg width="14" height="14"><use href="#chev"/></svg></div>
+    <div style="display:flex;gap:22px;align-items:flex-start;margin-top:4px">
+      <svg width="104" height="92"><use href="#rain"/></svg>
+      <div>
+        <div class="title" style="font-size:16px">Lisbon</div>
+        <div class="temp" style="font-size:44px;margin-top:4px">18°</div>
+        <div class="title" style="font-size:15px;margin-top:4px">Light Rain</div>
+        <div style="font-size:12px;font-weight:600;margin-top:10px">H: 21°  L: 15°</div>
+        <div class="sub" style="font-size:11px">Feels like 17° · Wind 12 km/h</div>
+      </div>
+      <div class="sub" style="margin-left:auto;font-size:11px;font-weight:600">Updated just now</div>
+    </div>
+    <div style="font-size:10px;font-weight:800;letter-spacing:.6px;color:var(--dim);margin-top:12px">HOURLY FORECAST</div>
+    <div style="display:grid;grid-template-columns:repeat(8,1fr);margin-top:10px">
+      <div class="hour"><b>NOW</b><svg width="22" height="20"><use href="#rain"/></svg>18°</div>
+      <div class="hour"><b>1 PM</b><svg width="22" height="20"><use href="#rain"/></svg>18°</div>
+      <div class="hour"><b>2 PM</b><svg width="22" height="18"><use href="#cloudsun"/></svg>19°</div>
+      <div class="hour"><b>3 PM</b><svg width="22" height="18"><use href="#cloudsun"/></svg>19°</div>
+      <div class="hour"><b>4 PM</b><svg width="20" height="20"><use href="#sun"/></svg>18°</div>
+      <div class="hour"><b>5 PM</b><svg width="20" height="20"><use href="#sun"/></svg>17°</div>
+      <div class="hour"><b>6 PM</b><svg width="22" height="18"><use href="#cloudsun"/></svg>16°</div>
+      <div class="hour"><b>7 PM</b><svg width="22" height="18"><use href="#cloudsun"/></svg>16°</div>
+    </div>
+  </div>
+</div>
+
+<!-- Closed notch: charging -->
+<div class="scene" id="charging" style="width:520px;height:70px">
+  <div class="notch closed" style="width:300px">
+    <svg width="18" height="18"><use href="#bolt"/></svg>
+    <div style="display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;color:#4ade80">82%<div class="batt" style="border-color:#4ade80;width:28px;padding:2px;display:block"><div style="width:82%;height:100%;background:#4ade80;border-radius:1.5px"></div></div></div>
+  </div>
+</div>
+
+<!-- Closed notch: an AI agent at work, with the home bubble -->
+<div class="scene" id="agent" style="width:520px;height:70px">
+  <div class="bubble" style="left:68px"><i><svg width="15" height="15"><use href="#house"/></svg></i></div>
+  <div class="notch closed" style="width:300px">
+    <svg width="20" height="20"><use href="#spark"/></svg>
+    <div style="font-size:14px;font-weight:700;font-family:ui-monospace,'SF Mono',monospace;color:#e8835a">3:12</div>
   </div>
 </div>
 
