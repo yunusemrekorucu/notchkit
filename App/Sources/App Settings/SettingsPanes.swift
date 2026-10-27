@@ -6004,8 +6004,11 @@ fileprivate struct CalibrateRSSIView: View {
         Text("Here are the suggested settings based on your measurements.").multilineTextAlignment(.center).foregroundColor(.secondary)
 
         if let near = nearRSSI, let far = farRSSI {
-            let suggestedUnlock = min(-10, near + 5)
-            let suggestedLock = max(-100, far - 5)
+            // Unlock fires at or above its threshold and lock below its own, so each threshold
+            // sits a little past the measured signal: the near spot must clear the unlock bar,
+            // and the far spot must fall under the lock bar.
+            let suggestedUnlock = min(-10, max(-95, near - 5))
+            let suggestedLock = max(-100, min(far + 5, suggestedUnlock - 5))
 
             VStack(alignment: .leading, spacing: 15) {
                 Text("Measured Average 'Near' Signal: **\(near) dBm**")

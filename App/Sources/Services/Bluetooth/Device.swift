@@ -218,7 +218,9 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             }
 
             if activeModeTimer == nil {
-                updateMonitoredPeripheral(RSSI.intValue)
+                if let rssi = Self.measuredRSSI(RSSI) {
+                    updateMonitoredPeripheral(rssi)
+                }
                 if !passiveMode {
                     connectMonitoredPeripheral()
                 }
@@ -338,7 +340,7 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     @MainActor func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
         guard peripheral.identifier == monitoredUUID, error == nil else { return }
         lastReadAt = Date().timeIntervalSince1970
-        let rssi = RSSI.intValue > 0 ? 0 : RSSI.intValue
+        guard let rssi = Self.measuredRSSI(RSSI) else { return }
 
         if let device = self.devices[peripheral.identifier] {
             device.rssi = rssi
@@ -366,6 +368,8 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         if let p = monitoredPeripheral {
             if p.state == .connected && !passiveMode {
                 print("[BLE] Monitored peripheral already connected. Starting active mode.")
+                p.delegate = self
+                Task { @MainActor in self.delegate?.monitoredPeripheralState = .connected }
                 startActiveMode(peripheral: p)
             } else {
                 print("[BLE] Monitored peripheral found. Attempting to connect for monitoring.")
@@ -451,6 +455,13 @@ class BLE: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
             timer.tolerance = 0.5
             RunLoop.main.add(timer, forMode: .common)
         }
+    }
+
+    /// CoreBluetooth reports 127 when it could not measure the signal. Clamping that to 0 dBm
+    /// would read as the device sitting on the Mac and trigger an unlock.
+    private static func measuredRSSI(_ value: NSNumber) -> Int? {
+        let rssi = value.intValue
+        return rssi < 0 ? rssi : nil
     }
 
     private func getEstimatedRSSI(rssi: Int) -> Int {

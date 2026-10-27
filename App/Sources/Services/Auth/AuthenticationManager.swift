@@ -259,13 +259,10 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
         }
     }
 
-    func stopAllAuthentication() {
-        if isBluetoothAuthenticating {
-            isBluetoothAuthenticating = false
-            ble.monitoredUUID = nil
-            setStatusThrottled("Disabled")
-            self.monitoredPeripheralState = .disconnected
-        }
+    /// Bluetooth monitoring keeps running once the screen is unlocked: it is what locks the
+    /// Mac again when the trusted device walks away, and it reports whether the device is in
+    /// range. Only Face ID belongs to a single unlock attempt.
+    func stopUnlockAttempts() {
         if isFaceIDAuthenticating {
             tearDownFaceID()
         }
@@ -280,7 +277,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
         guard self.isScreenLocked else {
             print("[AuthManager] Screen already unlocked. Sequence aborted.")
             isUnlockInProgress = false
-            stopAllAuthentication()
+            stopUnlockAttempts()
             return
         }
 
@@ -300,7 +297,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
         guard hasAccessibilityPermission(promptIfNeeded: true) else {
             setStatusThrottled("Enable Accessibility in System Settings to allow auto-unlock.")
             isUnlockInProgress = false
-            stopAllAuthentication()
+            stopUnlockAttempts()
             return
         }
 
@@ -327,7 +324,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
         print("[AuthManager] Cancelling pending password injection: \(reason)")
         unlockAttemptID = UUID()
         isUnlockInProgress = false
-        stopAllAuthentication()
+        stopUnlockAttempts()
     }
 
     // MARK: - Password & HID Injection
@@ -440,7 +437,11 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
 
     func forgetDevice() {
         settings.settings.bluetoothUnlockDeviceID = nil
-        ble.monitoredUUID = nil
+        if isBluetoothAuthenticating {
+            isBluetoothAuthenticating = false
+            ble.stopMonitor()
+        }
+        lastRSSI = nil
         self.monitoredPeripheralState = .disconnected
     }
 
@@ -587,6 +588,7 @@ class AuthenticationManager: NSObject, ObservableObject, BLEDelegate {
                 isBluetoothAuthenticating = false
                 ble.stopMonitor()
                 setStatusThrottled("Disabled")
+                lastRSSI = nil
                 self.monitoredPeripheralState = .disconnected
             }
         }
