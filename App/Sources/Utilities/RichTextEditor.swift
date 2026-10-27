@@ -11,6 +11,32 @@ final class RichTextViewBox: ObservableObject {
     weak var textView: NSTextView?
 }
 
+/// The notch panel only becomes key once something asks for keyboard focus. NSTextView
+/// announces editing on the first keystroke, which never arrives while the panel is not
+/// key, so the request has to happen on the click that places the caret.
+final class NotchFocusingTextView: NSTextView {
+    override func mouseDown(with event: NSEvent) {
+        if isEditable {
+            (NSApp.delegate as? AppDelegate)?.makeNotchWindowFocusable(window)
+        }
+        super.mouseDown(with: event)
+    }
+}
+
+/// A short note leaves empty space under the text view; a click there should still start
+/// typing at the end of the note.
+final class NotchFocusingScrollView: NSScrollView {
+    override func mouseDown(with event: NSEvent) {
+        guard let textView = documentView as? NSTextView, textView.isEditable else {
+            super.mouseDown(with: event)
+            return
+        }
+        (NSApp.delegate as? AppDelegate)?.makeNotchWindowFocusable(window)
+        window?.makeFirstResponder(textView)
+        textView.setSelectedRange(NSRange(location: textView.string.utf16.count, length: 0))
+    }
+}
+
 struct RichTextEditor: NSViewRepresentable {
     @Binding var attributedText: NSAttributedString
     var textViewBox: RichTextViewBox
@@ -21,14 +47,14 @@ struct RichTextEditor: NSViewRepresentable {
     }
 
     func makeNSView(context: Context) -> NSScrollView {
-        let scroll = NSScrollView()
+        let scroll = NotchFocusingScrollView()
         scroll.hasVerticalScroller = true
         scroll.hasHorizontalScroller = false
         scroll.autohidesScrollers = true
         scroll.borderType = .noBorder
         scroll.drawsBackground = false
 
-        let textView = NSTextView()
+        let textView = NotchFocusingTextView()
         textView.delegate = context.coordinator
         if #available(macOS 15.0, *) {
             textView.writingToolsBehavior = .none
@@ -90,7 +116,7 @@ struct RichTextEditor: NSViewRepresentable {
         func textDidEndEditing(_ notification: Notification) {
             isEditing = false
             sync()
-            (NSApp.delegate as? AppDelegate)?.revertNotchWindowFocus()
+            (NSApp.delegate as? AppDelegate)?.revertNotchWindowFocusUnlessEditing()
         }
 
         func textDidChange(_ notification: Notification) {

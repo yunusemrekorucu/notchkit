@@ -1904,6 +1904,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         previouslyFrontmostApp = nil
     }
 
+    /// Called when one text input in the notch loses focus. Moving from one field to the next
+    /// (a note's title to its body) also ends editing in the first one, so wait a turn and keep
+    /// the panel key if another editable text view took over.
+    func revertNotchWindowFocusUnlessEditing() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            if let window = self.focusedNotchWindow,
+               let textView = window.firstResponder as? NSTextView,
+               textView.isEditable {
+                return
+            }
+            self.revertNotchWindowFocus()
+        }
+    }
+
     private func notchFocusTarget(_ requester: NSWindow?) -> DynamicFocusWindow? {
         let windows = notchWindows.compactMap { $0 as? DynamicFocusWindow }
         if let requester = requester as? DynamicFocusWindow, windows.contains(where: { $0 === requester }) {

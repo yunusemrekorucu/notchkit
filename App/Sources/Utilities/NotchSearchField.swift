@@ -25,7 +25,7 @@ struct NotchSearchField: View {
                 if focused {
                     appDelegate.makeNotchWindowFocusable()
                 } else {
-                    appDelegate.revertNotchWindowFocus()
+                    appDelegate.revertNotchWindowFocusUnlessEditing()
                 }
             }
             .onAppear {
@@ -99,7 +99,7 @@ struct NotchKeyboardFocusModifier: ViewModifier {
                 if focused {
                     appDelegate.makeNotchWindowFocusable()
                 } else {
-                    appDelegate.revertNotchWindowFocus()
+                    appDelegate.revertNotchWindowFocusUnlessEditing()
                 }
             }
             .onDisappear {
