@@ -278,3 +278,31 @@ private struct TimerActivityRightView: View {
         TimerActivityView.right(timerManager: timerManager)
     }
 }
+/// The bubble left of the notch while a live activity shows. It opens the main widgets tab,
+/// so a click on the activity itself can keep opening the activity's own detail view.
+struct NotchActivityHomeButton: View {
+    let diameter: CGFloat
+    let action: () -> Void
+
+    @State private var isHovering = false
+
+    var body: some View {
+        Button(action: action) {
+            ZStack {
+                Circle()
+                    .fill(Color.white.opacity(isHovering ? 0.2 : 0.12))
+                    .frame(width: diameter * 0.78, height: diameter * 0.78)
+                Image(systemName: "house.fill")
+                    .font(.system(size: diameter * 0.36, weight: .semibold))
+                    .foregroundStyle(.white.opacity(isHovering ? 1 : 0.85))
+            }
+            .frame(width: diameter, height: diameter)
+            .contentShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .focusable(false)
+        .help("Home")
+        .accessibilityLabel("Home")
+        .onHover { isHovering = $0 }
+    }
+}

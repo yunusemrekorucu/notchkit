@@ -307,7 +307,9 @@ final class NotchMorphEngine: ObservableObject {
     private var height = NotchMorphChannel(value: 0)
     private var cornerRadius = NotchMorphChannel(value: 0)
     private var bottomCornerRadius = NotchMorphChannel(value: 0)
+    /// One presence channel per bubble slot, then the bubbles' shared scale.
     private var satelliteChannels = [NotchMorphChannel](repeating: NotchMorphChannel(value: 0), count: NotchSatelliteSlot.count)
+        + [NotchMorphChannel(value: 1)]
     private(set) var hasTarget = false
     private(set) var generation: UInt64 = 0
 
@@ -372,7 +374,7 @@ final class NotchMorphEngine: ObservableObject {
     }
 
     func setSatellites(_ presence: NotchSatellitePresence, animation: Animation?) {
-        setTargets(.satellites, values: NotchSatelliteSlot.allCases.map { presence[$0] }, animation: animation)
+        setTargets(.satellites, values: NotchSatelliteSlot.allCases.map { presence[$0] } + [presence.scale], animation: animation)
     }
 
     private func setTargets(_ group: Group, values: [CGFloat], animation: Animation?) {
@@ -526,12 +528,14 @@ final class NotchMorphEngine: ObservableObject {
         for slot in NotchSatelliteSlot.allCases {
             presence[slot] = CGFloat(satelliteChannels[slot.index].value(at: time))
         }
+        presence.scale = CGFloat(satelliteChannels[NotchSatelliteSlot.count].value(at: time))
         return presence
     }
 
     private func satellitePresence(_ value: (NotchMorphChannel) -> Double) -> NotchSatellitePresence {
         var presence = NotchSatellitePresence.none
         for slot in NotchSatelliteSlot.allCases { presence[slot] = CGFloat(value(satelliteChannels[slot.index])) }
+        presence.scale = CGFloat(value(satelliteChannels[NotchSatelliteSlot.count]))
         return presence
     }
 

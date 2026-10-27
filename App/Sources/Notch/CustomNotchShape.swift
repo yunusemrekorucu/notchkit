@@ -39,8 +39,8 @@ struct CustomNotchShape: Shape, Hashable {
         for slot in NotchSatelliteSlot.allCases {
             let presence = satellites[slot]
             guard presence > 0.001 else { continue }
-            let bubble = satelliteLayout.rect(slot: slot, presence: presence, outline: rect)
-            let anchor = satelliteLayout.anchor(of: slot, outline: rect)
+            let bubble = satelliteLayout.rect(slot: slot, presence: presence, outline: rect, scale: satellites.scale)
+            let anchor = satelliteLayout.anchor(of: slot, outline: rect, scale: satellites.scale)
             let inside = slot.isTrailing ? bubble.maxX <= anchor.maxX - 0.5 : bubble.minX >= anchor.minX + 0.5
             if inside { continue }
             let neck = satelliteLayout.neck(slot: slot, bubble: bubble, anchor: anchor)
@@ -379,6 +379,15 @@ struct NotchSatellitePresence: Hashable {
         set { values[slot.index] = Double(newValue) }
     }
 
+    /// How much the bubbles are grown, so they swell with the notch on hover. Kept in a lane
+    /// past the slots; 1 when nothing has set it.
+    var scale: CGFloat {
+        get { values[Self.scaleLane] > 0 ? CGFloat(values[Self.scaleLane]) : 1 }
+        set { values[Self.scaleLane] = Double(newValue) }
+    }
+
+    private static let scaleLane = NotchSatelliteSlot.count
+
     var isEmpty: Bool { NotchSatelliteSlot.allCases.allSatisfy { self[$0] <= 0.001 } }
     var count: Int { NotchSatelliteSlot.allCases.filter { self[$0] > 0 }.count }
 }
@@ -395,13 +404,15 @@ struct NotchSatelliteLayout: Hashable {
         return CGFloat(rings) * (gap + diameter)
     }
 
-    func anchor(of slot: NotchSatelliteSlot, outline: CGRect) -> CGRect {
+    func anchor(of slot: NotchSatelliteSlot, outline: CGRect, scale: CGFloat = 1) -> CGRect {
         guard let inner = slot.inner else { return outline }
-        return restingRect(slot: inner, outline: outline)
+        return restingRect(slot: inner, outline: outline, scale: scale)
     }
 
-    func rect(slot: NotchSatelliteSlot, presence: CGFloat, outline: CGRect) -> CGRect {
+    func rect(slot: NotchSatelliteSlot, presence: CGFloat, outline: CGRect, scale: CGFloat = 1) -> CGRect {
         let p = max(0, presence)
+        let diameter = diameter * scale
+        let gap = gap * scale
         let size = diameter * (0.5 + 0.5 * min(p, 1.08))
         let tucked = diameter / 2
         let apart = gap + diameter / 2
@@ -410,12 +421,12 @@ struct NotchSatelliteLayout: Hashable {
         let centerX = slot.isTrailing
             ? outline.maxX + ringOffset + distance
             : outline.minX - ringOffset - distance
-        let centerY = outline.minY + self.centerY
+        let centerY = outline.minY + self.centerY * scale
         return CGRect(x: centerX - size / 2, y: centerY - size / 2, width: size, height: size)
     }
 
-    func restingRect(slot: NotchSatelliteSlot, outline: CGRect) -> CGRect {
-        rect(slot: slot, presence: 1, outline: outline)
+    func restingRect(slot: NotchSatelliteSlot, outline: CGRect, scale: CGFloat = 1) -> CGRect {
+        rect(slot: slot, presence: 1, outline: outline, scale: scale)
     }
 
     func neck(slot: NotchSatelliteSlot, bubble: CGRect, anchor outline: CGRect) -> Path? {

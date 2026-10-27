@@ -49,7 +49,7 @@ final class NotchSatelliteStage {
                 host.park(keepingContent: true)
                 continue
             }
-            let bubble = layout.rect(slot: side, presence: presence, outline: outline)
+            let bubble = layout.rect(slot: side, presence: presence, outline: outline, scale: values.satellites.scale)
             let origin = CGPoint(x: bubble.midX - layout.diameter / 2, y: bubble.midY - layout.diameter / 2)
             if final { host.settle(at: origin) } else { host.presentOrigin(origin) }
             guard let content = host.followView.layer else { continue }
@@ -75,7 +75,7 @@ final class NotchSatelliteStage {
             positions.reserveCapacity(rects.count)
             for (rect, frame) in zip(rects, timeline.frames) {
                 let presence = Self.presence(side, frame.values)
-                let bubble = layout.rect(slot: side, presence: presence, outline: rect)
+                let bubble = layout.rect(slot: side, presence: presence, outline: rect, scale: frame.values.satellites.scale)
                 let hostRect = CGRect(x: bubble.midX - diameter / 2, y: bubble.midY - diameter / 2, width: diameter, height: diameter)
                 positions.append(NSValue(point: NotchLayerGeometry.position(
                     for: hostRect, anchor: layer.anchorPoint, topDown: topDown, superHeight: superHeight
@@ -91,7 +91,7 @@ final class NotchSatelliteStage {
 
     func restingRects(outline: CGRect, values: NotchMorphValues) -> [CGRect] {
         NotchSatelliteSlot.allCases.compactMap { slot in
-            Self.presence(slot, values) > 0.5 ? layout.restingRect(slot: slot, outline: outline) : nil
+            Self.presence(slot, values) > 0.5 ? layout.restingRect(slot: slot, outline: outline, scale: values.satellites.scale) : nil
         }
     }
 

@@ -479,7 +479,7 @@ struct NotchController: View {
     // MARK: Satellites (extra live activities)
 
     private func satelliteLayout(config: ResolvedNotchConfiguration) -> NotchSatelliteLayout {
-        guard settings.settings.showLiveActivitySatellites else { return .none }
+        guard settings.settings.showLiveActivitySatellites || showsHomeSatellite else { return .none }
         let band = config.initialSize.height
         if config.isFloatingIsland {
             return NotchSatelliteLayout(diameter: (band * 1.06).rounded(), gap: (band * 0.2).rounded(), centerY: band / 2)
@@ -496,13 +496,47 @@ struct NotchController: View {
         return Array(liveActivityManager.satelliteActivities.prefix(max(1, min(NotchSatelliteSlot.count, settings.settings.liveActivitySatelliteLimit))))
     }
 
+    private enum SatelliteEntry {
+        case activity(NotchSatelliteActivity)
+        case home
+    }
+
+    /// Home keeps the first leading slot; other activities fill the rest, trailing side first,
+    /// so every outer bubble still has an inner one to hang from.
+    private static let homeSatelliteSlot = NotchSatelliteSlot(index: 1)
+    private static let activitySlotsBesideHome = [0, 3, 2, 4].map(NotchSatelliteSlot.init(index:))
+
+    private var showsHomeSatellite: Bool {
+        guard !isManuallyHidden,
+              notchState == .autoExpanded || notchState == .hoverExpanded,
+              isLiveActivityActive, case .standard(let data, _) = liveActivityManager.activityContent,
+              effectiveActivity != .systemHUD, effectiveActivity != .lockScreen, effectiveActivity != .unlocked
+        else { return false }
+        return Self.showsHomeButton(for: data)
+    }
+
+    private var satelliteEntries: [(slot: NotchSatelliteSlot, entry: SatelliteEntry)] {
+        let activities = visibleSatellites
+        guard showsHomeSatellite else {
+            return zip(NotchSatelliteSlot.allCases, activities).map { ($0, .activity($1)) }
+        }
+        return [(Self.homeSatelliteSlot, .home)]
+            + zip(Self.activitySlotsBesideHome, activities).map { ($0, .activity($1)) }
+    }
+
     private func updateSatellitePresence(stateChange: (NotchState, NotchState)? = nil) {
-        let target = NotchSatellitePresence.showing(visibleSatellites.count)
+        var target = NotchSatellitePresence.none
+        for (slot, _) in satelliteEntries { target[slot] = 1 }
+        target.scale = activeScaleFactor
         guard target != animatedSatellites else { return }
         let growing = NotchSatelliteSlot.allCases.contains { target[$0] > animatedSatellites[$0] }
         let animation: Animation
         if let (_, newState) = stateChange, newState == .clickExpanded, let config {
             animation = config.expandAnimation
+        } else if let (oldState, newState) = stateChange, oldState != newState,
+                  oldState == .hoverExpanded || newState == .hoverExpanded, let config {
+            // Swell and shrink with the notch on hover, on the notch's own curve.
+            animation = newState == .hoverExpanded ? config.hoverAnimation : config.activityToActivityAnimation
         } else if growing {
             animation = .notchMorphSpring(response: 0.5, dampingFraction: 0.58)
         } else {
@@ -517,7 +551,16 @@ struct NotchController: View {
         let layout = satelliteLayout(config: config)
         guard layout.diameter > 0 else { return [:] }
         var pieces: [NotchSatelliteSlot: NotchSatellitePiece] = [:]
-        for (side, satellite) in zip(NotchSatelliteSlot.allCases, visibleSatellites) {
+        for (side, entry) in satelliteEntries {
+            guard case .activity(let satellite) = entry else {
+                pieces[side] = NotchSatellitePiece(
+                    view: widgetEnvironment(AnyView(
+                        NotchActivityHomeButton(diameter: layout.diameter, action: openHomeFromActivity)
+                    )),
+                    key: NotchContentKey(config: config, numbers: [layout.diameter], tags: ["satellite", "home"])
+                )
+                continue
+            }
             let type = satellite.type
             let view = NotchActivityContentView(
                 content: satellite.content,
@@ -812,6 +855,27 @@ struct NotchController: View {
         )
     }
 
+    /// Lasting activities get a home bubble so the main tab is one click away instead of the
+    /// activity's own detail view. Brief system notices (HUD, lock, battery…) don't need one.
+    private static func showsHomeButton(for data: StandardActivityData) -> Bool {
+        switch data {
+        case .hud, .lockScreen, .unlocked, .capsLock, .battery, .audioSwitch, .desktop, .bluetooth, .updateAvailable:
+            return false
+        default:
+            return true
+        }
+    }
+
+    private func openHomeFromActivity() {
+        guard !isManuallyHidden, !shouldBlockNotchExpansionWhileLocked, let config else { return }
+        scratch.collapseTask?.cancel()
+        scratch.isCollapseTimerActive = false
+        expansionAnimation = config.expandAnimation
+        measuredClickContentSize = .zero
+        navigationStack = [.defaultWidgets]
+        notchState = .clickExpanded
+    }
+
     private func activityRegions(config: ResolvedNotchConfiguration, tag: String) -> NotchActivityRegions? {
         var live = liveActivityManager.activityContent
         var activity = liveActivityManager.currentActivity
@@ -892,6 +956,7 @@ struct NotchController: View {
             .onChange(of: fileShelfState.selectedItemForPreview, perform: handlePreviewItemChange)
             .onChange(of: liveActivityManager.currentActivity, perform: handleActivityChange)
             .onChange(of: liveActivityManager.satelliteActivities) { _, _ in updateSatellitePresence() }
+            .onChange(of: liveActivityManager.currentActivity) { _, _ in updateSatellitePresence() }
             .onChange(of: showRightHUDOverlay) { _, _ in
                 updateHUDOverlayAnimation()
             }
@@ -3141,7 +3206,7 @@ struct NotchController: View {
         let topInset = config.topInset - config.topBuffer
         let showsSatellites = notchState != .clickExpanded && !animatedSatellites.isEmpty
         let layout = satelliteLayout(config: config)
-        let satelliteReach = showsSatellites ? layout.reach(count: animatedSatellites.count) : 0
+        let satelliteReach = showsSatellites ? layout.reach(count: animatedSatellites.count) * animatedSatellites.scale : 0
         let frame = CGRect(
             x: contentBounds.midX - (notchWidth / 2) - satelliteReach,
             y: contentBounds.maxY - notchHeight - topInset,
