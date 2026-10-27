@@ -598,6 +598,10 @@ final class NotchWidgetPlaneHostingView: NSHostingView<NotchWidgetPlaneRoot>, Po
         fatalError("init(coder:) has not been implemented")
     }
 
+    /// Once a widget with a text field has made the panel focusable, a click while the panel is
+    /// not key would otherwise only make it key, and the control under the pointer never sees it.
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
+
     override func viewWillMove(toWindow newWindow: NSWindow?) {
         (window as? DynamicFocusWindow)?.unregisterPointerTrackingClient(self)
         super.viewWillMove(toWindow: newWindow)
